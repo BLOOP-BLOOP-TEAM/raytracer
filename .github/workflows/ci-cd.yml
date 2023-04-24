@@ -32,6 +32,9 @@ jobs:
       
       - name: install libconfig++
         run: dnf install libconfig-devel
+        
+      - name: cmake
+        run: timeout 2m cmake .
       
       - name: make for makefile
         run: timeout 2m make
