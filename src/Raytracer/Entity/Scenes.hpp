@@ -7,6 +7,11 @@
 
 #pragma once
 
+#include <vector>
+#include <string>
+#include <memory>
+#include "IEntity.hpp"
+
 namespace Raytracer {
     class Scenes {
     public:
@@ -14,7 +19,14 @@ namespace Raytracer {
 
         ~Scenes();
 
+        void addEntity(IEntity &entity);
+
+        IEntity &getEntity(int index) const;
+
+        IEntity &getEntity(std::string name) const;
+
     protected:
     private:
+        std::vector<std::unique_ptr<IEntity>> _entities;
     };
 };

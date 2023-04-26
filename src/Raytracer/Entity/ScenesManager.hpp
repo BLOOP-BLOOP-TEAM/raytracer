@@ -8,8 +8,8 @@
 #pragma once
 
 #include <vector>
-#include <functional>
 #include <string>
+#include <memory>
 #include "Scenes.hpp"
 
 namespace Raytracer {
@@ -28,6 +28,6 @@ namespace Raytracer {
 
     protected:
     private:
-        std::vector<std::reference_wrapper<Scenes>> _scenes;
+        std::vector<std::unique_ptr<Scenes>> _scenes;
     };
 };
