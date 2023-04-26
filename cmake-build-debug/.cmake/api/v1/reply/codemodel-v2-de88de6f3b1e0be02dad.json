@@ -1,0 +1,146 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"build" : "src",
+					"childIndexes" : 
+					[
+						2,
+						4
+					],
+					"jsonFile" : "directory-src-Debug-b6cf2213fc5053b67c22.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src"
+				},
+				{
+					"build" : "src/Raytracer",
+					"childIndexes" : 
+					[
+						3
+					],
+					"jsonFile" : "directory-src.Raytracer-Debug-8943673b5ed53276645f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Raytracer"
+				},
+				{
+					"build" : "src/Raytracer/Core",
+					"jsonFile" : "directory-src.Raytracer.Core-Debug-a57c083548f35af8eb96.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "src/Raytracer/Core"
+				},
+				{
+					"build" : "src/Plugins",
+					"childIndexes" : 
+					[
+						5
+					],
+					"jsonFile" : "directory-src.Plugins-Debug-512ac4a3a326449fb9e4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Plugins"
+				},
+				{
+					"build" : "src/Plugins/Sphere",
+					"jsonFile" : "directory-src.Plugins.Sphere-Debug-2118304f3fac14f13f9a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 0,
+					"source" : "src/Plugins/Sphere"
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					],
+					"name" : "Raytracer",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "plugin_sphere::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-plugin_sphere-Debug-122cafac4d1ba88d6f80.json",
+					"name" : "plugin_sphere",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "raytracer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-raytracer-Debug-9013068c2b8b7b6d10bf.json",
+					"name" : "raytracer",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/alagasse/delivery/prod/raytracer/cmake-build-debug",
+		"source" : "/home/alagasse/delivery/prod/raytracer"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}
