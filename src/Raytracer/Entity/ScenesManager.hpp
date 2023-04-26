@@ -24,7 +24,7 @@ namespace Raytracer {
 
         Scenes &getScene(int index) const;
 
-        Scenes &getScene(std::string name) const;
+        Scenes &getScene(const std::string &name) const;
 
     protected:
     private:

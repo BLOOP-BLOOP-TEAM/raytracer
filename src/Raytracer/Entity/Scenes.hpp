@@ -23,7 +23,7 @@ namespace Raytracer {
 
         IEntity &getEntity(int index) const;
 
-        IEntity &getEntity(std::string name) const;
+        IEntity &getEntity(const std::string &name) const;
 
     protected:
     private:
