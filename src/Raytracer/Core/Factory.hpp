@@ -7,13 +7,14 @@
 
 #pragma once
 
+namespace Raytracer {
+    class Factory {
+    public:
+        Factory();
 
-class Factory {
-public:
-    Factory();
+        ~Factory();
 
-    ~Factory();
-
-protected:
-private:
+    protected:
+    private:
+    };
 };

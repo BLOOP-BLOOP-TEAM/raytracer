@@ -7,13 +7,14 @@
 
 #pragma once
 
+namespace Raytracer {
+    class IPrimitive {
+    public:
+        IPrimitive();
 
-class IPrimitive {
-public:
-    IPrimitive();
+        ~IPrimitive();
 
-    ~IPrimitive();
-
-protected:
-private:
+    protected:
+    private:
+    };
 };

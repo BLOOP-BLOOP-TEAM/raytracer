@@ -7,13 +7,17 @@
 
 #pragma once
 
+#include "ICam.hpp"
+#include "AEntity.hpp"
 
-class ACam {
-public:
-    ACam();
+namespace Raytracer {
+    class ACam : public ICam, public AEntity {
+    public:
+        ACam();
 
-    ~ACam();
+        ~ACam();
 
-protected:
-private:
+    protected:
+    private:
+    };
 };

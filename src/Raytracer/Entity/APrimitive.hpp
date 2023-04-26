@@ -7,13 +7,17 @@
 
 #pragma once
 
+#include "IPrimitive.hpp"
+#include "AEntity.hpp"
 
-class APrimitive {
-public:
-    APrimitive();
+namespace Raytracer {
+    class APrimitive : public IPrimitive, public AEntity {
+    public:
+        APrimitive();
 
-    ~APrimitive();
+        ~APrimitive();
 
-protected:
-private:
+    protected:
+    private:
+    };
 };

@@ -7,13 +7,10 @@
 
 #pragma once
 
-
-class Vector3f {
-public:
-    Vector3f();
-
-    ~Vector3f();
-
-protected:
-private:
-};
+namespace Component { ;
+    struct Vector3f {
+        float x;
+        float y;
+        float z;
+    };
+}

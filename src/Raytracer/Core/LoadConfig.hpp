@@ -7,13 +7,14 @@
 
 #pragma once
 
+namespace Raytracer {
+    class LoadConfig {
+    public:
+        LoadConfig();
 
-class LoadConfig {
-public:
-    LoadConfig();
+        ~LoadConfig();
 
-    ~LoadConfig();
-
-protected:
-private:
+    protected:
+    private:
+    };
 };

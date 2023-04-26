@@ -7,13 +7,17 @@
 
 #pragma once
 
+#include "AEntity.hpp"
+#include "ILight.hpp"
 
-class ALight {
-public:
-    ALight();
+namespace Raytracer {
+    class ALight : public ILight, public AEntity {
+    public:
+        ALight();
 
-    ~ALight();
+        ~ALight();
 
-protected:
-private:
+    protected:
+    private:
+    };
 };

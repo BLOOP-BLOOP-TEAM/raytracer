@@ -7,13 +7,14 @@
 
 #pragma once
 
+namespace Raytracer {
+    class Scenes {
+    public:
+        Scenes();
 
-class Scenes {
-public:
-    Scenes();
+        ~Scenes();
 
-    ~Scenes();
-
-protected:
-private:
+    protected:
+    private:
+    };
 };

@@ -19,4 +19,4 @@ namespace Raytracer {
     private:
         bool _isRunning;
     };
-}
+};

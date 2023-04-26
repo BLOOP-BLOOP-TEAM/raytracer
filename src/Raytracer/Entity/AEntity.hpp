@@ -7,13 +7,16 @@
 
 #pragma once
 
+#include "IEntity.hpp"
 
-class AEntity {
-public:
-    AEntity();
+namespace Raytracer {
+    class AEntity : public IEntity {
+    public:
+        AEntity();
 
-    ~AEntity();
+        ~AEntity();
 
-protected:
-private:
+    protected:
+    private:
+    };
 };

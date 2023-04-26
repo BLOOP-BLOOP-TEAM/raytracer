@@ -7,13 +7,14 @@
 
 #pragma once
 
+namespace Raytracer {
+    class IEntity {
+    public:
+        IEntity();
 
-class IEntity {
-public:
-    IEntity();
+        ~IEntity();
 
-    ~IEntity();
-
-protected:
-private:
+    protected:
+    private:
+    };
 };

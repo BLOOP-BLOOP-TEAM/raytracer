@@ -7,13 +7,16 @@
 
 #pragma once
 
+#include "IPrimitive.hpp"
 
-class ILight {
-public:
-    ILight();
+namespace Raytracer {
+    class ILight {
+    public:
+        ILight();
 
-    ~ILight();
+        ~ILight();
 
-protected:
-private:
+    protected:
+    private:
+    };
 };

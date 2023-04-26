@@ -7,13 +7,10 @@
 
 #pragma once
 
-
-class Color {
-public:
-    Color();
-
-    ~Color();
-
-protected:
-private:
+namespace Component { ;
+    struct Color {
+        int r;
+        int g;
+        int b;
+    };
 };

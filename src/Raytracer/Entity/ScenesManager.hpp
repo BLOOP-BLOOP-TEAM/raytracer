@@ -7,13 +7,27 @@
 
 #pragma once
 
+#include <vector>
+#include <functional>
+#include <string>
+#include "Scenes.hpp"
 
-class ScenesManager {
-public:
-    ScenesManager();
+namespace Raytracer {
+    class ScenesManager {
+    public:
+        ScenesManager();
+        ~ScenesManager();
 
-    ~ScenesManager();
+        void addScene(Scenes &scene);
 
-protected:
-private:
+        int getSceneCount() const;
+
+        Scenes &getScene(int index) const;
+
+        Scenes &getScene(std::string name) const;
+
+    protected:
+    private:
+        std::vector<std::reference_wrapper<Scenes>> _scenes;
+    };
 };

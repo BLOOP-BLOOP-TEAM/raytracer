@@ -7,13 +7,16 @@
 
 #pragma once
 
+#include "IPrimitive.hpp"
 
-class ICam {
-public:
-    ICam();
+namespace Raytracer {
+    class ICam {
+    public:
+        ICam();
 
-    ~ICam();
+        ~ICam();
 
-protected:
-private:
+    protected:
+    private:
+    };
 };
