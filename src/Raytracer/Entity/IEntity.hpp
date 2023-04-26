@@ -7,6 +7,8 @@
 
 #pragma once
 
+
+
 namespace Raytracer {
     class IEntity {
     public:
@@ -16,5 +18,6 @@ namespace Raytracer {
 
     protected:
     private:
+
     };
 };

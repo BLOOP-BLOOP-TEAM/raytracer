@@ -7,11 +7,17 @@
 
 #pragma once
 
+#include "Vector3f.hpp"
+
 class Sphere {
     public:
         Sphere();
         ~Sphere();
+        //bool intersect (rayon)
 
     protected:
     private:
+        Vector3f _position;
+        float _radius;
+
 };

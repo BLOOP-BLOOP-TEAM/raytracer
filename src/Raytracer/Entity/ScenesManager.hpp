@@ -20,14 +20,10 @@ namespace Raytracer {
 
         void addScene(Scenes &scene);
 
-        int getSceneCount() const;
-
-        Scenes &getScene(int index) const;
-
-        Scenes &getScene(const std::string &name) const;
+        Scenes &getSceneActual() const;
 
     protected:
     private:
-        std::vector<std::unique_ptr<Scenes>> _scenes;
+        std::vector<std::shared_ptr<Scenes>> _scenes;
     };
 };
