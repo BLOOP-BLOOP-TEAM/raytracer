@@ -10,3 +10,23 @@
 Raytracer::AEntity::AEntity(const std::string &type, const Component::Vector3f &position) : _type(type), _position(position)
 {
 }
+
+void Raytracer::AEntity::translate(const Component::Vector3f &newPos)
+{
+
+}
+
+void Raytracer::AEntity::rotate(const Component::Vector3f &newRot)
+{
+
+}
+
+void Raytracer::AEntity::scale(const Component::Vector3f &newScale)
+{
+
+}
+
+Component::Vector3f Raytracer::AEntity::getPosition() const
+{
+    return (this->_position);
+}
