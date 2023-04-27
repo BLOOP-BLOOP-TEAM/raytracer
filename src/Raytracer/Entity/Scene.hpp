@@ -32,7 +32,7 @@ namespace Raytracer {
 
     protected:
     private:
-        std::vector<std::unique_ptr<IEntity>> _entities;
+        std::vector<std::shared_ptr<IEntity>> _entities;
         std::unique_ptr<Image> _image;
     };
 };

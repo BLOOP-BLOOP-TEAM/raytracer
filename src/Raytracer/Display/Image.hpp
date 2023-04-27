@@ -27,7 +27,7 @@ namespace Raytracer {
 
         void write_ppm(const std::string &filename) const;
 
-        void calculateImage(std::vector<std::unique_ptr<IEntity>> &entities);
+        void calculateImage(std::vector<std::shared_ptr<IEntity>> &entities);
 
     private:
         int width;
@@ -35,12 +35,12 @@ namespace Raytracer {
         static const int MAX_COLOR = 255;
         std::vector<std::vector<Component::Color>> pixels;
 
-        ACam& findCam(const std::vector<std::unique_ptr<IEntity>> &entities);
-        std::vector<std::reference_wrapper<ALight>> findLights(const std::vector<std::unique_ptr<IEntity>> &entities);
+        ACam& findCam(const std::vector<std::shared_ptr<IEntity>> &entities);
+        std::vector<std::shared_ptr<ALight>> findLights(const std::vector<std::shared_ptr<IEntity>> &entities);
 
-        Component::Vector3f getRayDirection(int x, int y, int screenWidth, int screenHeight, const ACam *camera);
+        Component::Vector3f getRayDirection(int x, int y, int screenWidth, int screenHeight);
         Component::Color castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
-                                 const std::vector<std::unique_ptr<IEntity>> &entities,
-                                 const std::vector<ALight*> &lights);
+                                 const std::vector<std::shared_ptr<IEntity>> &entities,
+                                 const std::vector<std::shared_ptr<ALight>> &lights);
     };
 }

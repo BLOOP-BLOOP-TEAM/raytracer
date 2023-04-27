@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Vector3f.hpp"
+#include "CompType.hpp"
 
 namespace Raytracer {
     class IEntity {
