@@ -11,6 +11,7 @@
 #include <string>
 #include <memory>
 #include "IEntity.hpp"
+#include "Image.hpp"
 
 namespace Raytracer {
     class Scene {
@@ -25,8 +26,13 @@ namespace Raytracer {
 
         IEntity &getEntity(const std::string &name) const;
 
+        void calculateImage();
+
+        Image &getImage() const;
+
     protected:
     private:
         std::vector<std::unique_ptr<IEntity>> _entities;
+        std::unique_ptr<Image> _image;
     };
 };

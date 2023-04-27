@@ -24,5 +24,6 @@ void Raytracer::Core::run()
     // Observe
     // draw
     // Display
+    // clear
     // }
 }

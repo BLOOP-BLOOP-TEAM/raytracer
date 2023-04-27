@@ -7,13 +7,25 @@
 
 #pragma once
 
+#include "Image.hpp"
+#include <SFML/Graphics.hpp>
+#include "Image.hpp"
 
+namespace Raytracer {
 class DisplayModule {
-public:
-    DisplayModule();
+    public:
+        DisplayModule(unsigned int width, unsigned int height, const std::string& title);
 
-    ~DisplayModule();
+        ~DisplayModule();
 
-protected:
-private:
-};
+        void update(const Image &image);
+        bool isOpen() const;
+
+    protected:
+    private:
+        unsigned int width;
+        unsigned int height;
+        sf::RenderWindow window;
+        sf::VertexArray pixels;
+    };
+}
