@@ -8,12 +8,13 @@
 #pragma once
 
 #include <string>
+#include "CompType.hpp"
 #include "IEntity.hpp"
 
 namespace Raytracer {
     class AEntity : public IEntity {
     public:
-        AEntity(const std::string &type, const Component::Vector3f &position);
+        AEntity(Raytracer::CompType type, const Component::Vector3f &position);
 
         ~AEntity() = default;
 
@@ -25,9 +26,11 @@ namespace Raytracer {
 
         Component::Vector3f getPosition() const final;
 
+        Raytracer::CompType getType() const;
+
     protected:
     private:
-        const std::string _type;
+        Raytracer::CompType _type;
         Component::Vector3f _position;
         Component::Vector3f _rotation;
     };
