@@ -12,3 +12,13 @@ Raytracer::APrimitive::APrimitive(const std::string &type, const Component::Vect
                                                                                                           position)
 {
 }
+
+bool Raytracer::APrimitive::intersect(Ray rayon)
+{
+    return (true);
+}
+
+void Raytracer::APrimitive::setMaterial(std::unique_ptr<IMaterial> material)
+{
+
+}

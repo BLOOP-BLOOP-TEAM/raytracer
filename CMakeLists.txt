@@ -8,7 +8,7 @@ project(
 
 ##############################################################################
 # Raytracer binary
-add_executable(raytracer src/Raytracer/Entity/IPrimitive.hpp)
+add_executable(raytracer)
 set_target_properties(raytracer PROPERTIES
         CXX_STANDARD 20
         COMPILE_FLAGS "-fno-gnu-unique"
@@ -21,7 +21,7 @@ add_custom_command(TARGET raytracer PRE_BUILD
 
 ##############################################################################
 # Plugin .so libs
-add_library(plugin_sphere SHARED src/Raytracer/Entity/IPrimitive.hpp)
+add_library(plugin_sphere SHARED)
 set_target_properties(plugin_sphere PROPERTIES
         CXX_STANDARD 20
         COMPILE_FLAGS "-fno-gnu-unique"
