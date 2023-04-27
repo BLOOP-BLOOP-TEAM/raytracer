@@ -11,11 +11,10 @@
 
 namespace Raytracer {
     class ICam {
-    public:
+        public:
+            virtual ~ICam() = default;
 
-        virtual ~ICam() = 0;
-
-    protected:
-    private:
+        protected:
+        private:
     };
 };

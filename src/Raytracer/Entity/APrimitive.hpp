@@ -16,7 +16,9 @@ namespace Raytracer {
     public:
         APrimitive(const std::string &type, const Component::Vector3f &position);
 
-        ~APrimitive();
+        ~APrimitive() = default;
+
+        bool intersect(Ray rayon) override;
 
         void setMaterial(std::unique_ptr<IMaterial> material) override;
 

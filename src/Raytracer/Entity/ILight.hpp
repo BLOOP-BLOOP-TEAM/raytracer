@@ -13,7 +13,7 @@ namespace Raytracer {
     class ILight {
     public:
 
-        virtual ~ILight() = 0;
+        virtual ~ILight() = default;
 
     protected:
     private:
