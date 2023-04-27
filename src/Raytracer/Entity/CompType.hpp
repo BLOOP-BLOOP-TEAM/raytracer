@@ -11,6 +11,6 @@ namespace Raytracer {
     enum class CompType {
         PRIMITIVE,
         LIGHT,
-        CAM
+        CAM,
     };
 };

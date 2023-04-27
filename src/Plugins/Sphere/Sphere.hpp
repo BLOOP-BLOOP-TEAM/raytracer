@@ -17,7 +17,7 @@ class Sphere {
 
     protected:
     private:
-        Vector3f _position;
+        Component::Vector3f _position;
         float _radius;
 
 };

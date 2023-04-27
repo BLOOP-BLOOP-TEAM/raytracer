@@ -7,16 +7,19 @@
 
 #pragma once
 
+#include <string>
 #include "IEntity.hpp"
 
 namespace Raytracer {
     class AEntity : public IEntity {
     public:
-        AEntity();
+        AEntity(const std::string &type, const Component::Vector3f &position);
 
-        ~AEntity();
+        ~AEntity() = default;
 
     protected:
     private:
+        const std::string _type;
+        Component::Vector3f _position;
     };
 };

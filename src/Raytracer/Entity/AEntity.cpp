@@ -6,3 +6,7 @@
 */
 
 #include "AEntity.hpp"
+
+Raytracer::AEntity::AEntity(const std::string &type, const Component::Vector3f &position) : _type(type), _position(position)
+{
+}

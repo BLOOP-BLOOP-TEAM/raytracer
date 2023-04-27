@@ -7,17 +7,19 @@
 
 #pragma once
 
+#include <string>
 #include "ICam.hpp"
 #include "AEntity.hpp"
 
 namespace Raytracer {
     class ACam : public ICam, public AEntity {
     public:
-        ACam();
+        ACam(const std::string &typeCam, const Component::Vector3f &position);
 
-        ~ACam();
+        ~ACam() = default;
 
     protected:
     private:
+        std::string _typeCam;
     };
 };

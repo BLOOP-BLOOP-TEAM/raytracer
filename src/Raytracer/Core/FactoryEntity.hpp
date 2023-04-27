@@ -15,15 +15,15 @@
 
 namespace Raytracer {
 
-    class Factory {
+    class FactoryEntity {
     public:
-        Factory();
+        FactoryEntity();
 
-        ~Factory() = default;
+        ~FactoryEntity() = default;
 
-        //IEntity &createEntity(LibConfig);
+        //IEntity &createEntity(const std::string &name, LibConfig);
 
-        void addCreator(std::string name, std::function<void()> func);
+        void addCreator(const std::string &name, std::function<void()> func);
 
 
     protected:

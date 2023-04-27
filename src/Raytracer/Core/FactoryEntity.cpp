@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** Raytracer
 ** File description:
-** Scenes
+** Factory
 */
 
-#include "Scenes.hpp"
+#include "FactoryEntity.hpp"

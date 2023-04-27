@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** Raytracer
 ** File description:
-** Scenes
+** Scene
 */
 
 #pragma once
@@ -13,11 +13,11 @@
 #include "IEntity.hpp"
 
 namespace Raytracer {
-    class Scenes {
+    class Scene {
     public:
-        Scenes();
+        Scene();
 
-        ~Scenes();
+        ~Scene();
 
         void addEntity(IEntity &entity);
 

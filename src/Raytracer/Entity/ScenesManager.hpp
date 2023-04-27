@@ -10,7 +10,7 @@
 #include <vector>
 #include <string>
 #include <memory>
-#include "Scenes.hpp"
+#include "Scene.hpp"
 
 namespace Raytracer {
     class ScenesManager {
@@ -18,12 +18,12 @@ namespace Raytracer {
         ScenesManager();
         ~ScenesManager();
 
-        void addScene(Scenes &scene);
+        void addScene(Scene &scene);
 
-        Scenes &getSceneActual() const;
+        Scene &getSceneActual() const;
 
     protected:
     private:
-        std::vector<std::shared_ptr<Scenes>> _scenes;
+        std::vector<std::shared_ptr<Scene>> _scenes;
     };
 };
