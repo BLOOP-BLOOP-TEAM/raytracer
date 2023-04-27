@@ -14,8 +14,6 @@
 namespace Raytracer {
     class IPrimitive {
     public:
-        IPrimitive();
-
         ~IPrimitive() = default;
 
         virtual bool intersect(Ray rayon) = 0;

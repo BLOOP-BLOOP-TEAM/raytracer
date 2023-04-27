@@ -13,6 +13,7 @@ namespace Raytracer {
     class IMaterial {
     public:
 
+        virtual ~IMaterial() = 0;
     protected:
     private:
         std::string type;
