@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** Raytracer
 ** File description:
-** DisplayModude
+** Factory
 */
 
-#include "DisplayModude.hpp"
+#include "FactoryEntity.hpp"

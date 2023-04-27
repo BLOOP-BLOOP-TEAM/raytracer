@@ -13,6 +13,8 @@ Raytracer::Core::Core() : _isRunning(true)
     // load config
     // build factory
     // build scene
+    // Calculate
+    // create ppm
 }
 
 void Raytracer::Core::run()
@@ -20,8 +22,8 @@ void Raytracer::Core::run()
     // while (_isRunning) {
     // Check event
     // Observe
-    // Calculate
     // draw
     // Display
+    // clear
     // }
 }

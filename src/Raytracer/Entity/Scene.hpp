@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** Raytracer
 ** File description:
-** Scenes
+** Scene
 */
 
 #pragma once
@@ -11,13 +11,14 @@
 #include <string>
 #include <memory>
 #include "IEntity.hpp"
+#include "Image.hpp"
 
 namespace Raytracer {
-    class Scenes {
+    class Scene {
     public:
-        Scenes();
+        Scene();
 
-        ~Scenes();
+        ~Scene();
 
         void addEntity(IEntity &entity);
 
@@ -25,8 +26,13 @@ namespace Raytracer {
 
         IEntity &getEntity(const std::string &name) const;
 
+        void calculateImage();
+
+        Image &getImage() const;
+
     protected:
     private:
-        std::vector<std::unique_ptr<IEntity>> _entities;
+        std::vector<std::shared_ptr<IEntity>> _entities;
+        std::unique_ptr<Image> _image;
     };
 };

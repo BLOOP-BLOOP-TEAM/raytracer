@@ -7,17 +7,24 @@
 
 #pragma once
 
+#include <string>
 #include "IPrimitive.hpp"
 #include "AEntity.hpp"
 
 namespace Raytracer {
     class APrimitive : public IPrimitive, public AEntity {
     public:
-        APrimitive();
+        APrimitive(const std::string &type, const Component::Vector3f &position);
 
-        ~APrimitive();
+        ~APrimitive() = default;
+
+        bool intersect(Ray rayon) override;
+
+        void setMaterial(std::unique_ptr<IMaterial> material) override;
 
     protected:
     private:
+        std::string _typePrimitive;
+        std::unique_ptr<IMaterial> _material;
     };
 };

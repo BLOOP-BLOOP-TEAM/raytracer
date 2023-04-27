@@ -2,17 +2,17 @@
 ** EPITECH PROJECT, 2023
 ** Raytracer
 ** File description:
-** DisplayModude
+** Api
 */
 
 #pragma once
 
 
-class DisplayModude {
+class Api {
 public:
-    DisplayModude();
+    Api();
 
-    ~DisplayModude();
+    ~Api();
 
 protected:
 private:

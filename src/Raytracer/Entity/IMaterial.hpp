@@ -2,19 +2,20 @@
 ** EPITECH PROJECT, 2023
 ** Raytracer
 ** File description:
-** Factory
+** IMaterial
 */
 
 #pragma once
 
+#include <string>
+
 namespace Raytracer {
-    class Factory {
+    class IMaterial {
     public:
-        Factory();
 
-        ~Factory();
-
+        virtual ~IMaterial() = default;
     protected:
     private:
+        std::string type;
     };
 };

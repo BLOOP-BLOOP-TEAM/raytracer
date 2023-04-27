@@ -8,13 +8,15 @@
 #pragma once
 
 #include "IPrimitive.hpp"
+#include "Color.hpp"
 
 namespace Raytracer {
     class ILight {
     public:
-        ILight();
+        virtual ~ILight() = default;
 
-        ~ILight();
+        virtual const Component::Color& getColor() const = 0;
+        virtual float getIntensity() const = 0;
 
     protected:
     private:

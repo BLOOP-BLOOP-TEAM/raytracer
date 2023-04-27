@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** Raytracer
 ** File description:
-** Factory
+** FactoryMaterial
 */
 
-#include "Factory.hpp"
+#include "FactoryMaterial.hpp"

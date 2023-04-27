@@ -7,14 +7,20 @@
 
 #pragma once
 
+#include <memory>
+#include "Ray.hpp"
+#include "IMaterial.hpp"
+
 namespace Raytracer {
     class IPrimitive {
     public:
-        IPrimitive();
+        ~IPrimitive() = default;
 
-        ~IPrimitive();
+        virtual bool intersect(Ray rayon) = 0;
 
+        virtual void setMaterial(std::unique_ptr<IMaterial> material) = 0;
     protected:
     private:
+
     };
 };

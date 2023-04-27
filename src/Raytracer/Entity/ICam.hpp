@@ -8,15 +8,18 @@
 #pragma once
 
 #include "IPrimitive.hpp"
+#include "Vector3f.hpp"
 
 namespace Raytracer {
     class ICam {
     public:
-        ICam();
+        virtual ~ICam() = default;
 
-        ~ICam();
+        virtual float getFieldOfView() const = 0;
+        virtual float getAspectRatio() const = 0;
 
     protected:
     private:
     };
 };
+
