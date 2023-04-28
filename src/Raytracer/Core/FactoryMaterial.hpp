@@ -26,5 +26,5 @@ public:
 
 protected:
 private:
-    std::map<std::string, std::function<void()>> _map;
+    std::map<std::string, std::function<void()>> _materials;
 };
