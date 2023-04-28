@@ -12,23 +12,24 @@
 #include <memory>
 #include "IEntity.hpp"
 #include "Image.hpp"
+#include "EventManager.hpp"
 
 namespace Raytracer {
     class Scene {
     public:
         Scene();
 
-        ~Scene();
+        ~Scene() = default;
 
-        void addEntity(IEntity &entity);
+        void addEntity(std::shared_ptr<IEntity> entity);
 
-        IEntity &getEntity(int index) const;
-
-        IEntity &getEntity(const std::string &name) const;
+        [[nodiscard]] IEntity &getEntity(int index) const;
 
         void calculateImage();
 
-        Image &getImage() const;
+        [[nodiscard]] Image &getImage() const;
+
+        void update(EventManager &eventManager);
 
     protected:
     private:

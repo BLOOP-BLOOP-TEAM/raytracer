@@ -16,3 +16,22 @@ void Raytracer::Scene::calculateImage()
 {
     _image->calculateImage(_entities);
 }
+
+void Raytracer::Scene::addEntity(std::shared_ptr<IEntity> entity)
+{
+    _entities.push_back(entity);
+}
+
+Raytracer::IEntity &Raytracer::Scene::getEntity(int index) const
+{
+    return *_entities[index];
+}
+
+Raytracer::Image &Raytracer::Scene::getImage() const
+{
+    return *_image;
+}
+
+void Raytracer::Scene::update(Raytracer::EventManager &eventManager)
+{
+}
