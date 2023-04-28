@@ -8,7 +8,6 @@ project(
 
 ##############################################################################
 # Raytracer binary
-add_executable(raytracer src/Raytracer/Api.hpp)
 set_target_properties(raytracer PROPERTIES
         CXX_STANDARD 20
         COMPILE_FLAGS "-fno-gnu-unique"

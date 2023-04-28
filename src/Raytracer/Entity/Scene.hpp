@@ -19,7 +19,7 @@ namespace Raytracer {
     public:
         Scene();
 
-        ~Scene() = default;
+        ~Scene();
 
         void addEntity(std::shared_ptr<IEntity> entity);
 

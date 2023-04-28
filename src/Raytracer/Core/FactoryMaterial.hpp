@@ -21,10 +21,10 @@ public:
 
     //IMaterial &createEntity(const std::string &name, LibConfig);
 
-    void addCreator(const std::string &name, std::function<void()> func);
+    void addCreator(const std::string &name, std::function<void()> funcCreate, std::function<void()> funcDestroy);
 
 
 protected:
 private:
-    std::map<std::string, std::function<void()>> _materials;
+    std::map<std::string, std::pair<std::function<void()>, std::function<void()>>> _materials;
 };

@@ -12,6 +12,11 @@ Raytracer::Scene::Scene() : _image(std::make_unique<Image>(1920, 1080))
 {
 }
 
+Raytracer::Scene::~Scene()
+{
+    
+}
+
 void Raytracer::Scene::calculateImage()
 {
     _image->calculateImage(_entities);
@@ -24,6 +29,8 @@ void Raytracer::Scene::addEntity(std::shared_ptr<IEntity> entity)
 
 Raytracer::IEntity &Raytracer::Scene::getEntity(int index) const
 {
+    if (index < 0 || index >= _entities.size())
+        throw std::out_of_range("Index out of range");
     return *_entities[index];
 }
 
