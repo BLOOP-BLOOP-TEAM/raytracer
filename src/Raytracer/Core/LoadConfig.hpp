@@ -7,14 +7,17 @@
 
 #pragma once
 
+#include <string>
+
 namespace Raytracer {
     class LoadConfig {
-    public:
-        LoadConfig();
+        public:
+            LoadConfig() = default;
+            ~LoadConfig() = default;
 
-        ~LoadConfig();
+            int loadConfigFile(const std::string &path);
 
-    protected:
-    private:
+        protected:
+        private:
     };
-};
+}; // namespace Raytracer
