@@ -73,11 +73,15 @@ void Raytracer::LoadConfig::loadPluginType(const std::string &type, const libcon
         std::cerr << "configLoader: loadPlugintypes: plugin type not found" << std::endl;
         return;
     }
-//    _factories[type]->
+    _factories[type]->createEntity(type, root);
 }
 
 void Raytracer::LoadConfig::loadPrimitives(const libconfig::Setting &root)
 {
+    if (_factories.find(PRIMITIVES) == _factories.end()) {
+        std::cerr << "configLoader: loadPrimitives: plugin type not found" << std::endl;
+        return;
+    }
     try {
         const libconfig::Setting &primitives = root[PRIMITIVES];
         int count = primitives.getLength();
@@ -85,7 +89,7 @@ void Raytracer::LoadConfig::loadPrimitives(const libconfig::Setting &root)
         for (int i = 0; i < count; i++) {
             const libconfig::Setting &primitive = primitives[i];
             std::cout << primitive.getName() << std::endl << std::endl;
-//            _factories[PRIMITIVES]->exec(primitive.getName(), primitive);
+            _factories[PRIMITIVES]->createEntity(primitive.getName(), primitive);
         }
     } catch (const libconfig::SettingNotFoundException &nfex) {
         // Ignore.
