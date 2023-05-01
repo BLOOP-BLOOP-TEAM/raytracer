@@ -7,10 +7,12 @@
 
 #pragma once
 
-namespace Component { ;
+namespace Component {
     struct Color {
-        int r;
-        int g;
-        int b;
+        int r = 0;
+        int g = 0;
+        int b = 0;
+        Color() : r(0), g(0), b(0) {};
+        Color(int red, int green, int blue) : r(red), g(green), b(blue) {};
     };
 };
