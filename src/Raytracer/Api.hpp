@@ -21,11 +21,11 @@ extern "C"
 {
     enum LibType { ENTITY, MATERIAL };
 
-    EXPORT Raytracer::IEntity *CreateEntity(libconfig::Setting &setting);
+    EXPORT Raytracer::IEntity *CreateEntity(const libconfig::Setting &setting);
 
     EXPORT void destroyEntity(Raytracer::IEntity *entity);
 
-    EXPORT Raytracer::IMaterial *CreateMaterial(libconfig::Setting &setting);
+    EXPORT Raytracer::IMaterial *CreateMaterial(const libconfig::Setting &setting);
 
     EXPORT void destroyMaterial(Raytracer::IMaterial *material);
 

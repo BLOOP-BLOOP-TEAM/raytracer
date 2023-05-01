@@ -7,14 +7,25 @@
 
 #pragma once
 
+#include <string>
+#include <memory>
+#include <map>
+#include <libconfig.h++>
+#include "FactoryEntity.hpp"
+
 namespace Raytracer {
     class LoadConfig {
-    public:
-        LoadConfig();
+        public:
+            LoadConfig();
+            ~LoadConfig() = default;
 
-        ~LoadConfig();
+            void loadConfigFolder();
+        protected:
+        private:
+            void loadConfigFile(const std::string &path);
+            void loadPluginType(const std::string &type, const libconfig::Setting &root);
+            void loadPrimitives(const libconfig::Setting &root);
 
-    protected:
-    private:
+            std::map<std::string, std::shared_ptr<Raytracer::FactoryEntity>> _factories;
     };
-};
+}; // namespace Raytracer

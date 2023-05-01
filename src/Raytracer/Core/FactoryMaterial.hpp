@@ -24,10 +24,10 @@ public:
 
     void destroyMaterial(Raytracer::IMaterial &material);
 
-    void addCreator(const std::string &name, std::function<Raytracer::IMaterial *(libconfig::Setting &)> funcCreate, std::function<void(Raytracer::IMaterial *material)> funcDestroy);
+    void addCreator(const std::string &name, std::function<Raytracer::IMaterial *(const libconfig::Setting &)> funcCreate, std::function<void(Raytracer::IMaterial *material)> funcDestroy);
 
 
 protected:
 private:
-    std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(libconfig::Setting &)>, std::function<void(Raytracer::IMaterial *material)>>> _materials;
+    std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(const libconfig::Setting &)>, std::function<void(Raytracer::IMaterial *material)>>> _materials;
 };

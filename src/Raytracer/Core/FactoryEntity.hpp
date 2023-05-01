@@ -18,19 +18,19 @@ namespace Raytracer {
 
     class FactoryEntity {
     public:
-        FactoryEntity();
+        FactoryEntity() = default;
 
         ~FactoryEntity() = default;
 
-        IEntity *createEntity(const std::string &name, libconfig::Setting &setting);
+        IEntity *createEntity(const std::string &name, const libconfig::Setting &setting);
 
         void destroyEntity(IEntity *entity);
 
-        void addCreator(const std::string &name, std::function<Raytracer::IEntity *(libconfig::Setting &)> funcCreate, std::function<void(Raytracer::IEntity *entity)> funcDestroy);
+        void addCreator(const std::string &name, std::function<Raytracer::IEntity *(const libconfig::Setting &)> funcCreate, std::function<void(Raytracer::IEntity *entity)> funcDestroy);
 
 
     protected:
     private:
-        std::map<std::string, std::pair<std::function<Raytracer::IEntity *(libconfig::Setting &)>, std::function<void(Raytracer::IEntity *entity)>>> _entities;
+        std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const libconfig::Setting &)>, std::function<void(Raytracer::IEntity *entity)>>> _entities;
     };
 };
