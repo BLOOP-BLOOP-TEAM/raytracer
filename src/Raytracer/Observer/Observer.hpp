@@ -17,15 +17,17 @@ class Observer {
     public:
         Observer(std::vector<std::string> allScenes = {});
 
-        ~Observer();
+        ~Observer() = default;
 
         void checkEditedFiles();
 
-        void notify(std::string path);
+        void notify(const std::string &path);
 
-        void subscribe(std::string path);
+        void subscribe(const std::string &path);
 
-        std::time_t getTimeStamp(std::string path);
+        void unsubscribe(const std::string &path);
+
+        std::time_t getTimeStamp(const std::string &path);
 
     private:
         std::vector<std::string> _allSubScenes;

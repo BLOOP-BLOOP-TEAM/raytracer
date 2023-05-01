@@ -16,14 +16,32 @@ Observer::Observer(const std::vector<std::string> allScenes) {
         subscribe(allScenes[i]);
 }
 
-Observer::~Observer() {}
-
-void Observer::subscribe(std::string path) {
+void Observer::subscribe(const std::string &path) {
+    if (std::find(_allSubScenes.begin(), _allSubScenes.end(), path) != _allSubScenes.end())
+        return;
     _allSubScenes.push_back(path);
     _lastUpdates.push_back(getTimeStamp(path));
 }
 
-std::time_t Observer::getTimeStamp(std::string path) {
+void Observer::unsubscribe(const std::string &path) {
+    auto it = std::find(_allSubScenes.begin(), _allSubScenes.end(), path);
+    size_t index = 0;
+
+    if (it != _allSubScenes.end()) {
+        index = it - _allSubScenes.begin();
+        _allSubScenes.erase(_allSubScenes.begin() + index);
+        _lastUpdates.erase(_lastUpdates.begin() + index);
+        // appelle de la fonction qui détruit la scène
+    }
+}
+
+std::time_t Observer::getTimeStamp(const std::string &path) {
+    if (!std::filesystem::exists(path)) {
+        std::cout << "Delete la scene" << std::endl;
+        unsubscribe(path);
+        return -1;
+    }
+
     std::filesystem::file_time_type lastWriteTime = std::filesystem::last_write_time(path);
     auto timePoint_lastWriteTime = std::chrono::time_point_cast<std::chrono::system_clock::duration>(lastWriteTime - std::filesystem::file_time_type::clock::now() + std::chrono::system_clock::now());
     std::time_t timeStamp = std::chrono::system_clock::to_time_t(timePoint_lastWriteTime);
@@ -31,7 +49,7 @@ std::time_t Observer::getTimeStamp(std::string path) {
     return timeStamp;
 }
 
-void Observer::notify(std::string path)
+void Observer::notify(const std::string &path)
 {
     int index = 0;
     // appelle de la fonction qui load la scène
@@ -53,6 +71,8 @@ void Observer::checkEditedFiles() {
         std::string path = _allSubScenes[i];
         std::time_t timeStamp = getTimeStamp(path);
 
+        if (timeStamp == -1)
+            return;
         if (timeStamp > _lastUpdates[i])
             filesStatus.push_back(true);
         else
