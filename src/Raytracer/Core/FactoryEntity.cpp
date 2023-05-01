@@ -6,3 +6,8 @@
 */
 
 #include "FactoryEntity.hpp"
+
+Raytracer::IEntity *Raytracer::FactoryEntity::createEntity(const std::string &name, const libconfig::Setting &setting)
+{
+    return (nullptr);
+}
