@@ -7,6 +7,7 @@
 
 #include "Ray.hpp"
 
-Raytracer::Ray::Ray(Vector3f origin, Vector3f direction) : origin(origin), direction(direction)
+Raytracer::Ray::Ray(Component::Vector3f origin, Component::Vector3f direction) : origin(origin), direction(direction)
 {
+
 }

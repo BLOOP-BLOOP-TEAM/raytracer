@@ -14,13 +14,17 @@
 namespace Raytracer {
     class APrimitive : public IPrimitive, public AEntity {
     public:
-        APrimitive(const std::string &type, const Component::Vector3f &position);
+        APrimitive(std::string type, const Component::Vector3f &position);
 
-        ~APrimitive() = default;
+        ~APrimitive() override = default;
 
         bool intersect(Ray rayon) override;
 
         void setMaterial(std::unique_ptr<IMaterial> material) override;
+
+        [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
+
+        [[nodiscard]] Component::Color getColor(const Component::Vector3f &hit_point) const override;
 
     protected:
     private:
