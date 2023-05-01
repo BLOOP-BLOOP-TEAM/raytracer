@@ -19,6 +19,14 @@ add_custom_command(TARGET raytracer PRE_BUILD
         ${CMAKE_SOURCE_DIR}/plugins $<TARGET_FILE_DIR:raytracer>/plugins
         )
 
+# add libconfig++ and SFML
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBCONFIG++ REQUIRED IMPORTED_TARGET libconfig++)
+find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+
+
+target_link_libraries(raytracer PRIVATE sfml-graphics sfml-window sfml-system PkgConfig::LIBCONFIG++)
+
 ##############################################################################
 # Plugin .so libs
 add_library(plugin_sphere SHARED)

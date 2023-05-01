@@ -17,7 +17,7 @@ namespace Raytracer {
 
     class FactoryEntity {
     public:
-        FactoryEntity();
+        FactoryEntity() = default;
 
         ~FactoryEntity() = default;
 
