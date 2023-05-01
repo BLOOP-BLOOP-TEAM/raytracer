@@ -11,13 +11,15 @@ Raytracer::ScenesManager::ScenesManager() : _sceneActual(0)
 {
 }
 
-void Raytracer::ScenesManager::addScene(std::shared_ptr<Scene> scene)
+void Raytracer::ScenesManager::addScene(std::unique_ptr<Scene> scene)
 {
-    _scenes.push_back(scene);
+    _scenes.push_back(std::move(scene));
 }
 
 Raytracer::Scene &Raytracer::ScenesManager::getSceneActual() const
 {
+    if (_sceneActual < 0 || _sceneActual >= _scenes.size())
+        throw std::runtime_error("Scene actual is not valid");
     return *_scenes[_sceneActual];
 }
 

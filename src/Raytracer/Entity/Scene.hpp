@@ -21,7 +21,7 @@ namespace Raytracer {
 
         ~Scene();
 
-        void addEntity(std::shared_ptr<IEntity> entity);
+        void addEntity(IEntity *entity);
 
         [[nodiscard]] IEntity &getEntity(int index) const;
 
@@ -33,7 +33,7 @@ namespace Raytracer {
 
     protected:
     private:
-        std::vector<std::shared_ptr<IEntity>> _entities;
+        std::vector<IEntity *> _entities;
         std::unique_ptr<Image> _image;
     };
 };

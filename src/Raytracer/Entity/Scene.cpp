@@ -14,7 +14,6 @@ Raytracer::Scene::Scene() : _image(std::make_unique<Image>(1920, 1080))
 
 Raytracer::Scene::~Scene()
 {
-    
 }
 
 void Raytracer::Scene::calculateImage()
@@ -22,7 +21,7 @@ void Raytracer::Scene::calculateImage()
     _image->calculateImage(_entities);
 }
 
-void Raytracer::Scene::addEntity(std::shared_ptr<IEntity> entity)
+void Raytracer::Scene::addEntity(IEntity *entity)
 {
     _entities.push_back(entity);
 }

@@ -19,9 +19,9 @@ namespace Raytracer {
         ScenesManager();
         ~ScenesManager() = default;
 
-        void addScene(std::shared_ptr<Scene> scene);
+        void addScene(std::unique_ptr<Scene> scene);
 
-        Scene &getSceneActual() const;
+        [[nodiscard]] Scene &getSceneActual() const;
 
         void setSceneActual(int scene);
 
@@ -29,7 +29,7 @@ namespace Raytracer {
 
     protected:
     private:
-        std::vector<std::shared_ptr<Scene>> _scenes;
+        std::vector<std::unique_ptr<Scene>> _scenes;
         int _sceneActual;
     };
 };
