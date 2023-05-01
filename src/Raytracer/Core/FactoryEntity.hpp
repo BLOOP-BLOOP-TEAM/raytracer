@@ -22,7 +22,9 @@ namespace Raytracer {
 
         ~FactoryEntity() = default;
 
-        //IEntity &createEntity(const std::string &name, LibConfig);
+        IEntity *createEntity(const std::string &name, libconfig::Setting &setting);
+
+        void destroyEntity(IEntity *entity);
 
         void addCreator(const std::string &name, std::function<Raytracer::IEntity *(libconfig::Setting &)> funcCreate, std::function<void(Raytracer::IEntity *entity)> funcDestroy);
 

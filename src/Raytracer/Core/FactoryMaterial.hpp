@@ -10,6 +10,7 @@
 #include <map>
 #include <functional>
 #include <string>
+#include <libconfig.h++>
 #include "IMaterial.hpp"
 
 
@@ -19,12 +20,14 @@ public:
 
     ~FactoryMaterial() = default;
 
-    //IMaterial &createEntity(const std::string &name, LibConfig);
+    Raytracer::IMaterial &createMaterial(const std::string &name, libconfig::Setting &);
 
-    void addCreator(const std::string &name, std::function<void()> funcCreate, std::function<void()> funcDestroy);
+    void destroyMaterial(Raytracer::IMaterial &material);
+
+    void addCreator(const std::string &name, std::function<Raytracer::IMaterial *(libconfig::Setting &)> funcCreate, std::function<void(Raytracer::IMaterial *material)> funcDestroy);
 
 
 protected:
 private:
-    std::map<std::string, std::pair<std::function<void()>, std::function<void()>>> _materials;
+    std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(libconfig::Setting &)>, std::function<void(Raytracer::IMaterial *material)>>> _materials;
 };
