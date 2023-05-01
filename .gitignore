@@ -33,3 +33,6 @@
 .clang-format
 .idea/
 cmake-build-debug/
+
+# Makefile
+Makefile
