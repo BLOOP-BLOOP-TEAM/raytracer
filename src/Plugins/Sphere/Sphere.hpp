@@ -7,17 +7,23 @@
 
 #pragma once
 
+#include "APrimitive.hpp"
+#include "Ray.hpp"
 #include "Vector3f.hpp"
 
-class Sphere {
+namespace Plugin {
+class Sphere : public Raytracer::APrimitive {
     public:
-        Sphere();
-        ~Sphere();
-        //bool intersect (rayon)
+        Sphere(const Component::Vector3f &position, float radius);
+
+        ~Sphere() = default;
+
+        float intersect(const Raytracer::Ray &ray) override;
+
+        Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
 
     protected:
     private:
-        Component::Vector3f _position;
         float _radius;
-
-};
+    };
+}

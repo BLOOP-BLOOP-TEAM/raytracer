@@ -15,9 +15,9 @@ Raytracer::APrimitive::APrimitive(std::string type, const Component::Vector3f &p
 {
 }
 
-bool Raytracer::APrimitive::intersect(Ray rayon)
+float Raytracer::APrimitive::intersect(const Ray &ray)
 {
-    return true;
+    return 0;
 }
 
 void Raytracer::APrimitive::setMaterial(std::unique_ptr<IMaterial> material)
