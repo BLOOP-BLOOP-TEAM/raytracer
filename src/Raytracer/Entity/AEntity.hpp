@@ -29,9 +29,9 @@ namespace Raytracer {
         Raytracer::CompType getType() const;
 
     protected:
+        Component::Vector3f _position;
     private:
         Raytracer::CompType _type;
-        Component::Vector3f _position;
         Component::Vector3f _rotation;
     };
 };
