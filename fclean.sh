@@ -1,3 +1,5 @@
+#!/bin/bash
+
 [ -f Makefile ] && echo "Running make clean..." && make clean
 
 echo "Finding files..."
