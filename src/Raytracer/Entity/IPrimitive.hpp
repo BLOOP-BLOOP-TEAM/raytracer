@@ -18,7 +18,7 @@ namespace Raytracer {
     public:
         ~IPrimitive() = default;
 
-        virtual bool intersect(Ray rayon) = 0;
+        virtual float intersect(const Ray &ray) = 0;
 
         virtual void setMaterial(std::unique_ptr<IMaterial> material) = 0;
 

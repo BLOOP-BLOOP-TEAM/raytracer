@@ -16,7 +16,7 @@ namespace Raytracer {
     public:
         AEntity(Raytracer::CompType type, const Component::Vector3f &position);
 
-        ~AEntity() = default;
+        ~AEntity() override = default;
 
         void translate(const Component::Vector3f &newPos) final;
 
@@ -24,7 +24,7 @@ namespace Raytracer {
 
         void scale(const Component::Vector3f &newScale) final;
 
-        Component::Vector3f getPosition() const final;
+        [[nodiscard]] Component::Vector3f getPosition() const final;
 
         Raytracer::CompType getType() const;
 
