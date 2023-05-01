@@ -20,6 +20,8 @@ Raytracer::LoadConfig::LoadConfig()
     _factories[PRIMITIVES] = std::make_shared<Raytracer::FactoryEntity>();
     _factories[CAMERA] = std::make_shared<Raytracer::FactoryEntity>();
     _factories[LIGHTS] = std::make_shared<Raytracer::FactoryEntity>();
+
+    loadConfigFolder();
 }
 
 void Raytracer::LoadConfig::loadConfigFolder()
