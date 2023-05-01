@@ -19,13 +19,16 @@ class DisplayModule {
         ~DisplayModule();
 
         void update(const Image &image);
+
         bool isOpen() const;
+
+        sf::RenderWindow &getWindow();
 
     protected:
     private:
-        unsigned int width;
-        unsigned int height;
-        sf::RenderWindow window;
-        sf::VertexArray pixels;
+        unsigned int _width;
+        unsigned int _height;
+        sf::RenderWindow _window;
+        sf::VertexArray _pixels;
     };
 }

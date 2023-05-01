@@ -7,6 +7,10 @@
 
 #pragma once
 
+#include "DisplayModule.hpp"
+#include "EventManager.hpp"
+#include "ScenesManager.hpp"
+
 namespace Raytracer {
     class Core {
     public:
@@ -17,6 +21,9 @@ namespace Raytracer {
 
     protected:
     private:
+        ScenesManager _scenesManager;
+        DisplayModule _displayModule;
+        EventManager _eventManager;
         bool _isRunning;
     };
 };
