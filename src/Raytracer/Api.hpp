@@ -7,13 +7,29 @@
 
 #pragma once
 
+#include "IEntity.hpp"
+#include "IMaterial.hpp"
+#include <libconfig.h++>
 
-class Api {
-public:
-    Api();
+#ifdef _WIN32
+    #define EXPORT __declspec(dllexport)
+#else
+    #define EXPORT
+#endif
 
-    ~Api();
+extern "C"
+{
+    enum LibType { ENTITY, MATERIAL };
 
-protected:
-private:
-};
+    EXPORT Raytracer::IEntity *CreateEntity(libconfig::Setting &setting);
+
+    EXPORT void destroyEntity(Raytracer::IEntity *entity);
+
+    EXPORT Raytracer::IMaterial *CreateMaterial(libconfig::Setting &setting);
+
+    EXPORT void destroyMaterial(Raytracer::IMaterial *material);
+
+    EXPORT const char *getName();
+
+    EXPORT LibType getType();
+}

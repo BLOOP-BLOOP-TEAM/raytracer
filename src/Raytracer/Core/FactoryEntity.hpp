@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <functional>
+#include <libconfig.h++>
 #include "IEntity.hpp"
 
 namespace Raytracer {
@@ -21,13 +22,15 @@ namespace Raytracer {
 
         ~FactoryEntity() = default;
 
-        //IEntity &createEntity(const std::string &name, LibConfig);
+        IEntity *createEntity(const std::string &name, libconfig::Setting &setting);
 
-        void addCreator(const std::string &name, std::function<void()> func);
+        void destroyEntity(IEntity *entity);
+
+        void addCreator(const std::string &name, std::function<Raytracer::IEntity *(libconfig::Setting &)> funcCreate, std::function<void(Raytracer::IEntity *entity)> funcDestroy);
 
 
     protected:
     private:
-        std::map<std::string, std::function<void()>> _map;
+        std::map<std::string, std::pair<std::function<Raytracer::IEntity *(libconfig::Setting &)>, std::function<void(Raytracer::IEntity *entity)>>> _entities;
     };
 };
