@@ -9,17 +9,15 @@
 #include <filesystem>
 #include "LoadConfig.hpp"
 
-static const std::string FOLDER_NAME = "Scenes";
-
-static const std::string PRIMITIVES = "primitives";
-static const std::string CAMERA = "camera";
-static const std::string LIGHTS = "lights";
+static const std::map<std::string, std::shared_ptr<Raytracer::FactoryEntity>> Factories = {
+    {PRIMITIVES, std::make_shared<Raytracer::FactoryEntity>()},
+    {CAMERA, std::make_shared<Raytracer::FactoryEntity>()},
+    {LIGHTS, std::make_shared<Raytracer::FactoryEntity>()}
+};
 
 Raytracer::LoadConfig::LoadConfig()
 {
-    _factories[PRIMITIVES] = std::make_shared<Raytracer::FactoryEntity>();
-    _factories[CAMERA] = std::make_shared<Raytracer::FactoryEntity>();
-    _factories[LIGHTS] = std::make_shared<Raytracer::FactoryEntity>();
+    loadConfigFolder();
 }
 
 void Raytracer::LoadConfig::loadConfigFolder()
@@ -69,16 +67,16 @@ void Raytracer::LoadConfig::loadConfigFile(const std::string &path)
 
 void Raytracer::LoadConfig::loadPluginType(const std::string &type, const libconfig::Setting &root)
 {
-    if (_factories.find(type) == _factories.end()) {
+    if (Factories.find(type) == Factories.end()) {
         std::cerr << "configLoader: loadPlugintypes: plugin type not found" << std::endl;
         return;
     }
-    _factories[type]->createEntity(type, root);
+    Factories.find(type)->second->createEntity(type, root);
 }
 
 void Raytracer::LoadConfig::loadPrimitives(const libconfig::Setting &root)
 {
-    if (_factories.find(PRIMITIVES) == _factories.end()) {
+    if (Factories.find(PRIMITIVES) == Factories.end()) {
         std::cerr << "configLoader: loadPrimitives: plugin type not found" << std::endl;
         return;
     }
@@ -89,7 +87,7 @@ void Raytracer::LoadConfig::loadPrimitives(const libconfig::Setting &root)
         for (int i = 0; i < count; i++) {
             const libconfig::Setting &primitive = primitives[i];
             std::cout << primitive.getName() << std::endl << std::endl;
-            _factories[PRIMITIVES]->createEntity(primitive.getName(), primitive);
+            Factories.find(PRIMITIVES)->second->createEntity(primitive.getName(), primitive);
         }
     } catch (const libconfig::SettingNotFoundException &nfex) {
         // Ignore.
