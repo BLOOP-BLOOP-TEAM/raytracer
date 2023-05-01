@@ -12,6 +12,7 @@
 #include <memory>
 #include "IEntity.hpp"
 #include "Image.hpp"
+#include "EventManager.hpp"
 
 namespace Raytracer {
     class Scene {
@@ -20,19 +21,19 @@ namespace Raytracer {
 
         ~Scene();
 
-        void addEntity(IEntity &entity);
+        void addEntity(IEntity *entity);
 
-        IEntity &getEntity(int index) const;
-
-        IEntity &getEntity(const std::string &name) const;
+        [[nodiscard]] IEntity &getEntity(int index) const;
 
         void calculateImage();
 
-        Image &getImage() const;
+        [[nodiscard]] Image &getImage() const;
+
+        void update(EventManager &eventManager);
 
     protected:
     private:
-        std::vector<std::shared_ptr<IEntity>> _entities;
+        std::vector<IEntity *> _entities;
         std::unique_ptr<Image> _image;
     };
 };

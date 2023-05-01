@@ -34,26 +34,33 @@ void Raytracer::Image::write_ppm(const std::string &filename) const
     file.close();
 }
 
-Raytracer::ACam& Raytracer::Image::findCam(const std::vector<std::shared_ptr<IEntity>> &entities)
+Raytracer::ACam& Raytracer::Image::findCam(const std::vector<IEntity *> &entities)
 {
+    Raytracer::ACam* cam = nullptr;
+
     for (const auto &entity : entities) {
         if (entity->getType() == Raytracer::CompType::CAM) {
-            return *std::dynamic_pointer_cast<ACam>(entity);
+            cam = static_cast<Raytracer::ACam*>(entity);
+            return *cam;
         }
     }
     throw std::runtime_error("No camera found in the scene.");
 }
 
-std::vector<std::shared_ptr<Raytracer::ALight>> Raytracer::Image::findLights(const std::vector<std::shared_ptr<IEntity>> &entities)
+std::vector<std::shared_ptr<Raytracer::ALight>> Raytracer::Image::findLights(const std::vector<IEntity *> &entities)
 {
-    std::vector<std::shared_ptr<ALight>> lights;
+    std::vector<std::shared_ptr<ALight>> lights = {};
+    Raytracer::ALight* light = nullptr;
+
     for (const auto &entity : entities) {
         if (entity->getType() == Raytracer::CompType::LIGHT) {
-            lights.push_back(std::dynamic_pointer_cast<ALight>(entity));
+            light = static_cast<Raytracer::ALight*>(entity);
+            lights.push_back(std::shared_ptr<ALight>(light));
         }
     }
     return lights;
 }
+
 Component::Vector3f Raytracer::Image::getRayDirection(int x, int y, int screenWidth, int screenHeight)
 {
     float aspect_ratio = (float)screenWidth / (float)screenHeight;
@@ -65,7 +72,7 @@ Component::Vector3f Raytracer::Image::getRayDirection(int x, int y, int screenWi
 }
 
 Component::Color Raytracer::Image::castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
-                         const std::vector<std::shared_ptr<Raytracer::IEntity>> &entities,
+                         const std::vector<IEntity *> &entities,
                          const std::vector<std::shared_ptr<Raytracer::ALight>> &lights)
                          {
     // Vous devrez implémenter la logique pour lancer un rayon à partir de l'origine dans la direction donnée,
@@ -74,7 +81,8 @@ Component::Color Raytracer::Image::castRay(const Component::Vector3f &origin, co
     return Component::Color(128, 128, 128);
 }
 
-void Raytracer::Image::calculateImage(std::vector<std::shared_ptr<IEntity>> &entities) {
+void Raytracer::Image::calculateImage(std::vector<IEntity *> &entities)
+{
     try {
         ACam& camera = findCam(entities);
         std::vector<std::shared_ptr<ALight>> lights = findLights(entities);
