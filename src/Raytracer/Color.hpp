@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <algorithm>
+
 namespace Component {
     struct Color {
         int r = 0;
