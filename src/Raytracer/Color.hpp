@@ -28,11 +28,14 @@ namespace Component {
             return Component::Color(r * scalar, g * scalar, b * scalar);
         }
 
-        Component::Color& operator+(const Component::Color &other) {
-            r += other.r;
-            g += other.g;
-            b += other.b;
-            return *this;
+
+        Component::Color operator*(const Component::Color &other) const {
+            return Component::Color(r * other.r, g * other.g, b * other.b);
         }
+
+        Component::Color operator+(const Component::Color &other) const {
+            return Component::Color(r + other.r, g + other.g, b + other.b);
+        }
+
     };
 };

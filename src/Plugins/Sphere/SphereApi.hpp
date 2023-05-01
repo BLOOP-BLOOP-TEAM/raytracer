@@ -7,9 +7,7 @@
 
 #pragma once
 
-
 #include "IEntity.hpp"
-#include "IMaterial.hpp"
 #include <libconfig.h++>
 
 namespace Plugin {

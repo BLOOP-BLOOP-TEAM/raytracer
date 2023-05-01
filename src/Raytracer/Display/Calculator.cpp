@@ -79,9 +79,9 @@ Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origi
 
             // Calculer l'éclairage spéculaire
             Component::Vector3f view_direction = (origin - hit_point).normalize();
-            Component::Vector3f reflection_direction = (light_direction - 2 * hit_normal.dot(light_direction) * hit_normal).normalize();
+            Component::Vector3f reflection_direction = (light_direction - hit_normal * hit_normal.dot(light_direction) * 2).normalize();
             float specular_intensity = pow(std::max(0.0f, view_direction.dot(reflection_direction)), object_material.getShininess());
-            Component::Color specular_color = object_material.getSpecular() * light->getColor() * light_intensity * specular_intensity;
+            Component::Color specular_color = light->getColor() * object_material.getSpecular() * light_intensity * specular_intensity;
 
             // Ajouter la couleur diffuse et spéculaire
             final_color = final_color + diffuse_color + specular_color;

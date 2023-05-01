@@ -28,9 +28,8 @@ namespace Component {
             return {x - v.x, y - v.y, z - v.z};
         }
 
-        Vector3f operator*(float s) const
-        {
-            return {x * s, y * s, z * s};
+        Component::Vector3f operator*(float scalar) const {
+            return {x * scalar, y * scalar, z * scalar};
         }
 
         Vector3f operator/(float s) const
