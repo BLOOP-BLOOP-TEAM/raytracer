@@ -10,14 +10,12 @@
 #include <string>
 #include <memory>
 #include <map>
+#include <cstdbool>
+#include <functional>
 #include <libconfig.h++>
+#include "Scene.hpp"
 #include "FactoryEntity.hpp"
-
-static const std::string FOLDER_NAME = "Scenes";
-
-static const std::string PRIMITIVES = "primitives";
-static const std::string CAMERA = "camera";
-static const std::string LIGHTS = "lights";
+#include "FactoryMaterial.hpp"
 
 namespace Raytracer {
     class LoadConfig {
@@ -26,11 +24,14 @@ namespace Raytracer {
             ~LoadConfig() = default;
 
             void loadConfigFolder();
-            static void loadConfigFile(const std::string &path);
+            static std::unique_ptr<Raytracer::Scene> loadConfigFile(const std::string &path);
         protected:
         private:
-            static void loadPluginType(const std::string &type, const libconfig::Setting &root);
-            static void loadPrimitives(const libconfig::Setting &root);
-
+            static void loadPluginType(const std::string &type, const libconfig::Setting &root, Raytracer::Scene &scene);
+            static std::vector<Raytracer::IEntity *> loadPrimitives(const libconfig::Setting &root);
+            static void loadMaterials(const libconfig::Setting &root);
+            static bool isAGoodConfigFile(libconfig::Config &cfg, const std::string &path);
+            static Raytracer::FactoryEntity _factoryEntity;
+            static Raytracer::FactoryMaterial _factoryMaterial;
     };
 }; // namespace Raytracer

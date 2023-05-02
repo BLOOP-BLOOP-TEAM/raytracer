@@ -21,7 +21,7 @@ namespace Raytracer {
 
             ~FactoryMaterial() = default;
 
-            Raytracer::IMaterial &createMaterial(const std::string &name, libconfig::Setting &);
+            Raytracer::IMaterial &createMaterial(const std::string &name, const libconfig::Setting &);
 
             void destroyMaterial(Raytracer::IMaterial &material);
 

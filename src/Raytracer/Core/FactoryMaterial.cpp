@@ -19,7 +19,7 @@ Raytracer::IMaterial &Raytracer::FactoryMaterial::createMaterial(const std::stri
     return (*result);
 }
 
-void Raytracer::FactoryMaterial::destroyMaterial(Raytracer::IMaterial &material)
+void Raytracer::FactoryMaterial::destroyMaterial(const Raytracer::IMaterial &material)
 {
     Raytracer::AMaterial *mat = static_cast<Raytracer::AMaterial *>(&material);
 
