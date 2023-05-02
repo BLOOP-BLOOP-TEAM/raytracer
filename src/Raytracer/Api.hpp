@@ -8,7 +8,6 @@
 #pragma once
 
 #include "IEntity.hpp"
-#include "IMaterial.hpp"
 #include <libconfig.h++>
 
 #ifdef _WIN32

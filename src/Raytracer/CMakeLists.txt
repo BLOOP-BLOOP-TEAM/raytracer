@@ -8,6 +8,7 @@ target_include_directories(plugin_plane PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 
 target_sources(raytracer PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/RaytracerException.cpp"
         )
 
 add_subdirectory(Core)

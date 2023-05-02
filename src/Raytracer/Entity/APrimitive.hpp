@@ -26,7 +26,9 @@ namespace Raytracer {
 
         [[nodiscard]] Component::Color getColor(const Component::Vector3f &hit_point) const override;
 
-        [[nodiscard]] IMaterial &getMaterial() const;
+        [[nodiscard]] IMaterial &getMaterial() const override;
+
+        [[nodiscard]] const std::string &getTypePrimitive() const;
 
     protected:
     private:
