@@ -14,5 +14,5 @@ Raytracer::AMaterial::AMaterial(const std::string &type) : _type(type)
 
 const std::string &Raytracer::AMaterial::getType(void)
 {
-    return (this->_type);
+    return (_type);
 }
