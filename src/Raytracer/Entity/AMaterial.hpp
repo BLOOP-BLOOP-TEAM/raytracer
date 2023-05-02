@@ -13,11 +13,11 @@
 namespace Raytracer {
     class AMaterial : public IMaterial {
         public:
-            explicit AMaterial(const std::string &type);
+            explicit AMaterial(std::string type);
 
             ~AMaterial() override = default;
 
-            const std::string &getType(void);
+            const std::string &getType();
         protected:
             const std::string _type;
     };

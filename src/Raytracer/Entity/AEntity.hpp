@@ -26,7 +26,7 @@ namespace Raytracer {
 
         [[nodiscard]] Component::Vector3f getPosition() const final;
 
-        Raytracer::CompType getType() const;
+        [[nodiscard]] Raytracer::CompType getType() const final;
 
     protected:
         Component::Vector3f _position;

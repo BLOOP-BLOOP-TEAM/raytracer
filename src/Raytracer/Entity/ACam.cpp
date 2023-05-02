@@ -30,5 +30,9 @@ namespace Raytracer {
     void ACam::setRotation(const Component::Vector3f &rotation) {
         _rotation = rotation;
     }
+
+    const std::string &ACam::getTypeCam() const {
+        return _typeCam;
+    }
 }
 
