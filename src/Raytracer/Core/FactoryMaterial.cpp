@@ -21,7 +21,7 @@ Raytracer::IMaterial &Raytracer::FactoryMaterial::createMaterial(const std::stri
 
 void Raytracer::FactoryMaterial::destroyMaterial(Raytracer::IMaterial &material)
 {
-    Raytracer::AMaterial *mat = dynamic_cast<Raytracer::AMaterial *>(&material);
+    Raytracer::AMaterial *mat = static_cast<Raytracer::AMaterial *>(&material);
 
     if (mat == nullptr) {
         return;

@@ -22,4 +22,3 @@ namespace Raytracer {
             const std::string _type;
     };
 }
-
