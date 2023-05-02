@@ -12,5 +12,6 @@ namespace Raytracer {
         PRIMITIVE,
         LIGHT,
         CAM,
+        MATERIAL,
     };
 };

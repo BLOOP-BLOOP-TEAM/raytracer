@@ -8,16 +8,17 @@
 #pragma once
 
 #include <string>
+#include "IMaterial.hpp"
 
 namespace Raytracer {
-    class AMaterial {
+    class AMaterial : public IMaterial {
     public:
-        AMaterial(const std::string &type);
+        explicit AMaterial(const std::string &type);
 
-        ~AMaterial() = default;
+        ~AMaterial() override = default;
 
     protected:
-    private:
         const std::string _type;
     };
-};
+}
+

@@ -10,4 +10,3 @@
 Raytracer::AMaterial::AMaterial(const std::string &type) : _type(type)
 {
 }
-
