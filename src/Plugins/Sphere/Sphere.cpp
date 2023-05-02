@@ -14,7 +14,7 @@ Plugin::Sphere::Sphere(const Component::Vector3f &position, float radius) : APri
 
 float Plugin::Sphere::intersect(const Raytracer::Ray &ray) const
 {
-    Component::Vector3f L = ray.origin - this->getPosition();
+    Component::Vector3f L = ray.origin - getPosition();
     float a = ray.direction.dot(ray.direction);
     float b = 2 * ray.direction.dot(L);
     float c = L.dot(L) - _radius * _radius;
@@ -39,5 +39,5 @@ float Plugin::Sphere::intersect(const Raytracer::Ray &ray) const
 }
 
 Component::Vector3f Plugin::Sphere::getNormal(const Component::Vector3f &hit_point) const {
-    return (hit_point - this->getPosition()).normalize();
+    return (hit_point - getPosition()).normalize();
 }

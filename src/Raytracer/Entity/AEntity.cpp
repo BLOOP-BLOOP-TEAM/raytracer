@@ -28,7 +28,7 @@ void Raytracer::AEntity::scale(const Component::Vector3f &newScale)
 
 Component::Vector3f Raytracer::AEntity::getPosition() const
 {
-    return (this->_position);
+    return (_position);
 }
 
 Raytracer::CompType Raytracer::AEntity::getType() const

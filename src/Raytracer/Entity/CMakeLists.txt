@@ -9,6 +9,7 @@ target_sources(raytracer PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/AEntity.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/ALight.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/APrimitive.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/AMaterial.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/Scene.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/ScenesManager.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp"

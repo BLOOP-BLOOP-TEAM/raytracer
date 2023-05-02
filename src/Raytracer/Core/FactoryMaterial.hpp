@@ -11,23 +11,24 @@
 #include <functional>
 #include <string>
 #include <libconfig.h++>
-#include "IMaterial.hpp"
+#include "AMaterial.hpp"
 
 
-class FactoryMaterial {
-public:
-    FactoryMaterial();
+namespace Raytracer {
+    class FactoryMaterial {
+        public:
+            FactoryMaterial() = default;
 
-    ~FactoryMaterial() = default;
+            ~FactoryMaterial() = default;
 
-    Raytracer::IMaterial &createMaterial(const std::string &name, libconfig::Setting &);
+            Raytracer::IMaterial &createMaterial(const std::string &name, libconfig::Setting &);
 
-    void destroyMaterial(Raytracer::IMaterial &material);
+            void destroyMaterial(Raytracer::IMaterial &material);
 
-    void addCreator(const std::string &name, std::function<Raytracer::IMaterial *(const libconfig::Setting &)> funcCreate, std::function<void(Raytracer::IMaterial *material)> funcDestroy);
+            void addCreator(const std::string &name, std::function<Raytracer::IMaterial *(const libconfig::Setting &)> funcCreate, std::function<void(Raytracer::IMaterial *material)> funcDestroy);
 
-
-protected:
-private:
-    std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(const libconfig::Setting &)>, std::function<void(Raytracer::IMaterial *material)>>> _materials;
-};
+        protected:
+        private:
+            std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(const libconfig::Setting &)>, std::function<void(Raytracer::IMaterial *material)>>> _materials;
+        };
+}
