@@ -8,7 +8,6 @@
 #include <iostream>
 #include "FactoryMaterial.hpp"
 
-
 Raytracer::IMaterial &Raytracer::FactoryMaterial::createMaterial(const std::string &name, libconfig::Setting &data)
 {
     Raytracer::IMaterial *result = _materials[name].first(data);
