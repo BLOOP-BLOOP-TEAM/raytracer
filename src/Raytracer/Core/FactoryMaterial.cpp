@@ -11,11 +11,7 @@
 
 Raytracer::IMaterial &Raytracer::FactoryMaterial::createMaterial(const std::string &name, libconfig::Setting &data)
 {
-    for (auto it = this->_materials.begin(); it != this->_materials.end(); it++) {
-        if (name == it->first) {
-            return (*it->second.first(data));
-        }
-    }
+    return (*_materials[name].first(data));
     //throw std::runtime_error("Runtime error");
 }
 
@@ -26,11 +22,7 @@ void Raytracer::FactoryMaterial::destroyMaterial(Raytracer::IMaterial &material)
     if (mat == nullptr) {
         return;
     }
-    for (auto it = this->_materials.begin(); it != this->_materials.end(); it++) {
-        if (it->first == mat->getType()) {
-            it->second.second(&material);
-        }
-    }
+    _materials[mat->getType()].second(&material);
 }
 
 void Raytracer::FactoryMaterial::addCreator(
