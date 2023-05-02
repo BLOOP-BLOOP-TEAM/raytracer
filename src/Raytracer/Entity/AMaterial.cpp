@@ -5,14 +5,14 @@
 ** AMaterial
 */
 
-#include "CompType.hpp"
+#include <utility>
 #include "AMaterial.hpp"
 
-Raytracer::AMaterial::AMaterial(const std::string &type) : _type(type)
+Raytracer::AMaterial::AMaterial(std::string type) : _type(std::move(type))
 {
 }
 
-const std::string &Raytracer::AMaterial::getType(void)
+const std::string &Raytracer::AMaterial::getType()
 {
     return (_type);
 }

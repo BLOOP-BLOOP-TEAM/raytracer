@@ -21,13 +21,14 @@ namespace Raytracer {
         ACam(const std::string &typeCam, const Component::Vector3f &position, const Component::Vector3f &rotation,
              float field_of_view, float aspect_ratio);
 
-        ~ACam() = default;
+        ~ACam() override = default;
 
-        float getFieldOfView() const override;
-        float getAspectRatio() const override;
+        [[nodiscard]] float getFieldOfView() const override;
+        [[nodiscard]] float getAspectRatio() const override;
 
-        const Component::Vector3f &getRotation() const;
+        [[nodiscard]] const Component::Vector3f &getRotation() const;
         void setRotation(const Component::Vector3f &rotation);
+        [[nodiscard]] const std::string &getTypeCam() const;
 
     protected:
     private:

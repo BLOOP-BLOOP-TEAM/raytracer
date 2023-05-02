@@ -15,22 +15,21 @@
 #include "IEntity.hpp"
 
 namespace Raytracer {
-
     class FactoryEntity {
     public:
         FactoryEntity() = default;
-
         ~FactoryEntity() = default;
-
+        FactoryEntity(const FactoryEntity&) = delete;
+        FactoryEntity& operator=(const FactoryEntity&) = delete;
+        static FactoryEntity& getInstance();
         IEntity *createEntity(const std::string &name, const libconfig::Setting &setting);
-
         void destroyEntity(IEntity *entity);
+        void addCreator(const std::string &name, const std::function<Raytracer::IEntity *(const libconfig::Setting &)>& funcCreate, const std::function<void(Raytracer::IEntity *entity)>& funcDestroy);
+        [[nodiscard]] const std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const libconfig::Setting &)>, std::function<void(Raytracer::IEntity *entity)>>>& getEntities() const;
 
-        void addCreator(const std::string &name, std::function<Raytracer::IEntity *(const libconfig::Setting &)> funcCreate, std::function<void(Raytracer::IEntity *entity)> funcDestroy);
 
-
-    protected:
     private:
+
         std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const libconfig::Setting &)>, std::function<void(Raytracer::IEntity *entity)>>> _entities;
     };
 };
