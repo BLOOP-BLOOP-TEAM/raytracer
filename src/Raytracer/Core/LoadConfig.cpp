@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <vector>
 #include "IEntity.hpp"
+#include "APrimitive.hpp"
 #include "LoadConfig.hpp"
 
 static const std::string FOLDER_NAME = "Scenes";
@@ -17,6 +18,7 @@ static const std::string PRIMITIVES = "primitives";
 static const std::string CAMERA = "camera";
 static const std::string LIGHTS = "lights";
 static const std::string MATERIALS = "materials";
+static const std::string MATERIAL = "material";
 
 static const std::vector<std::string> elementTypes = {
     PRIMITIVES,
@@ -46,36 +48,71 @@ bool Raytracer::LoadConfig::isAGoodConfigFile(libconfig::Config &cfg, const std:
     return true;
 }
 
-void Raytracer::LoadConfig::loadConfigFolder()
+std::vector<std::unique_ptr<Raytracer::Scene>> Raytracer::LoadConfig::loadConfigFolder()
 {
+    std::vector<std::unique_ptr<Raytracer::Scene>> scenes;
+
     for (const auto &entry : std::filesystem::directory_iterator(FOLDER_NAME)) {
         // check if filename end with .cgf
         if (entry.path().filename().extension() != ".cfg")
             continue;
-        loadConfigFile(entry.path());
+        scenes.push_back(loadConfigFile(entry.path()));
     }
+    return scenes;
 }
 
-void Raytracer::LoadConfig::loadPluginType(const std::string &type, const libconfig::Setting &root, Raytracer::Scene &scene)
+void Raytracer::LoadConfig::loadPluginType(const std::string &type, const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply)
 {
     if (type == PRIMITIVES)
-        loadPrimitives(root);
+        loadPrimitives(root, scene, materialsToApply);
     else if (type == MATERIALS)
-        loadMaterials(root);
+        loadMaterials(root, scene);
     else if (std::find(elementTypes.begin(), elementTypes.end(), type) != elementTypes.end())
-        _factoryEntity.createEntity(type, root);
+        scene.addEntity(Raytracer::FactoryEntity::getInstance().createEntity(type, root));
     else
         std::cerr << "configLoader: loadPlugintypes: plugin type not found" << std::endl;
+}
+
+Raytracer::IMaterial *Raytracer::LoadConfig::getMaterialFromName(const Raytracer::Scene &scene, const std::string &name)
+{
+    for (auto &element : scene.getMaterials()) {
+        auto material = static_cast<Raytracer::IMaterial *>(element);
+        auto materialType = static_cast<Raytracer::AMaterial *>(material)->getType();
+
+        if (materialType == name)
+            return material;
+    }
+    return nullptr;
+}
+
+void Raytracer::LoadConfig::applyMaterialsToPrimitives(Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply)
+{
+    Raytracer::IMaterial *material = nullptr;
+
+    for (auto &element : scene.getEntities()) {
+        if (element->getType() != Raytracer::CompType::PRIMITIVE) {
+            continue;
+        }
+        auto primitive = static_cast<Raytracer::APrimitive *>(element);
+
+        if (materialsToApply.find(primitive->getTypePrimitive()) != materialsToApply.end()) {
+            material = getMaterialFromName(scene, materialsToApply[primitive->getTypePrimitive()]);
+            if (material != nullptr)
+                primitive->setMaterial(material);
+        }
+    }
 }
 
 std::unique_ptr<Raytracer::Scene> Raytracer::LoadConfig::loadConfigFile(const std::string &path)
 {
     libconfig::Config cfg;
-    std::unique_ptr<Raytracer::Scene> scene = std::make_unique<Raytracer::Scene>();
+    std::unique_ptr<Raytracer::Scene> scene;
+    std::map<std::string, std::string> materialsToApply;
 
     if (!isAGoodConfigFile(cfg, path))
         return nullptr;
     const libconfig::Setting &root = cfg.getRoot();
+    scene = std::make_unique<Raytracer::Scene>();
     // Output a list of all books in the inventory.
     try {
         const libconfig::Setting &elements = root;
@@ -84,35 +121,36 @@ std::unique_ptr<Raytracer::Scene> Raytracer::LoadConfig::loadConfigFile(const st
         for (int i = 0; i < count; i++) {
             const libconfig::Setting &element = elements[i];
 
-            std::cout << element.getName() << std::endl << std::endl;
-            loadPluginType(element.getName(), element, *scene);
+            std::cout << "Element found : " << element.getName() << std::endl;
+            loadPluginType(element.getName(), element, *scene, materialsToApply);
         }
     } catch (const libconfig::SettingNotFoundException &nfex) {
         // Ignore.
     }
+    applyMaterialsToPrimitives(*scene, materialsToApply);
     return scene;
 }
 
-std::vector<Raytracer::IEntity *> Raytracer::LoadConfig::loadPrimitives(const libconfig::Setting &root)
+void Raytracer::LoadConfig::loadPrimitives(const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply)
 {
-    std::vector<Raytracer::IEntity *> primitivesEntities;
-
     try {
         const libconfig::Setting &primitives = root[PRIMITIVES];
         int count = primitives.getLength();
 
         for (int i = 0; i < count; i++) {
             const libconfig::Setting &primitive = primitives[i];
+
             std::cout << primitive.getName() << std::endl << std::endl;
-            _factoryEntity.createEntity(primitive.getName(), primitive);
+            if (primitive.exists(MATERIAL))
+                materialsToApply.insert({primitive.getName(), primitive[MATERIAL]});
+            scene.addEntity(Raytracer::FactoryEntity::getInstance().createEntity(primitive.getName(), primitive));
         }
     } catch (const libconfig::SettingNotFoundException &nfex) {
         // Ignore.
     }
-    return primitivesEntities;
 }
 
-void Raytracer::LoadConfig::loadMaterials(const libconfig::Setting &root)
+void Raytracer::LoadConfig::loadMaterials(const libconfig::Setting &root, Raytracer::Scene &scene)
 {
     try {
         const libconfig::Setting &materials = root[MATERIALS];
@@ -120,8 +158,9 @@ void Raytracer::LoadConfig::loadMaterials(const libconfig::Setting &root)
 
         for (int i = 0; i < count; i++) {
             const libconfig::Setting &material = materials[i];
+
             std::cout << material.getName() << std::endl << std::endl;
-            _factoryMaterial.createMaterial(material.getName(), material);
+            scene.addMaterial(Raytracer::FactoryMaterial::getInstance().createMaterial(material.getName(), material));
         }
     } catch (const libconfig::SettingNotFoundException &nfex) {
         // Ignore.

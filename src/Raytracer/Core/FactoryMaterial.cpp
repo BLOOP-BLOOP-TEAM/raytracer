@@ -14,21 +14,21 @@ Raytracer::FactoryMaterial &Raytracer::FactoryMaterial::getInstance()
     return (instance);
 }
 
-Raytracer::IMaterial &Raytracer::FactoryMaterial::createMaterial(const std::string &name, libconfig::Setting &data)
+Raytracer::IMaterial *Raytracer::FactoryMaterial::createMaterial(const std::string &name, const libconfig::Setting &data)
 {
     Raytracer::IMaterial *result = _materials[name].first(data);
 
     if (result == nullptr) {
         //throw
     }
-    return (*result);
+    return (result);
 }
 
-void Raytracer::FactoryMaterial::destroyMaterial(const Raytracer::IMaterial &material)
+void Raytracer::FactoryMaterial::destroyMaterial(Raytracer::IMaterial *material)
 {
-    Raytracer::AMaterial *mat = static_cast<Raytracer::AMaterial *>(&material);
+    Raytracer::AMaterial *mat = static_cast<Raytracer::AMaterial *>(material);
 
-    _materials[mat->getType()].second(&material);
+    _materials[mat->getType()].second(material);
 }
 
 void Raytracer::FactoryMaterial::addCreator(

@@ -20,9 +20,11 @@ float Raytracer::APrimitive::intersect(const Ray &ray) const
     return 0;
 }
 
-void Raytracer::APrimitive::setMaterial(std::unique_ptr<IMaterial> material)
+void Raytracer::APrimitive::setMaterial(IMaterial *material)
 {
-    _material = std::move(material);
+    if (_material == nullptr)
+        return;
+    _material = material;
 }
 
 Component::Vector3f Raytracer::APrimitive::getNormal(const Component::Vector3f &hit_point) const

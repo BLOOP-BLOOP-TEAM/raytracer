@@ -23,15 +23,15 @@ namespace Raytracer {
             LoadConfig();
             ~LoadConfig() = default;
 
-            void loadConfigFolder();
+            std::vector<std::unique_ptr<Raytracer::Scene>> loadConfigFolder();
             static std::unique_ptr<Raytracer::Scene> loadConfigFile(const std::string &path);
         protected:
         private:
-            static void loadPluginType(const std::string &type, const libconfig::Setting &root, Raytracer::Scene &scene);
-            static std::vector<Raytracer::IEntity *> loadPrimitives(const libconfig::Setting &root);
-            static void loadMaterials(const libconfig::Setting &root);
+            static void loadPluginType(const std::string &type, const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
+            static void loadPrimitives(const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
+            static void loadMaterials(const libconfig::Setting &root, Raytracer::Scene &scene);
             static bool isAGoodConfigFile(libconfig::Config &cfg, const std::string &path);
-            static Raytracer::FactoryEntity _factoryEntity;
-            static Raytracer::FactoryMaterial _factoryMaterial;
+            static void applyMaterialsToPrimitives(Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
+            static Raytracer::IMaterial *getMaterialFromName(const Raytracer::Scene &scene, const std::string &name);
     };
 }; // namespace Raytracer
