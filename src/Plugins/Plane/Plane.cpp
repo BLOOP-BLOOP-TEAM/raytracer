@@ -5,6 +5,7 @@
 ** Plane
 */
 
+#include <libconfig.h++>
 #include "Plane.hpp"
 
 Plugin::Plane::Plane(const Component::Vector3f &position, const Component::Vector3f &normal)
@@ -30,4 +31,22 @@ Component::Color Plugin::Plane::getColor(const Component::Vector3f &hit_point) c
     bool is_even = (x + z) % 2 == 0;
 
     return is_even ? Component::Color(255, 255, 255) : Component::Color(0, 0, 0);
+}
+
+Raytracer::IEntity *createEntity(const libconfig::Setting &setting) {
+    Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
+    Component::Vector3f normal(setting["normal"][0], setting["normal"][1], setting["normal"][2]);
+    return new Plugin::Plane(position, normal);
+}
+
+void destroyEntity(Raytracer::IEntity *entity) {
+    delete entity;
+}
+
+const char *getName() {
+    return "Plane";
+}
+
+Raytracer::CompType getType() {
+    return Raytracer::CompType::PRIMITIVE;
 }
