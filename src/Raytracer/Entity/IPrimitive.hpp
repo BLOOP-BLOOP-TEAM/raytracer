@@ -18,7 +18,7 @@ namespace Raytracer {
     public:
         ~IPrimitive() = default;
 
-        virtual float intersect(const Ray &ray) = 0;
+        virtual float intersect(const Ray &ray) const = 0 ;
 
         virtual void setMaterial(std::unique_ptr<IMaterial> material) = 0;
 
@@ -26,6 +26,7 @@ namespace Raytracer {
 
         [[nodiscard]] virtual Component::Color getColor(const Component::Vector3f &hit_point) const = 0;
 
+        [[nodiscard]] virtual IMaterial &getMaterial() const = 0;
     protected:
     private:
 

@@ -12,7 +12,7 @@ Plugin::Sphere::Sphere(const Component::Vector3f &position, float radius) : APri
 
 }
 
-float Plugin::Sphere::intersect(const Raytracer::Ray &ray)
+float Plugin::Sphere::intersect(const Raytracer::Ray &ray) const
 {
     Component::Vector3f L = ray.origin - this->getPosition();
     float a = ray.direction.dot(ray.direction);

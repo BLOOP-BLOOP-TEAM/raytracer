@@ -16,11 +16,11 @@ class Sphere : public Raytracer::APrimitive {
     public:
         Sphere(const Component::Vector3f &position, float radius);
 
-        ~Sphere() = default;
+        ~Sphere() override = default;
 
-        float intersect(const Raytracer::Ray &ray) override;
+        [[nodiscard]] float intersect(const Raytracer::Ray &ray) const override;
 
-        Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
+        [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
 
     protected:
     private:

@@ -50,7 +50,6 @@ Component::Vector3f Raytracer::Calculator::getRayDirection(int x, int y, const R
 Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                                 const std::vector<IEntity *> &entities,
                                                 const std::vector<std::shared_ptr<Raytracer::ALight>> &lights)
-
 {
     float t_min;
     IEntity &intersected_object = findClosestEntity(origin, direction, entities, t_min);
@@ -63,7 +62,7 @@ Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origi
 
     Component::Vector3f hit_point = origin + direction * t_min;
     Component::Vector3f hit_normal = primitive->getNormal(hit_point);
-    Component::Color object_color = primitive->getColor(hit_point);
+    IMaterial &object_material = primitive->getMaterial();
 
     // Calculer l'éclairage pour chaque lumière
     Component::Color final_color(0, 0, 0);
@@ -76,8 +75,16 @@ Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origi
 
         // Calculer la couleur finale en fonction de l'éclairage et des ombres
         if (!in_shadow) {
-            float cos_theta = std::max(0.0f, hit_normal.dot(light_direction));
-            final_color = final_color + object_color * (light_intensity * cos_theta);
+            Component::Color diffuse_color = object_material.computeColor(hit_point, hit_normal, light_direction, light_intensity);
+
+            // Calculer l'éclairage spéculaire
+            Component::Vector3f view_direction = (origin - hit_point).normalize();
+            Component::Vector3f reflection_direction = (light_direction - hit_normal * hit_normal.dot(light_direction) * 2).normalize();
+            float specular_intensity = pow(std::max(0.0f, view_direction.dot(reflection_direction)), object_material.getShininess());
+            Component::Color specular_color = light->getColor() * object_material.getSpecular() * light_intensity * specular_intensity;
+
+            // Ajouter la couleur diffuse et spéculaire
+            final_color = final_color + diffuse_color + specular_color;
         }
     }
     // Clamp color values between 0 and 255
@@ -85,7 +92,6 @@ Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origi
 
     return final_color;
 }
-
 
 Raytracer::IEntity &Raytracer::Calculator::findClosestEntity(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                                              const std::vector<IEntity *> &entities, float &t_min)

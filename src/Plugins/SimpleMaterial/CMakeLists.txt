@@ -4,6 +4,6 @@ target_include_directories(plugin_sphere PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(raytracer PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 
 target_sources(plugin_sphere PRIVATE
-        "${CMAKE_CURRENT_SOURCE_DIR}/Sphere.cpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/SphereApi.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/SimpleMaterial.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/SimpleMaterialApi.cpp"
         )

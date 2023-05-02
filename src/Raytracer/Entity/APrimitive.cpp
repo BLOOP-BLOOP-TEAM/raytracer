@@ -15,7 +15,7 @@ Raytracer::APrimitive::APrimitive(std::string type, const Component::Vector3f &p
 {
 }
 
-float Raytracer::APrimitive::intersect(const Ray &ray)
+float Raytracer::APrimitive::intersect(const Ray &ray) const
 {
     return 0;
 }
@@ -33,4 +33,9 @@ Component::Vector3f Raytracer::APrimitive::getNormal(const Component::Vector3f &
 Component::Color Raytracer::APrimitive::getColor(const Component::Vector3f &hit_point) const
 {
     return {0, 0, 0};
+
+}
+
+Raytracer::IMaterial& Raytracer::APrimitive::getMaterial() const {
+    return *_material;
 }
