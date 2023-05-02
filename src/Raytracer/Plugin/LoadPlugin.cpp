@@ -5,7 +5,7 @@
 ** LoadPlugin
 */
 
-#include <dirent.h>
+#include <filesystem>
 #include <dlfcn.h>
 #include <iostream>
 #include <stdexcept>
@@ -26,6 +26,7 @@ Raytracer::LoadPlugin::~LoadPlugin()
 void Raytracer::LoadPlugin::loadPluginsFromDirectory(const std::string& directory)
 {
     auto pluginFiles = findPluginFiles(directory);
+
     for (const auto& filepath : pluginFiles) {
         loadPlugin(filepath);
     }
@@ -34,19 +35,19 @@ void Raytracer::LoadPlugin::loadPluginsFromDirectory(const std::string& director
 std::vector<std::string> Raytracer::LoadPlugin::findPluginFiles(const std::string& directory)
 {
     std::vector<std::string> pluginFiles;
-    DIR* dir = opendir(directory.c_str());
-    if (dir) {
-        struct dirent* entry;
-        while ((entry = readdir(dir))) {
-            std::string filename = entry->d_name;
-            if (filename.length() > 3 && filename.substr(filename.length() - 3) == ".so") {
-                pluginFiles.push_back(directory + "/" + filename);
-            }
+    std::error_code errorCode;
+
+    for (const auto& entry : std::filesystem::directory_iterator(directory, errorCode)) {
+        std::string filename = entry.path().filename().string();
+        if (filename.length() > 3 && filename.substr(filename.length() - 3) == ".so") {
+            pluginFiles.push_back(entry.path().string());
         }
-        closedir(dir);
-    } else {
+    }
+
+    if (errorCode) {
         throw std::runtime_error("Failed to open directory: " + directory);
     }
+
     return pluginFiles;
 }
 
