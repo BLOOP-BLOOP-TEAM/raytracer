@@ -16,7 +16,7 @@ Raytracer::IMaterial &Raytracer::FactoryMaterial::createMaterial(const std::stri
             return (*it->second.first(data));
         }
     }
-    throw std::runtime_error("Runtime error");
+    //throw std::runtime_error("Runtime error");
 }
 
 void Raytracer::FactoryMaterial::destroyMaterial(Raytracer::IMaterial &material)
