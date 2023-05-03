@@ -6,6 +6,7 @@
 */
 
 #include <libconfig.h++>
+#include "Api.hpp"
 #include "IEntity.hpp"
 #include "SimpleMaterial.hpp"
 #include "AMaterial.hpp"
@@ -42,6 +43,10 @@ const char *getName() {
     return "SimpleMaterial";
 }
 
-Raytracer::CompType getType() {
-    return Raytracer::CompType::MATERIAL;
+LibType getType() {
+    return LibType::MATERIAL;
+}
+
+void destroyMaterial(Raytracer::IMaterial *material) {
+    delete material;
 }

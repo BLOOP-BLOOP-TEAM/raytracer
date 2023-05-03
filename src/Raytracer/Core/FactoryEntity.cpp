@@ -11,13 +11,14 @@
 #include "ACam.hpp"
 #include "ALight.hpp"
 #include "APrimitive.hpp"
-
+#include "RaytracerException.hpp"
 Raytracer::IEntity* Raytracer::FactoryEntity::createEntity(const std::string &name, const libconfig::Setting &setting)
 {
+
     Raytracer::IEntity *result = _entities[name].first(setting);
 
     if (result == nullptr) {
-        //throw
+        throw Raytracer::RaytracerException("Error: Entity not found");
     }
     return (result);
 }

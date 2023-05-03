@@ -6,6 +6,7 @@
 */
 
 #include <libconfig.h++>
+#include "Api.hpp"
 #include "PointLight.hpp"
 
 Plugin::PointLight::PointLight(const Component::Vector3f &position, const Component::Color &color, float intensity)
@@ -25,6 +26,10 @@ const char *getName() {
     return "PointLight";
 }
 
-Raytracer::CompType getType() {
-    return Raytracer::CompType::LIGHT;
+LibType getType() {
+    return LibType::ENTITY;
+}
+
+void destroyEntity(Raytracer::IEntity *entity) {
+    delete entity;
 }

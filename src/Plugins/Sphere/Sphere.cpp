@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <libconfig.h++>
+#include "Api.hpp"
 #include "Sphere.hpp"
 
 Plugin::Sphere::Sphere(const Component::Vector3f &position, float radius) : APrimitive("Sphere", position), _radius(radius)
@@ -45,30 +46,22 @@ Component::Vector3f Plugin::Sphere::getNormal(const Component::Vector3f &hit_poi
 }
 
 Raytracer::IEntity *createEntity(const libconfig::Setting &setting) {
-    Component::Vector3f position;
+    std::cout << "createEntity" << std::endl;
+    Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
     float radius = 0;
 
-    try {
-        if (setting.exists("position")) {
-            position = Component::Vector3f(setting["position"][0],
-            setting["position"][1], setting["position"][2]);
-        } else {
-            position = Component::Vector3f(0, 0, 0);
-        }
-        if (setting.exists("radius")) {
-            radius = setting["radius"];
-        }
-    } catch (const libconfig::SettingException &e) {
-        std::cerr << e.what() << std::endl;
-        return nullptr;
-    }
+    setting.lookupValue("radius", radius);
     return new Plugin::Sphere(position, radius);
 }
 
 const char *getName() {
-    return "Sphere";
+    return "sphere";
 }
 
-Raytracer::CompType getType() {
-    return Raytracer::CompType::PRIMITIVE;
+LibType getType() {
+    return LibType::ENTITY;
+}
+
+void destroyEntity(Raytracer::IEntity *entity) {
+    delete entity;
 }
