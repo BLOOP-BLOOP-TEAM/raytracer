@@ -7,6 +7,8 @@
 
 #include "ScenesManager.hpp"
 
+static const std::string key = "KEY_RIGHT_PRESSED";
+
 Raytracer::ScenesManager::ScenesManager() : _sceneActual(0)
 {
 }
@@ -30,8 +32,9 @@ void Raytracer::ScenesManager::setSceneActual(int scene)
 
 void Raytracer::ScenesManager::update(Raytracer::EventManager &eventManager)
 {
-    // treatment of events
-    // if is event triggered change scene _sceneActual + 1
+    if (eventManager.isEventTriggered(key)) {
+        this->setSceneActual(_sceneActual + 1);
+    }
     if (!_scenes[_sceneActual]->getIsCalculate())
         _scenes[_sceneActual]->calculateImage();
     _scenes[_sceneActual]->update(eventManager);
