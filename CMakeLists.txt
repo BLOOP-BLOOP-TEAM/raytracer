@@ -29,8 +29,8 @@ target_link_libraries(raytracer PRIVATE sfml-graphics sfml-window sfml-system Pk
 
 ##############################################################################
 # Plugin .so libs
-add_library(plugin_sphere SHARED)
-set_target_properties(plugin_sphere PROPERTIES
+add_library(plugin_perspective_camera SHARED)
+set_target_properties(plugin_perspective_camera PROPERTIES
         CXX_STANDARD 20
         COMPILE_FLAGS "-fno-gnu-unique"
         PREFIX ""
@@ -39,6 +39,30 @@ set_target_properties(plugin_sphere PROPERTIES
 
 add_library(plugin_plane SHARED)
 set_target_properties(plugin_plane PROPERTIES
+        CXX_STANDARD 20
+        COMPILE_FLAGS "-fno-gnu-unique"
+        PREFIX ""
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+        )
+
+add_library(plugin_point_light SHARED)
+set_target_properties(plugin_point_light PROPERTIES
+        CXX_STANDARD 20
+        COMPILE_FLAGS "-fno-gnu-unique"
+        PREFIX ""
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+        )
+
+add_library(plugin_simple_material SHARED)
+set_target_properties(plugin_simple_material PROPERTIES
+        CXX_STANDARD 20
+        COMPILE_FLAGS "-fno-gnu-unique"
+        PREFIX ""
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+        )
+
+add_library(plugin_sphere SHARED)
+set_target_properties(plugin_sphere PROPERTIES
         CXX_STANDARD 20
         COMPILE_FLAGS "-fno-gnu-unique"
         PREFIX ""

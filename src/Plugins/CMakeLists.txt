@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
-target_include_directories(plugin_sphere PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
-
-add_subdirectory(Sphere)
+add_subdirectory(PerspectiveCamera)
 add_subdirectory(Plane)
+add_subdirectory(PointLight)
+add_subdirectory(SimpleMaterial)
+add_subdirectory(Sphere)
