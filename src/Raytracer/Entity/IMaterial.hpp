@@ -5,6 +5,8 @@
 ** IMaterial
 */
 
+#pragma once
+
 #include "Color.hpp"
 #include "Vector3f.hpp"
 
@@ -21,5 +23,5 @@ namespace Raytracer {
             virtual float getSpecular() const = 0;
 
             virtual float getShininess() const = 0;
-        };
+    };
 }
