@@ -30,11 +30,33 @@ void Raytracer::Scene::addEntity(IEntity *entity)
     _entities.push_back(entity);
 }
 
+void Raytracer::Scene::addMaterial(IMaterial *material)
+{
+    _materials.push_back(material);
+}
+
 Raytracer::IEntity &Raytracer::Scene::getEntity(int index) const
 {
     if (index < 0 || index >= _entities.size())
         throw std::out_of_range("Index out of range");
     return *_entities[index];
+}
+
+const std::vector<Raytracer::IEntity *> &Raytracer::Scene::getEntities() const
+{
+    return _entities;
+}
+
+Raytracer::IMaterial &Raytracer::Scene::getMaterial(int index) const
+{
+    if (index < 0 || index >= _materials.size())
+        throw std::out_of_range("Index out of range");
+    return *_materials[index];
+}
+
+const std::vector<Raytracer::IMaterial *> &Raytracer::Scene::getMaterials() const
+{
+    return _materials;
 }
 
 Raytracer::Image &Raytracer::Scene::getImage() const
