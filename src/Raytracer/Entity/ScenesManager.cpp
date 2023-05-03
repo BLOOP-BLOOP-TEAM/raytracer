@@ -33,7 +33,7 @@ void Raytracer::ScenesManager::setSceneActual(int scene)
 void Raytracer::ScenesManager::update(Raytracer::EventManager &eventManager)
 {
     if (eventManager.isEventTriggered(key)) {
-        this->setSceneActual(_sceneActual + 1);
+        setSceneActual(_sceneActual + 1);
     }
     if (!_scenes[_sceneActual]->getIsCalculate())
         _scenes[_sceneActual]->calculateImage();
