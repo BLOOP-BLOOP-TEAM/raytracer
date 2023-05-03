@@ -141,9 +141,12 @@ void Raytracer::LoadConfig::loadPrimitives(const libconfig::Setting &root, Raytr
             const libconfig::Setting &primitive = primitives[i];
 
             std::cout << primitive.getName() << std::endl << std::endl;
-            if (primitive.exists(MATERIAL))
-                materialsToApply.insert({primitive.getName(), primitive[MATERIAL]});
-            scene.addEntity(Raytracer::FactoryEntity::getInstance().createEntity(primitive.getName(), primitive));
+            for (const auto &element : primitive) {
+                std::cout << element.getName() << " = " << element.getType() << std::endl;
+                if (element.exists(MATERIAL))
+                    materialsToApply.insert({primitive.getName(), element[MATERIAL]});
+                scene.addEntity(Raytracer::FactoryEntity::getInstance().createEntity(primitive.getName(), element));
+            }
         }
     } catch (const libconfig::SettingNotFoundException &nfex) {
         // Ignore.
