@@ -5,6 +5,8 @@
 ** SimpleMaterial
 */
 
+#include <libconfig.h++>
+#include "IEntity.hpp"
 #include "SimpleMaterial.hpp"
 #include "AMaterial.hpp"
 
@@ -28,4 +30,18 @@ float Plugin::SimpleMaterial::getSpecular() const {
 
 float Plugin::SimpleMaterial::getShininess() const {
     return 1.0f;
+}
+
+Raytracer::IMaterial *createMaterial(const libconfig::Setting &setting) {
+    Component::Color baseColor(setting["baseColor"][0], setting["baseColor"][1], setting["baseColor"][2]);
+    float diffuseFactor = setting["diffuseFactor"];
+    return new Plugin::SimpleMaterial(baseColor, diffuseFactor);
+}
+
+const char *getName() {
+    return "SimpleMaterial";
+}
+
+Raytracer::CompType getType() {
+    return Raytracer::CompType::MATERIAL;
 }
