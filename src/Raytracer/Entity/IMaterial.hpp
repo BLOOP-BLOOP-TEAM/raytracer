@@ -5,6 +5,8 @@
 ** IMaterial
 */
 
+#pragma once
+
 #include "Color.hpp"
 #include "Vector3f.hpp"
 

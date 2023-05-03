@@ -20,7 +20,7 @@ namespace Raytracer {
 
         [[nodiscard]] float intersect(const Ray &ray) const override;
 
-        void setMaterial(std::unique_ptr<IMaterial> material) override;
+        void setMaterial(IMaterial *material) override;
 
         [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
 
@@ -33,6 +33,6 @@ namespace Raytracer {
     protected:
     private:
         std::string _typePrimitive;
-        std::unique_ptr<IMaterial> _material;
+        IMaterial *_material;
     };
 };

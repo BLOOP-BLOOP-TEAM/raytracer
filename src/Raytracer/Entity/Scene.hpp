@@ -23,7 +23,15 @@ namespace Raytracer {
 
         void addEntity(IEntity *entity);
 
+        void addMaterial(IMaterial *material);
+
         [[nodiscard]] IEntity &getEntity(int index) const;
+
+        [[nodiscard]] const std::vector<IEntity *> &getEntities() const;
+
+        [[nodiscard]] IMaterial &getMaterial(int index) const;
+
+        [[nodiscard]] const std::vector<IMaterial *> &getMaterials() const;
 
         void calculateImage();
 
@@ -34,6 +42,7 @@ namespace Raytracer {
     protected:
     private:
         std::vector<IEntity *> _entities;
+        std::vector<IMaterial *> _materials;
         std::unique_ptr<Image> _image;
     };
 };

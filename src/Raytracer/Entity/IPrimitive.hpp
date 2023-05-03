@@ -20,7 +20,7 @@ namespace Raytracer {
 
         virtual float intersect(const Ray &ray) const = 0 ;
 
-        virtual void setMaterial(std::unique_ptr<IMaterial> material) = 0;
+        virtual void setMaterial(IMaterial *material) = 0;
 
         [[nodiscard]] virtual Component::Vector3f getNormal(const Component::Vector3f &hit_point) const = 0;
 
