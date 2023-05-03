@@ -6,14 +6,24 @@
 */
 
 #include "Scene.hpp"
+#include "FactoryEntity.hpp"
+#include "FactoryMaterial.hpp"
 #include "Image.hpp"
 
 Raytracer::Scene::Scene() : _image(std::make_unique<Image>(1920, 1080))
 {
 }
 
-Raytracer::Scene::~Scene()
-{
+Raytracer::Scene::~Scene() {
+    FactoryEntity& factoryEntity = FactoryEntity::getInstance();
+    for (IEntity* entity : _entities) {
+        factoryEntity.destroyEntity(entity);
+    }
+
+    FactoryMaterial& factoryMaterial = FactoryMaterial::getInstance();
+    for (IMaterial* material : _materials) {
+        factoryMaterial.destroyMaterial(material);
+    }
 }
 
 void Raytracer::Scene::calculateImage()

@@ -5,9 +5,8 @@
 ** APrimitive
 */
 
-#include "APrimitive.hpp"
-
 #include <utility>
+#include "APrimitive.hpp"
 
 Raytracer::APrimitive::APrimitive(std::string type, const Component::Vector3f &position) : _typePrimitive(std::move(type)),
                                                                                                   AEntity(Raytracer::CompType::PRIMITIVE,
