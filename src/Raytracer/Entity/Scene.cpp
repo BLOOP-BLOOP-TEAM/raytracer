@@ -8,7 +8,9 @@
 #include "Scene.hpp"
 #include "Image.hpp"
 
-Raytracer::Scene::Scene() : _image(std::make_unique<Image>(1920, 1080))
+static const std::string FOLDER_PPM = "./PPM/";
+
+Raytracer::Scene::Scene(const std::string &name) : _image(std::make_unique<Image>(1920, 1080)), _fileName(name) 
 {
 }
 
@@ -19,6 +21,8 @@ Raytracer::Scene::~Scene()
 void Raytracer::Scene::calculateImage()
 {
     _image->calculateImage(_entities);
+    _image->write_ppm(FOLDER_PPM + _fileName + ".ppm");
+    setIsCalculate();
 }
 
 void Raytracer::Scene::addEntity(IEntity *entity)
@@ -62,4 +66,19 @@ Raytracer::Image &Raytracer::Scene::getImage() const
 
 void Raytracer::Scene::update(Raytracer::EventManager &eventManager)
 {
+}
+
+const std::string &Raytracer::Scene::getFileName()
+{
+    return _fileName;
+}
+
+void Raytracer::Scene::setIsCalculate()
+{
+    _isCalculate = !_isCalculate;
+}
+
+const bool &Raytracer::Scene::getIsCalculate()
+{
+    return _isCalculate;
 }

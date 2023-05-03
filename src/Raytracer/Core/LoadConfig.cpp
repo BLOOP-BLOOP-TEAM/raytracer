@@ -112,7 +112,7 @@ std::unique_ptr<Raytracer::Scene> Raytracer::LoadConfig::loadConfigFile(const st
     if (!isAGoodConfigFile(cfg, path))
         return nullptr;
     const libconfig::Setting &root = cfg.getRoot();
-    scene = std::make_unique<Raytracer::Scene>();
+    scene = std::make_unique<Raytracer::Scene>(path);
     // Output a list of all books in the inventory.
     try {
         const libconfig::Setting &elements = root;

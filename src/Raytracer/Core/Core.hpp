@@ -10,6 +10,9 @@
 #include "DisplayModule.hpp"
 #include "EventManager.hpp"
 #include "ScenesManager.hpp"
+#include "LoadPlugin.hpp"
+#include "Observer.hpp"
+#include "LoadConfig.hpp"
 
 namespace Raytracer {
     class Core {
@@ -24,6 +27,7 @@ namespace Raytracer {
         ScenesManager _scenesManager;
         DisplayModule _displayModule;
         EventManager _eventManager;
+        Observer _observer;
         bool _isRunning;
     };
 };

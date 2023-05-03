@@ -23,5 +23,5 @@ namespace Raytracer {
             virtual float getSpecular() const = 0;
 
             virtual float getShininess() const = 0;
-        };
+    };
 }

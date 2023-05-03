@@ -54,7 +54,7 @@ void Observer::notify(const std::string &path)
     int index = 0;
     // appelle de la fonction qui load la scène
 
-    for (int i = 0; i < _allSubScenes.size(); i++) {
+    for (int i = 0; i < _allSubScenes.size(); i++) { // faire auto const
         if (_allSubScenes[i] == path) {
             index = i;
             break;
@@ -67,7 +67,7 @@ void Observer::checkEditedFiles() {
     std::vector<bool> filesStatus;
     int nbrFiles = _allSubScenes.size();
 
-    for (int i = 0; i < nbrFiles; i++) {
+    for (int i = 0; i < nbrFiles; i++) { // faire auto const
         std::string path = _allSubScenes[i];
         std::time_t timeStamp = getTimeStamp(path);
 
@@ -78,7 +78,7 @@ void Observer::checkEditedFiles() {
         else
             filesStatus.push_back(false);
     }
-    for (int i = 0; i < nbrFiles; i++) {
+    for (int i = 0; i < nbrFiles; i++) { // faire auto const
         if (filesStatus[i]) {
             std::cout << "Lancement de load sur la scene : " << _allSubScenes[i] << std::endl;
             notify(_allSubScenes[i]);
