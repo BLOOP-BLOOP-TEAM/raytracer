@@ -59,3 +59,4 @@ raytracer
 .vscode/
 build.ninja
 .cmake/
+*.cbp
