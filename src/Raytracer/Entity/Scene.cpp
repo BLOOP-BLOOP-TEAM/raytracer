@@ -6,6 +6,8 @@
 */
 
 #include "Scene.hpp"
+#include "FactoryEntity.hpp"
+#include "FactoryMaterial.hpp"
 #include "Image.hpp"
 
 static const std::string FOLDER_PPM = "./PPM/";
@@ -14,8 +16,17 @@ Raytracer::Scene::Scene(const std::string &name) : _image(std::make_unique<Image
 {
 }
 
-Raytracer::Scene::~Scene()
-{
+Raytracer::Scene::~Scene() {
+    FactoryEntity& factoryEntity = FactoryEntity::getInstance();
+    FactoryMaterial& factoryMaterial = FactoryMaterial::getInstance();
+
+    for (IEntity* entity : _entities) {
+        factoryEntity.destroyEntity(entity);
+    }
+
+    for (IMaterial* material : _materials) {
+        factoryMaterial.destroyMaterial(material);
+    }
 }
 
 void Raytracer::Scene::calculateImage()
