@@ -26,9 +26,9 @@ namespace Raytracer {
             ~LoadConfig() = default;
 
             void loadConfigFolder();
-            static void loadConfigFile(const std::string &path);
         protected:
         private:
+            static void loadConfigFile(const std::string &path);
             static void loadPluginType(const std::string &type, const libconfig::Setting &root);
             static void loadPrimitives(const libconfig::Setting &root);
 

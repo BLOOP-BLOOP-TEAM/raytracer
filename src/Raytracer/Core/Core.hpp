@@ -12,6 +12,7 @@
 #include "ScenesManager.hpp"
 #include "LoadPlugin.hpp"
 #include "Observer.hpp"
+#include "LoadConfig.hpp"
 
 namespace Raytracer {
     class Core {
