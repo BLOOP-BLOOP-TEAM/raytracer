@@ -46,7 +46,6 @@ Component::Vector3f Plugin::Sphere::getNormal(const Component::Vector3f &hit_poi
 }
 
 Raytracer::IEntity *createEntity(const libconfig::Setting &setting) {
-    std::cout << "createEntity" << std::endl;
     Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
     float radius = 0;
 
