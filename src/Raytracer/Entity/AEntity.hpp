@@ -30,8 +30,9 @@ namespace Raytracer {
 
     protected:
         Component::Vector3f _position;
+        Component::Vector3f _rotation;
+        Component::Vector3f _scale;
     private:
         Raytracer::CompType _type;
-        Component::Vector3f _rotation;
     };
 };
