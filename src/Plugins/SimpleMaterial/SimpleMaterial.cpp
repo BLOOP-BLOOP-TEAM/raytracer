@@ -32,10 +32,11 @@ float Plugin::SimpleMaterial::getSpecular() const {
 float Plugin::SimpleMaterial::getShininess() const {
     return 1.0f;
 }
-
 Raytracer::IMaterial *createMaterial(const libconfig::Setting &setting) {
     Component::Color baseColor(setting["baseColor"][0], setting["baseColor"][1], setting["baseColor"][2]);
-    float diffuseFactor = setting["diffuseFactor"];
+    float diffuseFactor = 0.0f;
+
+    setting.lookupValue("diffuseFactor", diffuseFactor);
     return new Plugin::SimpleMaterial(baseColor, diffuseFactor);
 }
 

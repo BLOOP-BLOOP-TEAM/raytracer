@@ -37,6 +37,7 @@ void Raytracer::Image::write_ppm(const std::string &filename) const
 
 void Raytracer::Image::calculateImage(std::vector<IEntity *> &entities)
 {
+    std::cout << "Image calculated" << std::endl;
     Calculator calculator(width, height, entities, pixels);
     try {
         calculator.calculatePixels();

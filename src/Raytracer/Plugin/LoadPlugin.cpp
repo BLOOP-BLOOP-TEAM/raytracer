@@ -6,7 +6,6 @@
 */
 
 #include <filesystem>
-#include <dlfcn.h>
 #include <iostream>
 #include <stdexcept>
 #include "LoadPlugin.hpp"
@@ -51,31 +50,6 @@ std::vector<std::string> Raytracer::LoadPlugin::findPluginFiles(const std::strin
     }
 
     return pluginFiles;
-}
-
-template <typename T, typename... Args>
-static T getResult(void* library, const std::string& symbolName, Args&&... args)
-{
-    void* sym = dlsym(library, symbolName.c_str());
-
-    if (!sym) {
-        throw std::runtime_error("Error on open with dlsym: " + std::string(dlerror()));
-    }
-
-    T (*function)(Args...) = reinterpret_cast<T(*)(Args...)>(sym);
-    return (function(std::forward<Args>(args)...));
-}
-
-template <typename T>
-static T openLibraryFunc(void *library, const std::string &symbolName)
-{
-    void *sym = dlsym(library, symbolName.c_str());
-
-    if (!sym) {
-        throw std::runtime_error("Error on open with dlsym: " + std::string(dlerror()));
-    }
-
-    return reinterpret_cast<T>(sym);
 }
 
 void Raytracer::LoadPlugin::loadPlugin(const std::string& filepath)

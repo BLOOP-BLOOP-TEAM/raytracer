@@ -29,6 +29,7 @@ namespace Raytracer {
         private:
             static void loadPluginType(const std::string &type, const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
             static void loadPrimitives(const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
+            static void loadLights(const libconfig::Setting &root, Raytracer::Scene &scene);
             static void loadMaterials(const libconfig::Setting &root, Raytracer::Scene &scene);
             static bool isAGoodConfigFile(libconfig::Config &cfg, const std::string &path);
             static void applyMaterialsToPrimitives(Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
