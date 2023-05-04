@@ -9,21 +9,21 @@
 
 static const std::string FOLDER_NAME = "Scenes";
 
-Raytracer::Observer(const std::vector<std::string> allScenes) {
+Raytracer::Observer::Observer(const std::vector<std::string> allScenes) {
     int nbrFiles = allScenes.size();
 
     for (int i = 0; i < nbrFiles; i++)
         subscribe(allScenes[i]);
 }
 
-void Raytracer::subscribe(const std::string &path) {
+void Raytracer::Observer::subscribe(const std::string &path) {
     if (std::find(_allSubScenes.begin(), _allSubScenes.end(), path) != _allSubScenes.end())
         return;
     _allSubScenes.push_back(path);
     _lastUpdates.push_back(getTimeStamp(path));
 }
 
-void Raytracer::unsubscribe(const std::string &path) {
+void Raytracer::Observer::unsubscribe(const std::string &path) {
     size_t index = 0;
     auto it = std::find(_allSubScenes.begin(), _allSubScenes.end(), path);
 
@@ -35,7 +35,7 @@ void Raytracer::unsubscribe(const std::string &path) {
     }
 }
 
-std::time_t Raytracer::getTimeStamp(const std::string &path) {
+std::time_t Raytracer::Observer::getTimeStamp(const std::string &path) {
     if (!std::filesystem::exists(path)) {
         std::cout << "Delete la scene" << std::endl;
         unsubscribe(path);
@@ -49,7 +49,7 @@ std::time_t Raytracer::getTimeStamp(const std::string &path) {
     return timeStamp;
 }
 
-void Raytracer::notify(const std::string &path)
+void Raytracer::Observer::notify(const std::string &path)
 {
     int index = 0;
     // appelle de la fonction qui load la scène
@@ -62,9 +62,10 @@ void Raytracer::notify(const std::string &path)
     _lastUpdates[index] = getTimeStamp(path);
 }
 
-void Raytracer::checkEditedFiles() {
+void Raytracer::Observer::checkEditedFiles() {
     std::vector<bool> filesStatus;
     int nbrFiles = _allSubScenes.size();
+    int index = 0;
 
     for (const auto &path : _allSubScenes) {
         const std::time_t timeStamp = getTimeStamp(path);
@@ -75,6 +76,7 @@ void Raytracer::checkEditedFiles() {
             filesStatus.push_back(true);
         else
             filesStatus.push_back(false);
+        index += 1;
     }
     for (int i = 0; i < nbrFiles; i++) {
         if (filesStatus[i]) {

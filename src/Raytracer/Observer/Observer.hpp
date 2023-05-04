@@ -6,7 +6,6 @@
 */
 
 #pragma once
-
 #include "vector"
 #include "string"
 #include "iostream" // à enlever
@@ -35,4 +34,4 @@ namespace Raytracer {
             std::vector<std::string> _allSubScenes;
             std::vector<std::time_t> _lastUpdates;
     };
-}
+};
