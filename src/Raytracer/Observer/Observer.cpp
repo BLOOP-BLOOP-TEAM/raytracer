@@ -9,23 +9,23 @@
 
 static const std::string FOLDER_NAME = "Scenes";
 
-Observer::Observer(const std::vector<std::string> allScenes) {
+Raytracer::Observer(const std::vector<std::string> allScenes) {
     int nbrFiles = allScenes.size();
 
     for (int i = 0; i < nbrFiles; i++)
         subscribe(allScenes[i]);
 }
 
-void Observer::subscribe(const std::string &path) {
+void Raytracer::subscribe(const std::string &path) {
     if (std::find(_allSubScenes.begin(), _allSubScenes.end(), path) != _allSubScenes.end())
         return;
     _allSubScenes.push_back(path);
     _lastUpdates.push_back(getTimeStamp(path));
 }
 
-void Observer::unsubscribe(const std::string &path) {
-    auto it = std::find(_allSubScenes.begin(), _allSubScenes.end(), path);
+void Raytracer::unsubscribe(const std::string &path) {
     size_t index = 0;
+    auto it = std::find(_allSubScenes.begin(), _allSubScenes.end(), path);
 
     if (it != _allSubScenes.end()) {
         index = it - _allSubScenes.begin();
@@ -35,7 +35,7 @@ void Observer::unsubscribe(const std::string &path) {
     }
 }
 
-std::time_t Observer::getTimeStamp(const std::string &path) {
+std::time_t Raytracer::getTimeStamp(const std::string &path) {
     if (!std::filesystem::exists(path)) {
         std::cout << "Delete la scene" << std::endl;
         unsubscribe(path);
@@ -49,36 +49,34 @@ std::time_t Observer::getTimeStamp(const std::string &path) {
     return timeStamp;
 }
 
-void Observer::notify(const std::string &path)
+void Raytracer::notify(const std::string &path)
 {
     int index = 0;
     // appelle de la fonction qui load la scène
 
-    for (int i = 0; i < _allSubScenes.size(); i++) { // faire auto const
-        if (_allSubScenes[i] == path) {
-            index = i;
+    for (const auto &subScene : _allSubScenes) {
+        if (subScene == path)
             break;
-        }
+        index += 1;
     }
     _lastUpdates[index] = getTimeStamp(path);
 }
 
-void Observer::checkEditedFiles() {
+void Raytracer::checkEditedFiles() {
     std::vector<bool> filesStatus;
     int nbrFiles = _allSubScenes.size();
 
-    for (int i = 0; i < nbrFiles; i++) { // faire auto const
-        std::string path = _allSubScenes[i];
-        std::time_t timeStamp = getTimeStamp(path);
+    for (const auto &path : _allSubScenes) {
+        const std::time_t timeStamp = getTimeStamp(path);
 
         if (timeStamp == -1)
             return;
-        if (timeStamp > _lastUpdates[i])
+        if (timeStamp > _lastUpdates[index])
             filesStatus.push_back(true);
         else
             filesStatus.push_back(false);
     }
-    for (int i = 0; i < nbrFiles; i++) { // faire auto const
+    for (int i = 0; i < nbrFiles; i++) {
         if (filesStatus[i]) {
             std::cout << "Lancement de load sur la scene : " << _allSubScenes[i] << std::endl;
             notify(_allSubScenes[i]);
