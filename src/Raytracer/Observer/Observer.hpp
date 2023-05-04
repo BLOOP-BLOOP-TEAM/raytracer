@@ -13,23 +13,25 @@
 #include <chrono>
 #include <algorithm>
 
-class Observer {
-    public:
-        Observer(std::vector<std::string> allScenes = {});
+namespace Raytracer {
+    class Observer {
+        public:
+            Observer(std::vector<std::string> allScenes = {});
 
-        ~Observer() = default;
+            ~Observer() = default;
 
-        void checkEditedFiles();
+            void checkEditedFiles();
 
-        void notify(const std::string &path);
+            void notify(const std::string &path);
 
-        void subscribe(const std::string &path);
+            void subscribe(const std::string &path);
 
-        void unsubscribe(const std::string &path);
+            void unsubscribe(const std::string &path);
 
-        std::time_t getTimeStamp(const std::string &path);
+            std::time_t getTimeStamp(const std::string &path);
 
-    private:
-        std::vector<std::string> _allSubScenes;
-        std::vector<std::time_t> _lastUpdates;
+        private:
+            std::vector<std::string> _allSubScenes;
+            std::vector<std::time_t> _lastUpdates;
+    };
 };
