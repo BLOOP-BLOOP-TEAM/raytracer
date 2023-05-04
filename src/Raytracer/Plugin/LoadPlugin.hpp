@@ -16,11 +16,26 @@
 #include "FactoryMaterial.hpp"
 
 namespace Raytracer {
+    /**
+     *
+     * @brief The LoadPlugin class
+     * 
+     * This class is used to load plugins contains inside the plugins directory
+     */
     class LoadPlugin {
     public:
         LoadPlugin();
         ~LoadPlugin();
 
+        /**
+         *
+         * @brief the function that load all the plugins of a directory
+         * 
+         * This function will load all the plugins with the path given
+         * The path given needs to be a directory path
+         * 
+         * @param directory string that define the path of the plugins 
+         */
         void loadPluginsFromDirectory(const std::string& directory);
 
     private:

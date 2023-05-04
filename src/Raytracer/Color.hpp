@@ -10,6 +10,14 @@
 #include <algorithm>
 
 namespace Component {
+    /**
+     * @brief data structure of Color
+     * 
+     * This data structure is used to define the color of a pixel
+     * 
+     * It contains all the data needed by a pixel and overriding operators
+     * to make calculations between two pixels.
+     */
     struct Color {
         int r = 0;
         int g = 0;

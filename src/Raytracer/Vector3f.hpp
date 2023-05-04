@@ -10,6 +10,14 @@
 #include <cmath>
 
 namespace Component {
+    /**
+     * @brief The Vector3f data structure
+     * 
+     * This data structure is used to define positions of an object.
+     * 
+     * It contains the data to define the positions and override
+     * operators that will make calculations on two positions.
+     */
     struct Vector3f {
         float x;
         float y;
