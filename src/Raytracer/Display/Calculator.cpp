@@ -9,6 +9,7 @@
 #include "APrimitive.hpp"
 #include "Calculator.hpp"
 #include "Ray.hpp"
+#include "Matrix.hpp"
 
 Raytracer::ACam &Raytracer::Calculator::findCam(const std::vector<IEntity *> &entities)
 {
@@ -34,63 +35,82 @@ std::vector<std::shared_ptr<Raytracer::ALight>> Raytracer::Calculator::findLight
     return lights;
 }
 
-Component::Vector3f Raytracer::Calculator::getRayDirection(int x, int y, const Raytracer::ACam &cam) const
+Component::Vector3f Raytracer::Calculator::getRayDirection(int x, int y, const Raytracer::ACam &cam)
 {
-    int screenWidth = width;
-    int screenHeight = height;
+    // Calculer les coordonnées normalisées de l'écran
+    float ndc_x = (2.0f * x) / static_cast<float>(width) - 1.0f;
+    float ndc_y = 1.0f - (2.0f * y) / static_cast<float>(height);
 
-    float aspect_ratio = (float)screenWidth / (float)screenHeight;
-    float x_coord = (2.0f * (x + 0.5f) / (float)screenWidth - 1.0f) * aspect_ratio;
-    float y_coord = 1.0f - 2.0f * (y + 0.5f) / (float)screenHeight;
+    // Calculer l'aspect ratio de l'écran
+    float aRatio = static_cast<float>(width) / static_cast<float>(height);
 
-    Component::Vector3f direction = Component::Vector3f(x_coord, y_coord, -1.0f).normalize();
-    return cam.getRotation().rotate(direction);
+    // Calculer la distance focale en fonction du champ de vision (fov) et de l'aspect ratio
+    float fov = cam.getFieldOfView();
+    float focalLengthX = 1.0f / tanf(fov * 0.5f * (M_PI / 180.0f));
+    float focalLengthY = focalLengthX / aRatio;
+
+    // Créer un vecteur direction dans l'espace de la caméra
+    Component::Vector3f directionInCameraSpace(ndc_x / focalLengthX, ndc_y / focalLengthY, -1.0f);
+
+    // Convertir les angles d'Euler de la rotation de la caméra en une matrice de rotation
+    Component::Matrix3x3 rotationMatrix = Component::Matrix3x3::fromEulerAngles(cam.getRotation());
+
+    // Appliquer la rotation de la caméra au vecteur direction
+    Component::Vector3f direction = rotationMatrix * directionInCameraSpace;
+
+    // Normaliser le vecteur direction
+    direction = direction.normalize();
+
+    return direction;
 }
 
 Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                                 const std::vector<IEntity *> &entities,
                                                 const std::vector<std::shared_ptr<Raytracer::ALight>> &lights)
 {
-    float t_min;
+    float t_min = std::numeric_limits<float>::max();
     IEntity &intersected_object = findClosestEntity(origin, direction, entities, t_min);
     APrimitive* primitive = nullptr;
     primitive = static_cast<APrimitive*>(&intersected_object);
 
     // S'il n'y a pas d'intersection, retourner une couleur d'arrière-plan
-    if (t_min == std::numeric_limits<float>::max())
+    if (t_min == std::numeric_limits<float>::max()) {
         return Component::Color(0, 0, 0);
-
-    Component::Vector3f hit_point = origin + direction * t_min;
-    Component::Vector3f hit_normal = primitive->getNormal(hit_point);
-    IMaterial &object_material = primitive->getMaterial();
-
-    // Calculer l'éclairage pour chaque lumière
-    Component::Color final_color(0, 0, 0);
-    for (const auto &light : lights) {
-        Component::Vector3f light_direction = (light->getPosition() - hit_point).normalize();
-        float light_intensity = light->getIntensity();
-
-        // Vérifier les ombres
-        bool in_shadow = checkShadows(hit_point, hit_normal, light_direction, entities, light);
-
-        // Calculer la couleur finale en fonction de l'éclairage et des ombres
-        if (!in_shadow) {
-            Component::Color diffuse_color = object_material.computeColor(hit_point, hit_normal, light_direction, light_intensity);
-
-            // Calculer l'éclairage spéculaire
-            Component::Vector3f view_direction = (origin - hit_point).normalize();
-            Component::Vector3f reflection_direction = (light_direction - hit_normal * hit_normal.dot(light_direction) * 2).normalize();
-            float specular_intensity = pow(std::max(0.0f, view_direction.dot(reflection_direction)), object_material.getShininess());
-            Component::Color specular_color = light->getColor() * object_material.getSpecular() * light_intensity * specular_intensity;
-
-            // Ajouter la couleur diffuse et spéculaire
-            final_color = final_color + diffuse_color + specular_color;
-        }
     }
-    // Clamp color values between 0 and 255
-    final_color.clamp();
+    return (Component::Color(255, 0, 0));
+    std::cout << "t_min: " << t_min << std::endl;
 
-    return final_color;
+//    Component::Vector3f hit_point = origin + direction * t_min;
+//    Component::Vector3f hit_normal = primitive->getNormal(hit_point);
+//    IMaterial &object_material = primitive->getMaterial();
+//
+//    // Calculer l'éclairage pour chaque lumière
+//    Component::Color final_color(0, 0, 0);
+//    for (const auto &light : lights) {
+//        Component::Vector3f light_direction = (light->getPosition() - hit_point).normalize();
+//        float light_intensity = light->getIntensity();
+//
+//        // Vérifier les ombres
+//        bool in_shadow = checkShadows(hit_point, hit_normal, light_direction, entities, light);
+//
+//        // Calculer la couleur finale en fonction de l'éclairage et des ombres
+//        if (!in_shadow) {
+//            Component::Color diffuse_color = object_material.computeColor(hit_point, hit_normal, light_direction, light_intensity);
+//
+//            // Calculer l'éclairage spéculaire
+//            Component::Vector3f view_direction = (origin - hit_point).normalize();
+//            Component::Vector3f reflection_direction = (light_direction - hit_normal * hit_normal.dot(light_direction) * 2).normalize();
+//            float specular_intensity = pow(std::max(0.0f, view_direction.dot(reflection_direction)), object_material.getShininess());
+//            Component::Color specular_color = light->getColor() * object_material.getSpecular() * light_intensity * specular_intensity;
+//
+//            // Ajouter la couleur diffuse et spéculaire
+//            final_color = final_color + diffuse_color + specular_color;
+//        }
+//    }
+//    // Clamp color values between 0 and 255
+//    final_color.clamp();
+//
+//    return final_color;
 }
 
 Raytracer::IEntity &Raytracer::Calculator::findClosestEntity(const Component::Vector3f &origin, const Component::Vector3f &direction,
@@ -102,6 +122,8 @@ Raytracer::IEntity &Raytracer::Calculator::findClosestEntity(const Component::Ve
     Ray ray(origin, direction);
 
     for (const auto &entity : entities) {
+        if (entity->getType() != Raytracer::CompType::PRIMITIVE)
+            continue;
         primitive = static_cast<APrimitive*>(entity);
         float t = primitive->intersect(ray);
         if (t > 0.0f && t < t_min) {
@@ -109,7 +131,6 @@ Raytracer::IEntity &Raytracer::Calculator::findClosestEntity(const Component::Ve
             intersected_object = entity;
         }
     }
-
     return *intersected_object;
 }
 
@@ -134,8 +155,17 @@ void Raytracer::Calculator::calculatePixels()
 {
     try {
         ACam& camera = findCam(entities);
+        std::cout << "Camera position: (" << camera.getPosition().x << ", " << camera.getPosition().y << ", " << camera.getPosition().z << ")" << std::endl;
         std::vector<std::shared_ptr<ALight>> lights = findLights(entities);
-
+        if (lights.empty()) {
+            std::cout << "No lights found" << std::endl;
+        } else {
+            std::cout << "Found " << lights.size() << " light(s)" << std::endl;
+            for (const auto& light : lights) {
+                std::cout << "Light position: (" << light->getPosition().x << ", " << light->getPosition().y << ", " << light->getPosition().z << ")" << std::endl;
+            }
+        }
+        std::cout << "Number of entities: " << entities.size() << std::endl;
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
                 Component::Vector3f rayDirection = getRayDirection(x, y, camera);

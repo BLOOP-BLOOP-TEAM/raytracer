@@ -40,7 +40,7 @@ namespace Raytracer {
 
         static std::vector<std::shared_ptr<ALight>> findLights(const std::vector<IEntity *> &entities);
 
-        [[nodiscard]] Component::Vector3f getRayDirection(int x, int y, const ACam &cam) const;
+        [[nodiscard]] Component::Vector3f getRayDirection(int x, int y, const ACam &cam);
 
         static Component::Color castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                  const std::vector<IEntity *> &entities,
@@ -52,6 +52,5 @@ namespace Raytracer {
         static bool checkShadows(const Component::Vector3f &hit_point, const Component::Vector3f &hit_normal,
                                                  const Component::Vector3f &light_direction, const std::vector<IEntity *> &entities,
                                                  const std::shared_ptr<Raytracer::ALight> &light) ;
-
     };
 };

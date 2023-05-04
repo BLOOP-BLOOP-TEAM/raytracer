@@ -48,7 +48,7 @@ namespace Component {
             return std::sqrt(x * x + y * y + z * z);
         }
 
-        [[nodiscard]] Vector3f normalize() const {
+        Vector3f normalize() const {
             return *this / length();
         }
 
@@ -56,23 +56,10 @@ namespace Component {
             return x * v.x + y * v.y + z * v.z;
         }
 
-        [[nodiscard]] Vector3f rotate(const Vector3f& rotation) const
-        {
-            float rx = rotation.x * M_PI / 180.0f;
-            float ry = rotation.y * M_PI / 180.0f;
-            float rz = rotation.z * M_PI / 180.0f;
-
-            Vector3f rotated;
-
-            rotated.x = x * std::cos(ry) * std::cos(rz) - y * std::cos(ry) * std::sin(rz) + z * std::sin(ry);
-            rotated.y = x * (std::sin(rx) * std::sin(ry) * std::cos(rz) + std::cos(rx) * std::sin(rz))
-                        - y * (std::sin(rx) * std::sin(ry) * std::sin(rz) - std::cos(rx) * std::cos(rz))
-                        - z * std::sin(rx) * std::cos(ry);
-            rotated.z = x * (std::cos(rx) * std::sin(ry) * std::cos(rz) - std::sin(rx) * std::sin(rz))
-                        - y * (std::cos(rx) * std::sin(ry) * std::sin(rz) + std::sin(rx) * std::cos(rz))
-                        + z * std::cos(rx) * std::cos(ry);
-
-            return rotated;
+        Vector3f cross(const Vector3f& other) const {
+            return Vector3f(y * other.z - z * other.y,
+                            z * other.x - x * other.z,
+                            x * other.y - y * other.x);
         }
     };
 }

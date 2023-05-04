@@ -12,7 +12,8 @@
 
 static const std::string FOLDER_PPM = "./PPM/";
 
-Raytracer::Scene::Scene(const std::string &name) : _image(std::make_unique<Image>(1920, 1080)), _fileName(name) 
+Raytracer::Scene::Scene(const std::string &name) : _image(std::make_unique<Image>(1920, 1080)), _fileName(name), _isCalculate(
+        false)
 {
 }
 
