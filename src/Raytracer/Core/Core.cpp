@@ -16,6 +16,7 @@ Raytracer::Core::Core() : _isRunning(true), _scenesManager(), _displayModule(192
     
     loadPlugin.loadPluginsFromDirectory(FOLDER);
     LoadConfig.loadConfigFolder();
+    std::cout << "Load config" << std::endl;
     auto &actualScene = _scenesManager.getSceneActual();
     _observer.subscribe(actualScene.getFileName());
     actualScene.calculateImage();
