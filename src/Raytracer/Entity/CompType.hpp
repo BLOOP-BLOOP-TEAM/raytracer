@@ -8,6 +8,9 @@
 #pragma once
 
 namespace Raytracer {
+    /**
+     * @brief Enum that defines component type 
+     */
     enum class CompType {
         PRIMITIVE,
         LIGHT,

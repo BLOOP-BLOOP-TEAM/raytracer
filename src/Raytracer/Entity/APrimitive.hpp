@@ -12,24 +12,62 @@
 #include "AEntity.hpp"
 
 namespace Raytracer {
+    /**
+    * @brief The APrimitive class
+    * 
+    * The APrimitive class defines the common methods that a Primitive will have, and extends the AEntity class.
+    */
     class APrimitive : public IPrimitive, public AEntity {
-    public:
-        APrimitive(std::string type, const Component::Vector3f &position);
+        public:
+       /**
+        * @brief Constructor for APrimitive
+        * 
+        * @param type The type of the primitive as a string
+        * @param position The position of the primitive as a Component::Vector3f object
+        */
+       APrimitive(std::string type, const Component::Vector3f &position);
 
-        ~APrimitive() override = default;
+           ~APrimitive() override = default;
 
-        [[nodiscard]] float intersect(const Ray &ray) const override;
+       /**
+        * @brief Function that checks for an intersection with a ray
+        * 
+        * Calculates whether the specified ray intersects with the object.
+        * 
+        * @param ray The Ray object to check for intersection
+        */
+       [[nodiscard]] float intersect(const Ray &ray) const override;
 
-        void setMaterial(IMaterial *material) override;
+       /**
+        * @brief Function that sets the material of the primitive
+        * 
+        * @param material Pointer on IMaterial object to set as the material of the primitive
+        */
+       void setMaterial(IMaterial *material) override;
 
-        [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
+       /**
+        * @brief Function that gets the normal of the primitive at the specified hit point
+        * 
+        * @param hit_point The hit point as a Component::Vector3f object
+        */
+       [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
 
-        [[nodiscard]] Component::Color getColor(const Component::Vector3f &hit_point) const override;
+       /**
+        * @brief Function that gets the color of the primitive at the specified hit point
+        * 
+        * @param hit_point The hit point as a Component::Vector3f object
+        */
+       [[nodiscard]] Component::Color getColor(const Component::Vector3f &hit_point) const override;
 
-        [[nodiscard]] IMaterial &getMaterial() const override;
+       /**
+        * @brief Function that gets the material of the primitive
+        */
+       [[nodiscard]] IMaterial &getMaterial() const override;
 
-        [[nodiscard]] const std::string &getTypePrimitive() const;
-
+       /**
+        * @brief Function that gets the type of the primitive
+        */
+       [[nodiscard]] const std::string &getTypePrimitive() const;
     protected:
     private:
         std::string _typePrimitive;

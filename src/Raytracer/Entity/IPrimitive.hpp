@@ -23,12 +23,13 @@ namespace Raytracer {
         public:
             ~IPrimitive() = default;
 
-       ////////// TODO     /**
-       ////////// TODO      * @brief function that check an intersection
-       ////////// TODO      * 
-       ////////// TODO      * This function take a Ray in parameter and calculate if the
-       ////////// TODO      * Ray intersect with the 
-       ////////// TODO      */
+            /**
+             * @brief function that checks for an intersection with a ray
+             * 
+             * Calculates whether the specified ray intersects with the object.
+             * 
+             * @param ray The Ray object to check for intersection
+             */
             virtual float intersect(const Ray &ray) const = 0 ;
 
             /**
@@ -66,8 +67,6 @@ namespace Raytracer {
              * This function is used to get the material of an IPrimitive object
              */
             [[nodiscard]] virtual IMaterial &getMaterial() const = 0;
-        protected:
-        private:
 
     };
 };

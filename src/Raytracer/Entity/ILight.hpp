@@ -11,14 +11,23 @@
 #include "Color.hpp"
 
 namespace Raytracer {
+    /**
+     * @brief The ILight class
+     * 
+     * The ILight class defines the common methods of Light objects.
+     */
     class ILight {
-    public:
-        virtual ~ILight() = default;
+        public:
+            virtual ~ILight() = default;
 
-        virtual const Component::Color& getColor() const = 0;
-        virtual float getIntensity() const = 0;
+            /**
+             * @brief Gets the color of the light
+             */
+            virtual const Component::Color& getColor() const = 0;
 
-    protected:
-    private:
+            /**
+             * @brief Gets the intensity of the light
+             */
+            virtual float getIntensity() const = 0;
     };
 };

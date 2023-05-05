@@ -11,17 +11,44 @@
 #include "CompType.hpp"
 
 namespace Raytracer {
+    /**
+     * @brief The IEntity class
+     * 
+     * The IEntity class defines the common methods of Entity objects.
+     */
     class IEntity {
-        public:
+    public:
+        virtual ~IEntity() = default;
 
-            virtual ~IEntity() = default;
-            virtual void translate(const Component::Vector3f &newPos) = 0;
-            virtual void rotate(const Component::Vector3f &newRot) = 0;
-            virtual void scale(const Component::Vector3f &newScale) = 0;
-            [[nodiscard]] virtual Component::Vector3f getPosition() const = 0;
-            [[nodiscard]] virtual Raytracer::CompType getType() const = 0;
-        protected:
-        private:
+        /**
+         * @brief Translates the entity to a new position
+         * 
+         * @param newPos The new position of the entity as a Component::Vector3f object
+         */
+        virtual void translate(const Component::Vector3f &newPos) = 0;
 
+        /**
+         * @brief Rotates the entity to a new rotation
+         * 
+         * @param newRot The new rotation of the entity as a Component::Vector3f object
+         */
+        virtual void rotate(const Component::Vector3f &newRot) = 0;
+
+        /**
+         * @brief Scales the entity to a new scale
+         * 
+         * @param newScale The new scale of the entity as a Component::Vector3f object
+         */
+        virtual void scale(const Component::Vector3f &newScale) = 0;
+
+        /**
+         * @brief Gets the position of the entity
+         */
+        [[nodiscard]] virtual Component::Vector3f getPosition() const = 0;
+
+        /**
+         * @brief Gets the type of the entity
+         */
+        [[nodiscard]] virtual Raytracer::CompType getType() const = 0;
     };
 };

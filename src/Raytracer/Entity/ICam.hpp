@@ -11,15 +11,23 @@
 #include "Vector3f.hpp"
 
 namespace Raytracer {
+    /**
+     * @brief The ICam class
+     * 
+     * The ICam class defines the common methods of Camera objects.
+     */
     class ICam {
     public:
         virtual ~ICam() = default;
 
+        /**
+         * @brief Gets the field of view of the camera
+         */
         virtual float getFieldOfView() const = 0;
-        virtual float getAspectRatio() const = 0;
 
-    protected:
-    private:
+        /**
+         * @brief Gets the aspect ratio of the camera
+         */
+        virtual float getAspectRatio() const = 0;
     };
 };
-

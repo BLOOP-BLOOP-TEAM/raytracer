@@ -32,9 +32,7 @@ namespace Raytracer {
              * all the scenes
              */
             Observer(std::vector<std::string> allScenes = {});
-            /**
-             * @brief destructor of Observer 
-             */
+
             ~Observer() = default;
 
             /**
@@ -73,8 +71,6 @@ namespace Raytracer {
              * @brief the function that get the time stamp of a file
              * 
              * This function will check if the file exists
-             * 
-             * @return std::time_t that indicate the last write time of the file
              */
             std::time_t getTimeStamp(const std::string &path);
             private:
