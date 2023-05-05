@@ -31,19 +31,11 @@ namespace Component {
         [[nodiscard]] float length() const;
 
         [[nodiscard]] Vector3f normalize() const;
-        
-        Vector3f normalize() const {
-            return *this / length();
-        }
 
-        [[nodiscard]] float dot(const Vector3f& v) const {
-            return x * v.x + y * v.y + z * v.z;
-        }
+        [[nodiscard]] float dot(const Vector3f& v) const;
 
-        Vector3f cross(const Vector3f& other) const {
-            return Vector3f(y * other.z - z * other.y,
-                            z * other.x - x * other.z,
-                            x * other.y - y * other.x);
-        }
+        [[nodiscard]] Vector3f cross(const Vector3f& other) const;
+
+        [[nodiscard]] Component::Vector3f rotate(const Vector3f& rotation) const;
     };
 }
