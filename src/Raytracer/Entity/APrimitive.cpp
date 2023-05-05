@@ -39,10 +39,12 @@ Component::Color Raytracer::APrimitive::getColor(const Component::Vector3f &hit_
 
 }
 
-Raytracer::IMaterial& Raytracer::APrimitive::getMaterial() const {
+Raytracer::IMaterial& Raytracer::APrimitive::getMaterial() const
+{
     return *_material;
 }
 
-const std::string &Raytracer::APrimitive::getTypePrimitive() const {
+const std::string &Raytracer::APrimitive::getTypePrimitive() const
+{
     return _typePrimitive;
 }

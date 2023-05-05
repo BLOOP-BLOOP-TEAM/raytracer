@@ -18,14 +18,14 @@ namespace Plugin {
 
         ~SimpleMaterial() override = default;
 
-        Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
+        [[nodiscard]] Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
                                       const Component::Vector3f &lightDirection, float lightIntensity) const override;
 
-        Component::Color getDiffuse() const override;
+        [[nodiscard]] Component::Color getDiffuse() const override;
 
-        float getSpecular() const override;
+        [[nodiscard]] float getSpecular() const override;
 
-        float getShininess() const override;
+        [[nodiscard]] float getShininess() const override;
 
     private:
         Component::Color _baseColor;

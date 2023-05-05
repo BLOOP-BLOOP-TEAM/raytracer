@@ -36,11 +36,11 @@ namespace Raytracer {
         std::vector<IEntity *> &entities;
         std::vector<std::vector<Component::Color>>& pixels;
 
-        static ACam& findCam(const std::vector<IEntity *> &entities);
+        static ACam *findCam(const std::vector<IEntity *> &entities);
 
         static std::vector<ALight *> findLights(const std::vector<IEntity *> &entities);
 
-        [[nodiscard]] Component::Vector3f getRayDirection(int x, int y, const ACam &cam);
+        [[nodiscard]] Component::Vector3f getRayDirection(int x, int y, const ACam *cam);
 
         static Component::Color castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                  const std::vector<IEntity *> &entities,
@@ -51,6 +51,6 @@ namespace Raytracer {
 
         static bool checkShadows(const Component::Vector3f &hit_point, const Component::Vector3f &hit_normal,
                                                  const Component::Vector3f &light_direction, const std::vector<IEntity *> &entities,
-                                                 const std::shared_ptr<Raytracer::ALight> &light) ;
+                                                 const Raytracer::ALight &light) ;
     };
 };
