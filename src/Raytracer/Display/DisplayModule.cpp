@@ -9,17 +9,48 @@
 
 namespace Raytracer {
 
-    DisplayModule::DisplayModule(unsigned int width, unsigned int height, const std::string& title)
-            : _width(width), _height(height), _window(sf::VideoMode(width, height), title), _pixels(sf::Points, width * height) {
-        initGuy();
-    }
+    DisplayModule::DisplayModule(unsigned int width, unsigned int height, const std::string& title, ScenesManager &scenesManager)
+            : _width(width), _height(height), _window(sf::VideoMode(width, height), title), _scenesManager(scenesManager), _pixels(sf::Points, width * height) {}
 
     DisplayModule::~DisplayModule() {}
 
+    std::string DisplayModule::Vector3fToString(Component::Vector3f vec) {
+        std::stringstream ss;
+
+        ss << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
+        return ss.str();
+    }
+
+    std::string DisplayModule::getCameraPos() {
+        for (const auto &entity: _scenesManager.getSceneActual().getEntities()) {
+            if (entity->getType() == CompType::CAM)
+                return Vector3fToString(entity->getPosition());
+        }
+        return "UNDEFINED";
+    }
+
+    std::string DisplayModule::getCameraRotation() {
+        for (const auto &entity: _scenesManager.getSceneActual().getEntities()) {
+            if (entity->getType() == CompType::CAM) {
+                ACam *cam = static_cast<ACam *>(entity);
+                return Vector3fToString(cam->getRotation());
+            }
+        }
+        return "UNDEFINED";
+    }
+
     void DisplayModule::initGuy() {
-        Component::Text CameraPosTitle("#cameraPosTitle", "arial.ttf", "Camera Position :", 20, {0, 0, 0}, {255, 255, 0}, {0, 0, 0});
+        std::string cameraPos = getCameraPos();
+        Component::Text CameraPosTitle("#cameraPosTitle", FONT, "Camera Position :", 15, {10, 10, 0}, {255, 0, 0}, {0, 0, 0});
+        Component::Text CameraPosValue("#cameraPosValue", FONT, getCameraPos(), 15, {150, 10, 0}, {255, 0, 0}, {0, 0, 0});
+
+        Component::Text CameraRotationTitle("#cameraRotationTitle", FONT, "Camera Rotation :", 15, {10, 30, 0}, {255, 0, 0}, {0, 0, 0});
+        Component::Text CameraRotationValue("#cameraRotationValue", FONT, getCameraRotation(), 15, {150, 30, 0}, {255, 0, 0}, {0, 0, 0});
 
         _allTexts.push_back(CameraPosTitle);
+        _allTexts.push_back(CameraPosValue);
+        _allTexts.push_back(CameraRotationTitle);
+        _allTexts.push_back(CameraRotationValue);
     }
 
     void DisplayModule::setText(const Component::Text &textComponent) {
@@ -27,7 +58,7 @@ namespace Raytracer {
         if (fontIt == _allFonts.end()) {
             sf::Font font;
             if (!font.loadFromFile(textComponent.fontPath))
-                // throw(std::invalid_argument("Impossible de charger la font"));
+                throw(std::invalid_argument("Impossible de charger la font")); // a modifier
             _allFonts.insert({textComponent.fontPath, font});
             fontIt = _allFonts.find(textComponent.fontPath);
         }
@@ -42,7 +73,6 @@ namespace Raytracer {
             textComponent.textColor.b,
             255));
         text.setCharacterSize(textComponent.size);
-        std::cout << textComponent.id << std::endl;
         _allSfTexts.insert({  textComponent.id, text });
         _window.draw(text);
     }
@@ -81,10 +111,10 @@ namespace Raytracer {
 
     void DisplayModule::update(const Image &image) {
         // Dessiner et afficher les pixels
-        displayPixels(image);
-        displayGuy();
         _window.clear();
+        displayPixels(image);
         _window.draw(_pixels);
+        displayGuy();
         _window.display();
     }
 

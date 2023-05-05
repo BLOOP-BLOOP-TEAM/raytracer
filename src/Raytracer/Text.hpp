@@ -11,15 +11,17 @@
 #include "Color.hpp"
 #include "string"
 
+static const std::string FONT = "./assets/fonts/arial.ttf";
+
 namespace Component {
     struct Text {
         std::string id;
-        std::string fontPath = "arial.ttf";
+        std::string fontPath = FONT;
         std::string text = " ";
-        int size = 20;
-        Component::Color backgroundColor = Component::Color();
-        Component::Color textColor = Component::Color();
+        int size = 15;
         Component::Vector3f pos = Component::Vector3f();
+        Component::Color textColor = Component::Color();
+        Component::Color backgroundColor = Component::Color();
 
         Text(std::string id);
         Text(std::string id, std::string fontPath, std::string text, int size, Component::Vector3f pos,

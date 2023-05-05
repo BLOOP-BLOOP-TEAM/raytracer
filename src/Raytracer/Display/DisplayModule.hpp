@@ -8,13 +8,15 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <sstream>
 #include "Image.hpp"
 #include "Text.hpp"
+#include "ScenesManager.hpp"
 
 namespace Raytracer {
     class DisplayModule {
         public:
-            DisplayModule(unsigned int width, unsigned int height, const std::string& title);
+            DisplayModule(unsigned int width, unsigned int height, const std::string& title, ScenesManager &scenesManager);
 
             ~DisplayModule();
 
@@ -34,10 +36,17 @@ namespace Raytracer {
 
             sf::RenderWindow &getWindow();
 
+            std::string getCameraPos();
+
+            std::string getCameraRotation();
+
+            std::string Vector3fToString(Component::Vector3f vec);
+
         protected:
         private:
             unsigned int _width;
             unsigned int _height;
+            ScenesManager &_scenesManager;
             sf::RenderWindow _window;
             sf::VertexArray _pixels;
             std::map<std::string, sf::Text> _allSfTexts;
