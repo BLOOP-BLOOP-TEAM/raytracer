@@ -14,21 +14,60 @@
 #include "IMaterial.hpp"
 
 namespace Raytracer {
+    /**
+     * @brief The IPrimitive class
+     * 
+     * This class defines all the common methods that a Primitive will have
+     */
     class IPrimitive {
-    public:
-        ~IPrimitive() = default;
+        public:
+            ~IPrimitive() = default;
 
-        virtual float intersect(const Ray &ray) const = 0 ;
+       ////////// TODO     /**
+       ////////// TODO      * @brief function that check an intersection
+       ////////// TODO      * 
+       ////////// TODO      * This function take a Ray in parameter and calculate if the
+       ////////// TODO      * Ray intersect with the 
+       ////////// TODO      */
+            virtual float intersect(const Ray &ray) const = 0 ;
 
-        virtual void setMaterial(IMaterial *material) = 0;
+            /**
+             * @brief function that set material
+             * 
+             * This function will set a material to any object of IPrimitive
+             * 
+             * @param material pointer on IMaterial object to set
+             */
+            virtual void setMaterial(IMaterial *material) = 0;
 
-        [[nodiscard]] virtual Component::Vector3f getNormal(const Component::Vector3f &hit_point) const = 0;
+            /**
+             * @brief function that get the normal
+             * 
+             * This function take a parameter a hit point is used to calculate
+             * the normal of the IPrimitive object with the help of his position
+             * 
+             * @param hitPoint a Vector3f object that is used for calculate the normal
+             */
+            [[nodiscard]] virtual Component::Vector3f getNormal(const Component::Vector3f &hitPoint) const = 0;
 
-        [[nodiscard]] virtual Component::Color getColor(const Component::Vector3f &hit_point) const = 0;
+            /**
+             * @brief function that get color
+             * 
+             * This function is used to calculate the color of a pixel
+             * with the help of a hit point
+             * 
+             * @param hitPoint a Vector3f object that is used to calculate the color of the pixel
+             */
+            [[nodiscard]] virtual Component::Color getColor(const Component::Vector3f &hitPoint) const = 0;
 
-        [[nodiscard]] virtual IMaterial &getMaterial() const = 0;
-    protected:
-    private:
+            /**
+             * @brief function that get material
+             * 
+             * This function is used to get the material of an IPrimitive object
+             */
+            [[nodiscard]] virtual IMaterial &getMaterial() const = 0;
+        protected:
+        private:
 
     };
 };
