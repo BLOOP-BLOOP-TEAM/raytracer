@@ -10,6 +10,8 @@ target_include_directories(plugin_simple_material PRIVATE "${CMAKE_CURRENT_SOURC
 target_sources(raytracer PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/RaytracerException.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Vector3f.cpp"
         )
 
 add_subdirectory(Core)

@@ -11,31 +11,17 @@
 
 namespace Component {
     struct Color {
-        int r = 0;
-        int g = 0;
-        int b = 0;
-        Color() : r(0), g(0), b(0) {};
-        Color(int red, int green, int blue) : r(red), g(green), b(blue) {};
+        int r;
+        int g;
+        int b;
 
-        void clamp()
-        {
-            r = std::clamp(r, 0, 255);
-            g = std::clamp(g, 0, 255);
-            b = std::clamp(b, 0, 255);
-        }
+        Color();
+        Color(int red, int green, int blue);
 
-        Component::Color operator*(float scalar) const {
-            return Component::Color(r * scalar, g * scalar, b * scalar);
-        }
+        void clamp();
 
-
-        Component::Color operator*(const Component::Color &other) const {
-            return Component::Color(r * other.r, g * other.g, b * other.b);
-        }
-
-        Component::Color operator+(const Component::Color &other) const {
-            return Component::Color(r + other.r, g + other.g, b + other.b);
-        }
-
+        Component::Color operator*(float scalar) const;
+        Component::Color operator*(const Component::Color &other) const;
+        Component::Color operator+(const Component::Color &other) const;
     };
 };
