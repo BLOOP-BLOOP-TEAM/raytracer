@@ -16,23 +16,12 @@ Raytracer::Core::Core()
           _eventManager(std::make_unique<EventManager>(_displayModule->getWindow())),
           _observer(std::make_unique<Observer>())
 {
-<<<<<<< HEAD
-    LoadPlugin loadPlugin;
-    LoadConfig LoadConfig;
-    
-    loadPlugin.loadPluginsFromDirectory(FOLDER);
-    LoadConfig.loadConfigFolder();
-    std::cout << "Load config" << std::endl;
-    auto &actualScene = _scenesManager.getSceneActual();
-    _observer.subscribe(actualScene.getFileName());
-=======
     _loadPlugin->loadPluginsFromDirectory(FOLDER);
     ConfigLoader LoadConfig;
 
     _scenesManager->addMultipleScenes(*LoadConfig.loadConfigFolder());
     auto &actualScene = _scenesManager->getSceneActual();
     _observer->subscribe(actualScene.getFileName());
->>>>>>> RAYT-37-tester-fix-linitialisation
     actualScene.calculateImage();
 }
 
