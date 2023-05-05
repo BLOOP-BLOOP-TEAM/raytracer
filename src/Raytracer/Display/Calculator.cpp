@@ -42,7 +42,7 @@ Component::Vector3f Raytracer::Calculator::getRayDirection(int x, int y, const R
     float ndc_y = 1.0f - (2.0f * y) / static_cast<float>(height);
 
     // Calculer l'aspect ratio de l'écran
-    float aRatio = static_cast<float>(width) / static_cast<float>(height);
+    float aRatio = static_cast<float>(height) / static_cast<float>(width);
 
     // Calculer la distance focale en fonction du champ de vision (fov) et de l'aspect ratio
     float fov = cam.getFieldOfView();

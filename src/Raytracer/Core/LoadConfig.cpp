@@ -197,7 +197,7 @@ void Raytracer::LoadConfig::loadMaterials(const libconfig::Setting &root, Raytra
 
             std::cout << "\tMaterial found : " << material.getName() << std::endl;
             for (const auto &element : material) {
-                std::cout << "LoadConfig: new entity" << std::endl;
+                std::cout << "LoadConfig: loading material " << material.getName() << std::endl;
                 scene.addMaterial(Raytracer::FactoryMaterial::getInstance().createMaterial(material.getName(), element));
             }
         }

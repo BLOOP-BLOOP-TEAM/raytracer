@@ -12,8 +12,10 @@
 Raytracer::Image::Image(int width, int height)
         : width(width), height(height), pixels(height, std::vector<Component::Color>(width)) {}
 
-Component::Color Raytracer::Image::get_pixel(int x, int y) const
+Component::Color Raytracer::Image::get_pixel(unsigned int x, unsigned int y) const
 {
+    if (x >= width || y >= height)
+        throw std::runtime_error("Pixel out of range");
     return pixels[y][x];
 }
 

@@ -22,11 +22,13 @@ Raytracer::Scene::~Scene() {
     FactoryMaterial& factoryMaterial = FactoryMaterial::getInstance();
 
     for (IEntity* entity : _entities) {
-        factoryEntity.destroyEntity(entity);
+        if (entity)
+            factoryEntity.destroyEntity(entity);
     }
 
     for (IMaterial* material : _materials) {
-        factoryMaterial.destroyMaterial(material);
+        if (material)
+            factoryMaterial.destroyMaterial(material);
     }
 }
 

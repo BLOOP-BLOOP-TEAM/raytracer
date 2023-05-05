@@ -10,7 +10,7 @@
 #include "Api.hpp"
 #include "Sphere.hpp"
 
-Plugin::Sphere::Sphere(const Component::Vector3f &position, float radius) : APrimitive("Sphere", position), _radius(radius)
+Plugin::Sphere::Sphere(const Component::Vector3f &position, float radius) : APrimitive("sphere", position), _radius(radius)
 {
 
 }
