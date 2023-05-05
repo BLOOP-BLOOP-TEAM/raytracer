@@ -68,5 +68,5 @@ set_target_properties(plugin_sphere PROPERTIES
         PREFIX ""
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
         )
-set(CMAKE_BUILD_TYPE Debug)
+
 add_subdirectory(src)

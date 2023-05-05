@@ -10,7 +10,9 @@
 #include "Api.hpp"
 #include "Sphere.hpp"
 
-Plugin::Sphere::Sphere(const Component::Vector3f &position, float radius) : APrimitive("sphere", position), _radius(radius)
+static const std::string SPHERE = "sphere";
+
+Plugin::Sphere::Sphere(const Component::Vector3f &position, float radius) : APrimitive(SPHERE, position), _radius(radius)
 {
 
 }
@@ -41,11 +43,13 @@ float Plugin::Sphere::intersect(const Raytracer::Ray &ray) const
     }
 }
 
-Component::Vector3f Plugin::Sphere::getNormal(const Component::Vector3f &hit_point) const {
+Component::Vector3f Plugin::Sphere::getNormal(const Component::Vector3f &hit_point) const
+{
     return (hit_point - getPosition()).normalize();
 }
 
-Raytracer::IEntity *createEntity(const libconfig::Setting &setting) {
+Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
+{
     Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
     float radius = 0;
 
@@ -53,15 +57,18 @@ Raytracer::IEntity *createEntity(const libconfig::Setting &setting) {
     return new Plugin::Sphere(position, radius);
 }
 
-const char *getName() {
-    return "sphere";
+const char *getName()
+{
+    return SPHERE.c_str();
 }
 
-LibType getType() {
+LibType getType()
+{
     return LibType::ENTITY;
 }
 
-void destroyEntity(Raytracer::IEntity *entity) {
+void destroyEntity(Raytracer::IEntity *entity)
+{
     std::cout << "destroy sphere" << std::endl;
     delete entity;
 }

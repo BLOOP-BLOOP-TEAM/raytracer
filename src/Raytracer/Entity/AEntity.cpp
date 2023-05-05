@@ -13,7 +13,7 @@ Raytracer::AEntity::AEntity(Raytracer::CompType type, const Component::Vector3f 
 
 void Raytracer::AEntity::translate(const Component::Vector3f &newPos)
 {
-
+    _position = _position + newPos;
 }
 
 void Raytracer::AEntity::rotate(const Component::Vector3f &newRot)

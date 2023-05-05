@@ -18,15 +18,18 @@ void Component::Color::clamp()
     b = std::clamp(b, 0, 255);
 }
 
-Component::Color Component::Color::operator*(float scalar) const {
+Component::Color Component::Color::operator*(float scalar) const
+{
     return Component::Color(r * scalar, g * scalar, b * scalar);
 }
 
 
-Component::Color Component::Color::operator*(const Component::Color &other) const {
+Component::Color Component::Color::operator*(const Component::Color &other) const
+{
     return Component::Color(r * other.r, g * other.g, b * other.b);
 }
 
-Component::Color Component::Color::operator+(const Component::Color &other) const {
+Component::Color Component::Color::operator+(const Component::Color &other) const
+{
     return Component::Color(r + other.r, g + other.g, b + other.b);
 }
