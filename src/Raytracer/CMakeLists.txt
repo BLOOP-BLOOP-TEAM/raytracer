@@ -15,6 +15,30 @@ target_sources(raytracer PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/Matrix.cpp"
         )
 
+target_sources(plugin_simple_material PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/Vector3f.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp"
+        )
+
+target_sources(plugin_point_light PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/Vector3f.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp"
+        )
+
+target_sources(plugin_perspective_camera PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/Vector3f.cpp"
+        )
+
+target_sources(plugin_sphere PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/Vector3f.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp"
+        )
+
+target_sources(plugin_plane PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/Vector3f.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp"
+        )
+
 add_subdirectory(Core)
 add_subdirectory(Entity)
 add_subdirectory(Display)
