@@ -6,6 +6,7 @@
 */
 
 #include <libconfig.h++>
+#include "Api.hpp"
 #include "Plane.hpp"
 
 Plugin::Plane::Plane(const Component::Vector3f &position, const Component::Vector3f &normal)
@@ -47,6 +48,6 @@ const char *getName() {
     return "Plane";
 }
 
-Raytracer::CompType getType() {
-    return Raytracer::CompType::PRIMITIVE;
+LibType getType() {
+    return LibType::ENTITY;
 }

@@ -8,3 +8,5 @@
 #pragma once
 
 #include <cstdlib>
+
+#define EXIT_EPITECH 84

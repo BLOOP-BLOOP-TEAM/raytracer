@@ -27,7 +27,9 @@ void Raytracer::LoadPlugin::loadPluginsFromDirectory(const std::string& director
 {
     auto pluginFiles = findPluginFiles(directory);
 
+    std::cout << "Found " << pluginFiles.size() << " plugins" << std::endl;
     for (const auto& filepath : pluginFiles) {
+        std::cout << "Loading plugin: " << filepath << std::endl;
         loadPlugin(filepath);
     }
 }
@@ -52,7 +54,7 @@ std::vector<std::string> Raytracer::LoadPlugin::findPluginFiles(const std::strin
 }
 
 template <typename T, typename... Args>
-T getResult(void* library, const std::string& symbolName, Args&&... args)
+static T getResult(void* library, const std::string& symbolName, Args&&... args)
 {
     void* sym = dlsym(library, symbolName.c_str());
 
@@ -62,6 +64,18 @@ T getResult(void* library, const std::string& symbolName, Args&&... args)
 
     T (*function)(Args...) = reinterpret_cast<T(*)(Args...)>(sym);
     return (function(std::forward<Args>(args)...));
+}
+
+template <typename T>
+static T openLibraryFunc(void *library, const std::string &symbolName)
+{
+    void *sym = dlsym(library, symbolName.c_str());
+
+    if (!sym) {
+        throw std::runtime_error("Error on open with dlsym: " + std::string(dlerror()));
+    }
+
+    return reinterpret_cast<T>(sym);
 }
 
 void Raytracer::LoadPlugin::loadPlugin(const std::string& filepath)
@@ -77,21 +91,21 @@ void Raytracer::LoadPlugin::loadPlugin(const std::string& filepath)
     _loadedLibraries.push_back(library);
 
     try {
-        LibType type = getResult<LibType>(library, "getType");
+        auto type = getResult<LibType>(library, "getType");
 
         switch (type) {
             case LibType::ENTITY: {
-                auto createEntity = getResult<Raytracer::IEntity*(*)(const libconfig::Setting&)>(library, "CreateEntity");
-                auto destroyEntity = getResult<void(*)(Raytracer::IEntity*)>(library, "destroyEntity");
-                auto nameEntity = getResult<const char*(*)()>(library, "getName");
+                auto createEntity = openLibraryFunc<Raytracer::IEntity*(*)(const libconfig::Setting&)>(library, "createEntity");
+                auto destroyEntity = openLibraryFunc<void(*)(Raytracer::IEntity*)>(library, "destroyEntity");
+                auto nameEntity = openLibraryFunc<const char*(*)()>(library, "getName");
 
                 _factoryEntity.addCreator(nameEntity(), createEntity, destroyEntity);
                 break;
             }
             case LibType::MATERIAL: {
-                auto createMaterial = getResult<Raytracer::IMaterial*(*)(const libconfig::Setting&)>(library, "CreateMaterial");
-                auto destroyMaterial = getResult<void(*)(Raytracer::IMaterial*)>(library, "destroyMaterial");
-                auto nameMaterial = getResult<const char*(*)()>(library, "getName");
+                auto createMaterial = openLibraryFunc<Raytracer::IMaterial*(*)(const libconfig::Setting&)>(library, "createMaterial");
+                auto destroyMaterial = openLibraryFunc<void(*)(Raytracer::IMaterial*)>(library, "destroyMaterial");
+                auto nameMaterial = openLibraryFunc<const char*(*)()>(library, "getName");
 
                 _factoryMaterial.addCreator(nameMaterial(), createMaterial, destroyMaterial);
                 break;

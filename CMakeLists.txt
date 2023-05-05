@@ -24,8 +24,7 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBCONFIG++ REQUIRED IMPORTED_TARGET libconfig++)
 find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 
-
-target_link_libraries(raytracer PRIVATE sfml-graphics sfml-window sfml-system PkgConfig::LIBCONFIG++)
+target_link_libraries(raytracer PRIVATE sfml-graphics sfml-window sfml-system PkgConfig::LIBCONFIG++ ${CMAKE_DL_LIBS})
 
 ##############################################################################
 # Plugin .so libs

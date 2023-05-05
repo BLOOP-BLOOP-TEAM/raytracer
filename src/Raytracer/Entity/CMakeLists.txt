@@ -17,3 +17,29 @@ target_sources(raytracer PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/ScenesManager.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp"
         )
+
+target_sources(plugin_plane PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/AMaterial.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/APrimitive.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/AEntity.cpp"
+        )
+
+target_sources(plugin_point_light PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/ALight.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/AEntity.cpp"
+        )
+
+target_sources(plugin_simple_material PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/AMaterial.cpp"
+        )
+
+target_sources(plugin_perspective_camera PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/ACam.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/AEntity.cpp"
+        )
+
+target_sources(plugin_sphere PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/AMaterial.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/APrimitive.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/AEntity.cpp"
+        )

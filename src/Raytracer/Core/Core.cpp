@@ -7,15 +7,16 @@
 
 #include "Core.hpp"
 
-static const std::string FOLDER = "./src/Plugins";
+static const std::string FOLDER = "./plugins";
 
 Raytracer::Core::Core() : _scenesManager(), _displayModule(1920, 1080, "Raytracer"), _eventManager(_displayModule.getWindow()), _observer()
 {
     LoadPlugin loadPlugin;
     LoadConfig LoadConfig;
-
-    LoadConfig.loadConfigFolder();
+    
     loadPlugin.loadPluginsFromDirectory(FOLDER);
+    LoadConfig.loadConfigFolder();
+    std::cout << "Load config" << std::endl;
     auto &actualScene = _scenesManager.getSceneActual();
     _observer.subscribe(actualScene.getFileName());
     actualScene.calculateImage();
