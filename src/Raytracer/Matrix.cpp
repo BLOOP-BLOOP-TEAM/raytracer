@@ -22,36 +22,36 @@ Component::Matrix3x3::Matrix3x3(float m0, float m1, float m2, float m3, float m4
     m[6] = m6; m[7] = m7; m[8] = m8;
 }
 
-Component::Matrix3x3 Component::Matrix3x3::fromEulerAngles(const Component::Vector3f &angles)
+Component::Matrix3x3 Component::Matrix3x3::fromEulerAngles(const Component::Vector3f &eulerAngles)
 {
-    float sx = sinf(angles.x);
-    float cx = cosf(angles.x);
-    float sy = sinf(angles.y);
-    float cy = cosf(angles.y);
-    float sz = sinf(angles.z);
-    float cz = cosf(angles.z);
+    float cos_x = cosf(eulerAngles.x);
+    float sin_x = sinf(eulerAngles.x);
+    float cos_y = cosf(eulerAngles.y);
+    float sin_y = sinf(eulerAngles.y);
+    float cos_z = cosf(eulerAngles.z);
+    float sin_z = sinf(eulerAngles.z);
 
-    Matrix3x3 rx{
+    Component::Matrix3x3 Rx = {
             1, 0, 0,
-            0, cx, -sx,
-            0, sx, cx
+            0, cos_x, -sin_x,
+            0, sin_x, cos_x,
     };
 
-    Matrix3x3 ry{
-            cy, 0, sy,
+    Component::Matrix3x3 Ry = {
+            cos_y, 0, sin_y,
             0, 1, 0,
-            -sy, 0, cy
+            -sin_y, 0, cos_y,
     };
 
-    Matrix3x3 rz{
-            cz, -sz, 0,
-            sz, cz, 0,
-            0, 0, 1
+    Component::Matrix3x3 Rz = {
+            cos_z, -sin_z, 0,
+            sin_z, cos_z, 0,
+            0, 0, 1,
     };
 
-    return rz * ry * rx;
+    // Modifiez l'ordre des multiplications de matrice ici, par exemple : Rz * Rx * Ry
+    return Rz * Ry * Rx;
 }
-
 Component::Matrix3x3 Component::Matrix3x3::operator*(const Component::Matrix3x3 &other) const
 {
     Matrix3x3 result;

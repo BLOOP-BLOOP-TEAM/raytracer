@@ -17,7 +17,7 @@
 namespace Raytracer {
     class Scene {
     public:
-        Scene(const std::string &name);
+        Scene(std::string name, std::string fileName);
 
         ~Scene();
 
@@ -51,6 +51,7 @@ namespace Raytracer {
         std::vector<IMaterial *> _materials;
         std::unique_ptr<Image> _image;
         std::string _fileName;
+        std::string _name;
         bool _isCalculate;
     };
 };

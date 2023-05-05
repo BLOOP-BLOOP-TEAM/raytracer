@@ -38,13 +38,13 @@ namespace Raytracer {
 
         static ACam& findCam(const std::vector<IEntity *> &entities);
 
-        static std::vector<std::shared_ptr<ALight>> findLights(const std::vector<IEntity *> &entities);
+        static std::vector<ALight *> findLights(const std::vector<IEntity *> &entities);
 
         [[nodiscard]] Component::Vector3f getRayDirection(int x, int y, const ACam &cam);
 
         static Component::Color castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                  const std::vector<IEntity *> &entities,
-                                 const std::vector<std::shared_ptr<Raytracer::ALight>> &lights) ;
+                                 const std::vector<Raytracer::ALight *> &lights) ;
 
         static Raytracer::IEntity &findClosestEntity(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                                                      const std::vector<IEntity *> &entities, float &t_min) ;

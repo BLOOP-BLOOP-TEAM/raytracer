@@ -62,5 +62,6 @@ LibType getType() {
 }
 
 void destroyEntity(Raytracer::IEntity *entity) {
+    std::cout << "destroy sphere" << std::endl;
     delete entity;
 }

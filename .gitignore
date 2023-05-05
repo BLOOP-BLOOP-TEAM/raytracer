@@ -53,6 +53,8 @@ _deps
 # External projects
 *-prefix/
 
+vgcore.*
+
 raytracer
 # End of https://www.toptal.com/developers/gitignore/api/cmake
 

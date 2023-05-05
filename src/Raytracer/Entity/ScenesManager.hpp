@@ -21,7 +21,7 @@ namespace Raytracer {
 
         void addScene(std::unique_ptr<Scene> scene);
 
-        void addMultipleScenes(std::vector<std::unique_ptr<Scene>> scenes);
+        void addMultipleScenes(std::vector<std::unique_ptr<Scene>> &scenes);
 
         [[nodiscard]] Scene &getSceneActual() const;
 

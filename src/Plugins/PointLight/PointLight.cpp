@@ -5,6 +5,7 @@
 ** PointLight
 */
 
+#include <iostream>
 #include <libconfig.h++>
 #include "Api.hpp"
 #include "PointLight.hpp"
@@ -31,6 +32,8 @@ LibType getType() {
     return LibType::ENTITY;
 }
 
-void destroyEntity(Raytracer::IEntity *entity) {
+void destroyEntity(Raytracer::IEntity *entity)
+{
+    std::cout << "destroying light" << std::endl;
     delete entity;
 }

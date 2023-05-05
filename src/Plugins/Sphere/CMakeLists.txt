@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 target_include_directories(plugin_sphere PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
-
+set(CMAKE_BUILD_TYPE Debug)
 target_sources(plugin_sphere PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/Sphere.cpp"
         )

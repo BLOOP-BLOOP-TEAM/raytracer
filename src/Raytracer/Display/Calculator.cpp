@@ -21,15 +21,15 @@ Raytracer::ACam &Raytracer::Calculator::findCam(const std::vector<IEntity *> &en
     throw std::runtime_error("No camera found in the scene.");
 }
 
-std::vector<std::shared_ptr<Raytracer::ALight>> Raytracer::Calculator::findLights(const std::vector<IEntity *> &entities)
+std::vector<Raytracer::ALight *> Raytracer::Calculator::findLights(const std::vector<IEntity *> &entities)
 {
-    std::vector<std::shared_ptr<ALight>> lights = {};
+    std::vector<ALight *> lights = {};
     Raytracer::ALight* light = nullptr;
 
     for (const auto &entity : entities) {
         if (entity->getType() == Raytracer::CompType::LIGHT) {
             light = static_cast<Raytracer::ALight*>(entity);
-            lights.push_back(std::shared_ptr<ALight>(light));
+            lights.push_back(light);
         }
     }
     return lights;
@@ -42,12 +42,12 @@ Component::Vector3f Raytracer::Calculator::getRayDirection(int x, int y, const R
     float ndc_y = 1.0f - (2.0f * y) / static_cast<float>(height);
 
     // Calculer l'aspect ratio de l'écran
-    float aRatio = static_cast<float>(height) / static_cast<float>(width);
+    float aRatio = static_cast<float>(width) / static_cast<float>(height);
 
     // Calculer la distance focale en fonction du champ de vision (fov) et de l'aspect ratio
     float fov = cam.getFieldOfView();
     float focalLengthX = 1.0f / tanf(fov * 0.5f * (M_PI / 180.0f));
-    float focalLengthY = focalLengthX / aRatio;
+    float focalLengthY = focalLengthX * aRatio;
 
     // Créer un vecteur direction dans l'espace de la caméra
     Component::Vector3f directionInCameraSpace(ndc_x / focalLengthX, ndc_y / focalLengthY, -1.0f);
@@ -66,7 +66,7 @@ Component::Vector3f Raytracer::Calculator::getRayDirection(int x, int y, const R
 
 Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                                 const std::vector<IEntity *> &entities,
-                                                const std::vector<std::shared_ptr<Raytracer::ALight>> &lights)
+                                                const std::vector< Raytracer::ALight *> &lights)
 {
     float t_min = std::numeric_limits<float>::max();
     IEntity &intersected_object = findClosestEntity(origin, direction, entities, t_min);
@@ -156,7 +156,7 @@ void Raytracer::Calculator::calculatePixels()
     try {
         ACam& camera = findCam(entities);
         std::cout << "Camera position: (" << camera.getPosition().x << ", " << camera.getPosition().y << ", " << camera.getPosition().z << ")" << std::endl;
-        std::vector<std::shared_ptr<ALight>> lights = findLights(entities);
+        std::vector<ALight *> lights = findLights(entities);
         if (lights.empty()) {
             std::cout << "No lights found" << std::endl;
         } else {

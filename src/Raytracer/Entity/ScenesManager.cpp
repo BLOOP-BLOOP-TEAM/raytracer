@@ -20,7 +20,7 @@ void Raytracer::ScenesManager::addScene(std::unique_ptr<Scene> scene)
     _scenes.push_back(std::move(scene));
 }
 
-void Raytracer::ScenesManager::addMultipleScenes(std::vector<std::unique_ptr<Scene>> scenes)
+void Raytracer::ScenesManager::addMultipleScenes(std::vector<std::unique_ptr<Scene>> &scenes)
 {
     for (auto &scene : scenes)
         _scenes.push_back(std::move(scene));

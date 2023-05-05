@@ -11,7 +11,7 @@
 
 Raytracer::APrimitive::APrimitive(std::string type, const Component::Vector3f &position) : _typePrimitive(std::move(type)),
                                                                                                   AEntity(Raytracer::CompType::PRIMITIVE,
-                                                                                                          position)
+                                                                                                          position), _material(nullptr)
 {
 }
 
