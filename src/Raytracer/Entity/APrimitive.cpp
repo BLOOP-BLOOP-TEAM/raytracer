@@ -6,16 +6,18 @@
 */
 
 #include <utility>
+#include <iostream>
 #include "APrimitive.hpp"
 
 Raytracer::APrimitive::APrimitive(std::string type, const Component::Vector3f &position) : _typePrimitive(std::move(type)),
                                                                                                   AEntity(Raytracer::CompType::PRIMITIVE,
-                                                                                                          position)
+                                                                                                          position), _material(nullptr)
 {
 }
 
 float Raytracer::APrimitive::intersect(const Ray &ray) const
 {
+    std::cout << "APrimitive::intersect" << std::endl;
     return 0;
 }
 

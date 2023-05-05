@@ -5,6 +5,7 @@
 ** Factory
 */
 
+#include <iostream>
 #include <stdexcept>
 #include "FactoryEntity.hpp"
 #include "AEntity.hpp"
@@ -12,9 +13,9 @@
 #include "ALight.hpp"
 #include "APrimitive.hpp"
 #include "RaytracerException.hpp"
+
 Raytracer::IEntity* Raytracer::FactoryEntity::createEntity(const std::string &name, const libconfig::Setting &setting)
 {
-
     Raytracer::IEntity *result = _entities[name].first(setting);
 
     if (result == nullptr) {
@@ -26,6 +27,8 @@ Raytracer::IEntity* Raytracer::FactoryEntity::createEntity(const std::string &na
 void Raytracer::FactoryEntity::destroyEntity(Raytracer::IEntity *entity)
 {
     AEntity *ent = static_cast<AEntity *>(entity);
+
+    auto test = entity->getType();
 
     if (ent->getType() == Raytracer::CompType::CAM) {
         ACam *cam = static_cast<ACam *>(ent);
