@@ -28,6 +28,5 @@ namespace Raytracer {
         DisplayModule _displayModule;
         EventManager _eventManager;
         Observer _observer;
-        bool _isRunning;
     };
 };

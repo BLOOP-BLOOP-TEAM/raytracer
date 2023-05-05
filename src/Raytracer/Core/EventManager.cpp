@@ -84,11 +84,12 @@ Raytracer::EventManager::EventManager(sf::RenderWindow &window) : _window(window
 void Raytracer::EventManager::update()
 {
     while (_window.pollEvent(_event)) {
-        if (_event.type == sf::Event::Closed)
+        if (_event.type == sf::Event::Closed) {
+            _events.push_back("Quit");
             _window.close();
-        if (_event.type == sf::Event::KeyPressed && KeyboardKeys.find(_event.key.code) != KeyboardKeys.end()) {
-            _events.push_back(KeyboardKeys.at(_event.key.code));
         }
+        if (_event.type == sf::Event::KeyPressed && KeyboardKeys.find(_event.key.code) != KeyboardKeys.end())
+            _events.push_back(KeyboardKeys.at(_event.key.code));
     }
 }
 

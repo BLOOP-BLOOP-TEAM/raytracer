@@ -8,6 +8,9 @@
 #include "RaytracerException.hpp"
 #include "ScenesManager.hpp"
 
+static const std::string keyLeft = "KEY_LEFT_PRESSED";
+static const std::string keyRight = "KEY_RIGHT_PRESSED";
+
 Raytracer::ScenesManager::ScenesManager() : _sceneActual(0)
 {
 }
@@ -37,8 +40,14 @@ void Raytracer::ScenesManager::setSceneActual(int scene)
 
 void Raytracer::ScenesManager::update(Raytracer::EventManager &eventManager)
 {
-    // treatment of events
-    // if is event triggered change scene _sceneActual + 1
+    if (eventManager.isEventTriggered(keyLeft)) {
+        _sceneActual - 1 >= 0 ? setSceneActual(_sceneActual - 1) : 
+                                setSceneActual(_scenes.size());
+    }
+    if (eventManager.isEventTriggered(keyRight)) {
+        _sceneActual + 1 > _scenes.size() ? setSceneActual(0) :
+                                            setSceneActual(_sceneActual + 1);
+    }
     if (!_scenes[_sceneActual]->getIsCalculate())
         _scenes[_sceneActual]->calculateImage();
     _scenes[_sceneActual]->update(eventManager);

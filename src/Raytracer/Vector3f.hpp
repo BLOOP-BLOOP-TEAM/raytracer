@@ -15,39 +15,23 @@ namespace Component {
         float y;
         float z;
 
-        Vector3f() : x(0), y(0), z(0) {}
-        Vector3f(float x, float y, float z) : x(x), y(y), z(z) {}
+        Vector3f();
+        Vector3f(float x, float y, float z);
 
-        Vector3f operator+(const Vector3f& v) const
-        {
-            return {x + v.x, y + v.y, z + v.z};
-        }
+        Vector3f operator+(const Vector3f& v) const;
 
-        Vector3f operator-(const Vector3f& v) const
-        {
-            return {x - v.x, y - v.y, z - v.z};
-        }
+        Vector3f operator-(const Vector3f& v) const;
 
-        Component::Vector3f operator*(float scalar) const {
-            return {x * scalar, y * scalar, z * scalar};
-        }
+        Component::Vector3f operator*(float scalar) const;
 
-        Vector3f operator*(const Vector3f& v) const
-        {
-            return {x * v.x, y * v.y, z * v.z};
-        }
+        Vector3f operator*(const Vector3f& v) const;
 
+        Vector3f operator/(float s) const;
 
-        Vector3f operator/(float s) const
-        {
-            return {x / s, y / s, z / s};
-        }
+        [[nodiscard]] float length() const;
 
-        [[nodiscard]] float length() const
-        {
-            return std::sqrt(x * x + y * y + z * z);
-        }
-
+        [[nodiscard]] Vector3f normalize() const;
+        
         Vector3f normalize() const {
             return *this / length();
         }

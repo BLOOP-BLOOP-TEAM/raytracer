@@ -9,12 +9,13 @@
 
 static const std::string FOLDER = "./plugins";
 
-Raytracer::Core::Core() : _isRunning(true), _scenesManager(), _displayModule(1080, 1920, "Raytracer"), _eventManager(_displayModule.getWindow()), _observer()
+Raytracer::Core::Core() : _scenesManager(), _displayModule(1080, 1080, "Raytracer"), _eventManager(_displayModule.getWindow()), _observer()
 {
     LoadPlugin loadPlugin;
     LoadConfig LoadConfig;
-    
+
     loadPlugin.loadPluginsFromDirectory(FOLDER);
+     LoadConfig.loadConfigFolder();
     _scenesManager.addMultipleScenes(LoadConfig.loadConfigFolder());
     auto &actualScene = _scenesManager.getSceneActual();
     _observer.subscribe(actualScene.getFileName());
@@ -23,7 +24,7 @@ Raytracer::Core::Core() : _isRunning(true), _scenesManager(), _displayModule(108
 
 void Raytracer::Core::run()
 {
-    while (_isRunning) {
+    while (!_eventManager.isEventTriggered("Quit")) {
         _eventManager.update();
         _scenesManager.update(_eventManager);
         _observer.checkEditedFiles();
