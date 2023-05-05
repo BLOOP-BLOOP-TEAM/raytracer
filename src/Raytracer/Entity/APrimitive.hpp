@@ -27,7 +27,7 @@ namespace Raytracer {
         */
        APrimitive(std::string type, const Component::Vector3f &position);
 
-           ~APrimitive() override = default;
+        ~APrimitive() override = default;
 
        /**
         * @brief Function that checks for an intersection with a ray
