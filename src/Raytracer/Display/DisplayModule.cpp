@@ -64,7 +64,7 @@ namespace Raytracer {
         if (fontIt == _allFonts.end()) {
             sf::Font font;
             if (!font.loadFromFile(textComponent.fontPath))
-                throw(std::invalid_argument("Impossible de charger la font")); // a modifier
+                throw Raytracer::RaytracerException("Impossible de charger la font");
             _allFonts.insert({textComponent.fontPath, font});
             fontIt = _allFonts.find(textComponent.fontPath);
         }

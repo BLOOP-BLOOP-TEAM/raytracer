@@ -95,7 +95,6 @@ void Raytracer::ScenesManager::update(Raytracer::EventManager &eventManager)
         moveCamera(key);
     if (eventManager.isEventTriggered(keyEnter) && getCam().isEdited()) {
         _scenes[_sceneActual]->calculateImage();
-        std::cout << "MODIFICATION EFFECTUE" << std::endl;
         getCam().setEdit(false);
     }
     if (!_scenes[_sceneActual]->getIsCalculate())

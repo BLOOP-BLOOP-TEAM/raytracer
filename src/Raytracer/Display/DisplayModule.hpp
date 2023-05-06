@@ -12,6 +12,7 @@
 #include "Image.hpp"
 #include "Text.hpp"
 #include "ScenesManager.hpp"
+#include "RaytracerException.hpp"
 
 namespace Raytracer {
     class DisplayModule {
