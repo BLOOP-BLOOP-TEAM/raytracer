@@ -19,13 +19,18 @@ namespace Raytracer {
 
             const std::string &getType();
 
-            [[nodiscard]] Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal, const Component::Vector3f &lightDirection, float lightIntensity) const override;
+            [[nodiscard]] Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
+                                                    const Component::Vector3f &lightDirection, float lightIntensity,
+                                                    const Component::Color &ambientLightColor, float ambientLightIntensity) const override = 0;
+
 
             [[nodiscard]] Component::Color getDiffuse() const override = 0;
 
             [[nodiscard]] float getSpecular() const override = 0;
 
             [[nodiscard]] float getShininess() const override = 0;
+
+            [[nodiscard]] float getReflectivity() const override = 0;
         protected:
             const std::string _type;
     };

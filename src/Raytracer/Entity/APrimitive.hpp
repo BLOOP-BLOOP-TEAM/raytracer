@@ -34,5 +34,6 @@ namespace Raytracer {
     private:
         std::string _typePrimitive;
         IMaterial *_material;
+        std::unique_ptr<IMaterial> _defaultMaterial;
     };
 };

@@ -23,8 +23,9 @@ float Raytracer::APrimitive::intersect(const Ray &ray) const
 
 void Raytracer::APrimitive::setMaterial(IMaterial *material)
 {
-    if (_material == nullptr)
+    if (material == nullptr)
         return;
+    std::cout << "APrimitive::setMaterial real" << std::endl;
     _material = material;
 }
 

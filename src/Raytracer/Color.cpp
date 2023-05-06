@@ -7,29 +7,38 @@
 
 #include "Color.hpp"
 
-Component::Color::Color() : r(0), g(0), b(0) {}
+Component::Color::Color() : r(0.0), g(0.0), b(0.0) {}
 
-Component::Color::Color(int red, int green, int blue) : r(red), g(green), b(blue) {}
+Component::Color::Color(float red, float green, float blue) : r(red), g(green), b(blue) {}
 
 void Component::Color::clamp()
 {
-    r = std::clamp(r, 0, 255);
-    g = std::clamp(g, 0, 255);
-    b = std::clamp(b, 0, 255);
+    r = std::clamp(r, 0.0f, 1.0f);
+    g = std::clamp(g, 0.0f, 1.0f);
+    b = std::clamp(b, 0.0f, 1.0f);
 }
+
 
 Component::Color Component::Color::operator*(float scalar) const
 {
     return Component::Color(r * scalar, g * scalar, b * scalar);
 }
 
-
 Component::Color Component::Color::operator*(const Component::Color &other) const
 {
     return Component::Color(r * other.r, g * other.g, b * other.b);
 }
 
+
 Component::Color Component::Color::operator+(const Component::Color &other) const
 {
     return Component::Color(r + other.r, g + other.g, b + other.b);
+}
+
+Component::Color Component::Color::toInteger() const
+{
+    int red = static_cast<int>(r * 255);
+    int green = static_cast<int>(g * 255);
+    int blue = static_cast<int>(b * 255);
+    return Component::Color(red, green, blue);
 }

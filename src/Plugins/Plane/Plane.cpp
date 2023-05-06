@@ -30,14 +30,17 @@ Component::Vector3f Plugin::Plane::getNormal(const Component::Vector3f &hit_poin
     return _normal;
 }
 
-Component::Color Plugin::Plane::getColor(const Component::Vector3f &hit_point) const
-{
-    int checker_size = 1;
-    int x = static_cast<int>(floor(hit_point.x / checker_size));
-    int z = static_cast<int>(floor(hit_point.z / checker_size));
-    bool is_even = (x + z) % 2 == 0;
+Component::Color Plugin::Plane::getColor(const Component::Vector3f &hit_point) const {
+    int x = static_cast<int>(floor(hit_point.x));
+    int z = static_cast<int>(floor(hit_point.z));
+    int sum = x + z;
 
-    return is_even ? Component::Color(255, 255, 255) : Component::Color(0, 0, 0);
+    // Retournez la couleur du damier pour le point d'intersection donné
+    if (sum % 2 == 0) {
+        return Component::Color(1.0f, 1.0f, 1.0f); // Blanc
+    } else {
+        return Component::Color(0.5f, 0.5f, 0.5f); // Gris
+    }
 }
 
 Raytracer::IEntity *createEntity(const libconfig::Setting &setting)

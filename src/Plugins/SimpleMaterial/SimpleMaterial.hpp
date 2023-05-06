@@ -14,12 +14,10 @@
 namespace Plugin {
     class SimpleMaterial : public Raytracer::AMaterial {
     public:
-        SimpleMaterial(const Component::Color &baseColor, float diffuseFactor);
+        SimpleMaterial(const Component::Color &baseColor, float diffuseFactor, float reflectivity);
 
         ~SimpleMaterial() override = default;
 
-        [[nodiscard]] Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
-                                      const Component::Vector3f &lightDirection, float lightIntensity) const override;
 
         [[nodiscard]] Component::Color getDiffuse() const override;
 
@@ -30,5 +28,12 @@ namespace Plugin {
     private:
         Component::Color _baseColor;
         float _diffuseFactor;
+        float _reflectivity;
+
+        [[nodiscard]] Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
+                                      const Component::Vector3f &lightDirection, float lightIntensity,
+                                      const Component::Color &ambientLightColor, float ambientLightIntensity) const override;
+
+        [[nodiscard]] float getReflectivity() const override;
     };
 }
