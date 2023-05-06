@@ -23,7 +23,7 @@ namespace Raytracer {
     public:
         Image(int width, int height);
 
-        [[nodiscard]] Component::Color get_pixel(int x, int y) const;
+        [[nodiscard]] Component::Color get_pixel(unsigned int x, unsigned int y) const;
 
         void write_ppm(const std::string &filename) const;
 

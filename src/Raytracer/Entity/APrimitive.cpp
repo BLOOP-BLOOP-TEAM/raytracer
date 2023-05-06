@@ -6,23 +6,26 @@
 */
 
 #include <utility>
+#include <iostream>
 #include "APrimitive.hpp"
 
 Raytracer::APrimitive::APrimitive(std::string type, const Component::Vector3f &position) : _typePrimitive(std::move(type)),
                                                                                                   AEntity(Raytracer::CompType::PRIMITIVE,
-                                                                                                          position)
+                                                                                                          position), _material(nullptr)
 {
 }
 
 float Raytracer::APrimitive::intersect(const Ray &ray) const
 {
+    std::cout << "APrimitive::intersect" << std::endl;
     return 0;
 }
 
 void Raytracer::APrimitive::setMaterial(IMaterial *material)
 {
-    if (_material == nullptr)
+    if (material == nullptr)
         return;
+    std::cout << "APrimitive::setMaterial real" << std::endl;
     _material = material;
 }
 
@@ -37,10 +40,12 @@ Component::Color Raytracer::APrimitive::getColor(const Component::Vector3f &hit_
 
 }
 
-Raytracer::IMaterial& Raytracer::APrimitive::getMaterial() const {
+Raytracer::IMaterial& Raytracer::APrimitive::getMaterial() const
+{
     return *_material;
 }
 
-const std::string &Raytracer::APrimitive::getTypePrimitive() const {
+const std::string &Raytracer::APrimitive::getTypePrimitive() const
+{
     return _typePrimitive;
 }
