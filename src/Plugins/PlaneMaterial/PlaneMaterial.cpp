@@ -14,13 +14,13 @@
 
 static const std::string PLANEMATERIAL = "PlaneMaterial";
 
-Plugin::PlaneMaterial::PlaneMaterial(const Component::Color &color1, const Component::Color &color2, float squareSize, float diffuseFactor, float reflectivity)
+Plugin::PlaneMaterial::PlaneMaterial(const Component::Color &color1, const Component::Color &color2, double squareSize, double diffuseFactor, double reflectivity)
         : _color1(color1), _color2(color2), _squareSize(squareSize), Raytracer::AMaterial(PLANEMATERIAL), _diffuseFactor(diffuseFactor), _reflectivity(reflectivity) {}
 
 
 Component::Color Plugin::PlaneMaterial::computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
-                                                            const Component::Vector3f &lightDirection, float lightIntensity,
-                                                            const Component::Color &ambientLightColor, float ambientLightIntensity) const
+                                                            const Component::Vector3f &lightDirection, double lightIntensity,
+                                                            const Component::Color &ambientLightColor, double ambientLightIntensity) const
 {
     int ix = static_cast<int>(floor(hitPoint.x / _squareSize));
     int iz = static_cast<int>(floor(hitPoint.z / _squareSize));
@@ -36,7 +36,7 @@ Component::Color Plugin::PlaneMaterial::computeColor(const Component::Vector3f &
         baseColor = _color2;
     }
 
-    float cosTheta = std::max(0.0f, normal.dot(lightDirection));
+    double cosTheta = std::max(0.0, normal.dot(lightDirection));
 
     Component::Color ambientColor = baseColor * ambientLightIntensity;
 
@@ -52,17 +52,17 @@ Component::Color Plugin::PlaneMaterial::getDiffuse() const
     return _color1;
 }
 
-float Plugin::PlaneMaterial::getSpecular() const
+double Plugin::PlaneMaterial::getSpecular() const
 {
     return 0.0f;
 }
 
-float Plugin::PlaneMaterial::getShininess() const
+double Plugin::PlaneMaterial::getShininess() const
 {
     return 1.0f;
 }
 
-float Plugin::PlaneMaterial::getReflectivity() const
+double Plugin::PlaneMaterial::getReflectivity() const
 {
     return _reflectivity;
 }
@@ -71,10 +71,10 @@ Raytracer::IMaterial *createMaterial(const libconfig::Setting &setting)
 {
     Component::Color baseColor(setting["baseColor"][0], setting["baseColor"][1], setting["baseColor"][2]);
     Component::Color baseColorSecond(setting["baseColorSecond"][0], setting["baseColorSecond"][1], setting["baseColorSecond"][2]);
-    float squareSize = 0.0f;
+    double squareSize = 0.0f;
     setting.lookupValue("squareSize", squareSize);
-    float diffuseFactor = 0.0f;
-    float reflectivity = 0.0f;
+    double diffuseFactor = 0.0f;
+    double reflectivity = 0.0f;
 
 
     setting.lookupValue("diffuseFactor", diffuseFactor);
