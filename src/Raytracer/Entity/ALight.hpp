@@ -14,19 +14,19 @@
 namespace Raytracer {
     class ALight : public ILight, public AEntity {
     public:
-        ALight(std::string type, const Component::Vector3f &position, const Component::Color &color, float intensity);
+        ALight(std::string type, const Component::Vector3f &position, const Component::Color &color, double intensity);
 
         ~ALight() override = default;
 
         [[nodiscard]] const Component::Color& getColor() const override;
-        [[nodiscard]] float getIntensity() const override;
+        [[nodiscard]] double getIntensity() const override;
         [[nodiscard]] const std::string &getTypeLight() const;
 
     protected:
     private:
         std::string _typeLight;
         Component::Color _color;
-        float _intensity;
+        double _intensity;
     };
 };
 

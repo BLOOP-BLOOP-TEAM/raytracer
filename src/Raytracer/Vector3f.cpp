@@ -6,9 +6,10 @@
 */
 
 #include "Vector3f.hpp"
+#include "Vector3f.hpp"
 
 Component::Vector3f::Vector3f() : x(0), y(0), z(0) {}
-Component::Vector3f::Vector3f(float x, float y, float z) : x(x), y(y), z(z) {}
+Component::Vector3f::Vector3f(double x, double y, double z) : x(x), y(y), z(z) {}
 
 Component::Vector3f Component::Vector3f::operator+(const Vector3f& v) const
 {
@@ -20,7 +21,7 @@ Component::Vector3f Component::Vector3f::operator-(const Vector3f& v) const
     return {x - v.x, y - v.y, z - v.z};
 }
 
-Component::Vector3f Component::Vector3f::operator*(float scalar) const
+Component::Vector3f Component::Vector3f::operator*(double scalar) const
 {
     return {x * scalar, y * scalar, z * scalar};
 }
@@ -30,32 +31,21 @@ Component::Vector3f Component::Vector3f::operator*(const Vector3f& v) const
     return {x * v.x, y * v.y, z * v.z};
 }
 
-
-Component::Vector3f Component::Vector3f:: operator/(float s) const
+Component::Vector3f Component::Vector3f::operator/(double s) const
 {
     return {x / s, y / s, z / s};
 }
 
-[[nodiscard]] float Component::Vector3f::length() const
+double Component::Vector3f::length() const
 {
     return std::sqrt(x * x + y * y + z * z);
 }
 
-[[nodiscard]] Component::Vector3f Component::Vector3f::normalize() const
+Component::Vector3f Component::Vector3f::rotate(const Vector3f& rotation) const
 {
-    return *this / length();
-}
-
-[[nodiscard]] float Component::Vector3f::dot(const Vector3f& v) const
-{
-    return x * v.x + y * v.y + z * v.z;
-}
-
-[[nodiscard]] Component::Vector3f Component::Vector3f::rotate(const Vector3f& rotation) const
-{
-    float rx = rotation.x * M_PI / 180.0f;
-    float ry = rotation.y * M_PI / 180.0f;
-    float rz = rotation.z * M_PI / 180.0f;
+    double rx = rotation.x * M_PI / 180.0;
+    double ry = rotation.y * M_PI / 180.0;
+    double rz = rotation.z * M_PI / 180.0;
 
     Vector3f rotated;
 
@@ -69,3 +59,21 @@ Component::Vector3f Component::Vector3f:: operator/(float s) const
 
     return rotated;
 }
+
+Component::Vector3f Component::Vector3f::cross(const Component::Vector3f &other) const
+{
+    return {y * other.z - z * other.y,
+            z * other.x - x * other.z,
+            x * other.y - y * other.x};
+}
+
+double Component::Vector3f::dot(const Component::Vector3f &v) const
+{
+    return x * v.x + y * v.y + z * v.z;
+}
+
+Component::Vector3f Component::Vector3f::normalize() const
+{
+    return *this / length();
+}
+

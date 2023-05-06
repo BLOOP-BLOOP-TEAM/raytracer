@@ -15,8 +15,7 @@ namespace Raytracer {
     public:
         virtual ~ICam() = default;
 
-        virtual float getFieldOfView() const = 0;
-        virtual float getAspectRatio() const = 0;
+        [[nodiscard]] virtual double getFieldOfView() const = 0;
 
     protected:
     private:
