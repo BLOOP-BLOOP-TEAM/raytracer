@@ -10,8 +10,10 @@
 #include "Api.hpp"
 #include "Camera.hpp"
 
+static const std::string CAMERA = "camera";
+
 Plugin::Camera::Camera(const Component::Vector3f &position, const Component::Vector3f &rotation, float field_of_view)
-        : Raytracer::ACam("camera", position, rotation, field_of_view)
+        : Raytracer::ACam(CAMERA, position, rotation, field_of_view)
 {
 }
 
@@ -25,15 +27,17 @@ Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
     setting.lookupValue("fieldOfView", field_of_view);
     return new Plugin::Camera(position, rotation, field_of_view);
 }
-const char *getName() {
-    return "camera";
+const char *getName()
+{
+    return CAMERA.c_str();
 }
 
 LibType getType() {
     return LibType::ENTITY;
 }
 
-void destroyEntity(Raytracer::IEntity *entity) {
+void destroyEntity(Raytracer::IEntity *entity)
+{
     std::cout << "destroying camera" << std::endl;
     delete entity;
 }

@@ -16,12 +16,16 @@ namespace Raytracer {
         public:
             virtual ~IMaterial() = default;
 
-            virtual Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal, const Component::Vector3f &lightDirection, float lightIntensity) const = 0;
+            [[nodiscard]] virtual Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
+                                                    const Component::Vector3f &lightDirection, float lightIntensity,
+                                                    const Component::Color &ambientLightColor, float ambientLightIntensity) const = 0;
 
-            virtual Component::Color getDiffuse() const = 0;
+            [[nodiscard]] virtual Component::Color getDiffuse() const = 0;
 
-            virtual float getSpecular() const = 0;
+            [[nodiscard]] virtual float getSpecular() const = 0;
 
-            virtual float getShininess() const = 0;
+            [[nodiscard]] virtual float getShininess() const = 0;
+
+            [[nodiscard]] virtual float getReflectivity() const = 0;
     };
 }

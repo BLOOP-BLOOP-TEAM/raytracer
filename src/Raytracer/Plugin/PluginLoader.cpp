@@ -50,7 +50,8 @@ std::vector<std::string> Raytracer::PluginLoader::findPluginFiles(const std::str
     return pluginFiles;
 }
 
-void Raytracer::PluginLoader::loadPlugin(const std::string& filepath) {
+void Raytracer::PluginLoader::loadPlugin(const std::string& filepath)
+{
     try {
         auto plugin = std::make_unique<Plugin>(filepath);
         LibType type = plugin->getFunction<LibType(*)()>("getType")();

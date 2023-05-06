@@ -5,9 +5,8 @@
 ** Scene
 */
 
-#include "Scene.hpp"
-
 #include <utility>
+#include "Scene.hpp"
 #include "FactoryEntity.hpp"
 #include "FactoryMaterial.hpp"
 #include "Image.hpp"
@@ -20,7 +19,8 @@ Raytracer::Scene::Scene(std::string name, std::string nameFile) : _image(std::ma
     std::cout << "Creating scene" << std::endl;
 }
 
-Raytracer::Scene::~Scene() {
+Raytracer::Scene::~Scene()
+{
     FactoryEntity& factoryEntity = FactoryEntity::getInstance();
     FactoryMaterial& factoryMaterial = FactoryMaterial::getInstance();
 
@@ -96,7 +96,7 @@ void Raytracer::Scene::setIsCalculate()
     _isCalculate = !_isCalculate;
 }
 
-const bool &Raytracer::Scene::getIsCalculate()
+const bool &Raytracer::Scene::getIsCalculate() const
 {
     return _isCalculate;
 }
