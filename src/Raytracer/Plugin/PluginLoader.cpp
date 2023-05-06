@@ -87,7 +87,7 @@ void Raytracer::PluginLoader::loadPlugin(const std::string& filepath)
 
 Raytracer::PluginLoader&  Raytracer::PluginLoader::getInstance()
 {
-    static Raytracer::LoadPlugin instance;
+    static Raytracer::PluginLoader instance;
 
     return instance;
 }
