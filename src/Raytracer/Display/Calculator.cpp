@@ -66,6 +66,7 @@ Component::Vector3f Raytracer::Calculator::getRayDirection(int x, int y, const R
 
     return direction;
 }
+
 Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                                 const std::vector<IEntity *> &entities,
                                                 const std::vector<Raytracer::ALight *> &lights,

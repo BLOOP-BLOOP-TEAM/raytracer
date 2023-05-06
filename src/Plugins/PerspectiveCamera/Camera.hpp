@@ -13,7 +13,7 @@
 namespace Plugin {
     class Camera : public Raytracer::ACam {
     public:
-        Camera(const Component::Vector3f &position, const Component::Vector3f &rotation, double field_of_view, const Component::Vector3f &resolution);
+        Camera(const Component::Vector3f &position, const Component::Vector3f &rotation, bool isEdited, double field_of_view, const Component::Vector3f &resolution);
 
         ~Camera() override = default;
     };
