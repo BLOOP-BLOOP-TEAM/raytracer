@@ -77,5 +77,9 @@ namespace Raytracer {
 
         Component::Color getAverageColor(int x, int y, const ACam *camera, const std::vector<IEntity *> &entities,
                                          const std::vector<Raytracer::ALight *> &lights, int subPixelsPerAxis);
+
+        Component::Vector3f
+        getRefractionDirection(const Component::Vector3f &incident, const Component::Vector3f &normal,
+                               double refractiveIndex);
     };
 };

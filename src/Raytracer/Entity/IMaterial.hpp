@@ -27,5 +27,9 @@ namespace Raytracer {
             [[nodiscard]] virtual double getShininess() const = 0;
 
             [[nodiscard]] virtual double getReflectivity() const = 0;
+
+            [[nodiscard]] virtual double getRefractivity() const = 0;
+
+            [[nodiscard]] virtual double getRefractiveIndex() const = 0;
     };
 }
