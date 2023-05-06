@@ -48,7 +48,7 @@ namespace Raytracer {
 
         Component::Color castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                  const std::vector<IEntity *> &entities,
-                                 const std::vector<Raytracer::ALight *> &lights, int recursionDepth = 4) ;
+                                 const std::vector<Raytracer::ALight *> &lights, int recursionDepth) ;
 
         Raytracer::IEntity &findClosestEntity(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                                                      const std::vector<IEntity *> &entities, double &t_min) ;
