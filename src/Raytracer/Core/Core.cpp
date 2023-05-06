@@ -14,12 +14,10 @@ Raytracer::Core::Core()
           _scenesManager(std::make_unique<ScenesManager>()),
           _displayModule(std::make_unique<DisplayModule>(1920, 1080, "Raytracer")),
           _eventManager(std::make_unique<EventManager>(_displayModule->getWindow())),
-          _observer(std::make_unique<Observer>())
+          _observer(std::make_unique<Observer>(*_scenesManager))
 {
-    _loadPlugin->loadPluginsFromDirectory(FOLDER);
-    ConfigLoader LoadConfig;
-
-    _scenesManager->addMultipleScenes(*LoadConfig.loadConfigFolder());
+    Raytracer::PluginLoader::getInstance().loadPluginsFromDirectory(FOLDER);
+    _scenesManager->addMultipleScenes(ConfigLoader::loadConfigFolder());
     auto &actualScene = _scenesManager->getSceneActual();
     _observer->subscribe(actualScene.getFileName());
     actualScene.calculateImage();
