@@ -41,12 +41,18 @@ target_sources(plugin_sphere PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/Vector3f.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp"
         )
-
+        
 target_sources(plugin_plane PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/Vector3f.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp"
         )
+
 target_sources(plugin_plane_material PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/Vector3f.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp"
+        )
+
+target_sources(plugin_cylinder PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/Vector3f.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp"
         )

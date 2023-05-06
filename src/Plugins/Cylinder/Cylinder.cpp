@@ -5,6 +5,9 @@
 ** Cylinder
 */
 
+#include <iostream>
+#include <libconfig.h++>
+#include "Api.hpp"
 #include "Cylinder.hpp"
 
 static const std::string cylinderName = "Cylinder";
@@ -20,7 +23,7 @@ Plugin::Cylinder::~Cylinder()
 {
 }
 
-Component::Vector3f calculateCylinderAxis(const Component::Vector3f &basePoint, const Component::Vector3f &topPoint)
+Component::Vector3f Plugin::Cylinder::calculateCylinderAxis(const Component::Vector3f &basePoint, const Component::Vector3f &topPoint)
 {
     Component::Vector3f axis = topPoint - basePoint;
 
@@ -68,11 +71,30 @@ Component::Vector3f Plugin::Cylinder::getNormal(const Component::Vector3f &hit_p
     return (hit_point - getPosition()).normalize();
 }
 
-const char *getName()
+Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
 {
-    return cylinderName.data();
+    Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
+    Component::Vector3f basePoint(setting["basePoint"][0], setting["basePoint"][1], setting["basePoint"][2]);
+    Component::Vector3f topPoint(setting["topPoint"][0], setting["topPoint"][1], setting["topPoint"][2]);
+    float height = 0;
+    float radius = 0;
+
+    setting.lookupValue("radius", radius);
+    setting.lookupValue("height", height);
+    return new Plugin::Cylinder(position, radius, height, basePoint, topPoint);
 }
 
-Raytracer::CompType getType() {
-    return Raytracer::CompType::PRIMITIVE;
+const char *getName()
+{
+    return cylinderName.c_str();
+}
+
+LibType getType() {
+    return LibType::ENTITY;
+}
+
+void destroyEntity(Raytracer::IEntity *entity)
+{
+    std::cout << "destroy cylinder" << std::endl;
+    delete entity;
 }
