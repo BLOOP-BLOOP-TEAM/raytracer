@@ -18,13 +18,33 @@
 #include "FactoryMaterial.hpp"
 
 namespace Raytracer {
+    /**
+     * @brief The ConfigLoader class provides a method for loading scene configurations from files and folders.
+     */
     class ConfigLoader {
         public:
+            /**
+             * @brief Constructor for ConfigLoader class.
+             */
             ConfigLoader();
+
+            /**
+             * @brief Default destructor for ConfigLoader class.
+             */
             ~ConfigLoader() = default;
 
-        std::unique_ptr<std::vector<std::unique_ptr<Raytracer::Scene>>> loadConfigFolder();
+            /**
+             * @brief Loads all configuration files in a folder.
+             */
+            std::unique_ptr<std::vector<std::unique_ptr<Raytracer::Scene>>> loadConfigFolder();
+
+            /**
+             * @brief Loads a configuration file at the given path.
+             * 
+             * @param path The path of the configuration file.
+             */
             static std::unique_ptr<Raytracer::Scene> loadConfigFile(const std::string &path);
+
         protected:
         private:
             static void loadPluginType(const std::string &type, const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
@@ -37,4 +57,4 @@ namespace Raytracer {
 
             static std::string extractFileName(const std::string &path);
     };
-}; // namespace Raytracer
+};

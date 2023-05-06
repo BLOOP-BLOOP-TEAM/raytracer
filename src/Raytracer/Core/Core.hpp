@@ -16,19 +16,29 @@
 #include "ConfigLoader.hpp"
 
 namespace Raytracer {
+    /**
+     * @brief The Core class is the main class of the Raytracer program.
+     */
     class Core {
-    public:
-        Core();
-        ~Core();
-        void run();
+        public:
+            /**
+             * @brief Constructor for Core class.
+             */
+            Core();
 
-    protected:
-    private:
-        std::unique_ptr<PluginLoader> _loadPlugin;
-        std::unique_ptr<ScenesManager> _scenesManager;
-        std::unique_ptr<DisplayModule> _displayModule;
-        std::unique_ptr<EventManager> _eventManager;
-        std::unique_ptr<Observer> _observer;
+            ~Core();
+
+            /**
+             * @brief Runs the Raytracer program.
+             */
+            void run();
+
+        protected:
+        private:
+            std::unique_ptr<PluginLoader> _loadPlugin;
+            std::unique_ptr<ScenesManager> _scenesManager;
+            std::unique_ptr<DisplayModule> _displayModule;
+            std::unique_ptr<EventManager> _eventManager;
+            std::unique_ptr<Observer> _observer;
     };
 };
-
