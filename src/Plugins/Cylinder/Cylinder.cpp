@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <libconfig.h++>
+#include <vector>
 #include "Api.hpp"
 #include "Cylinder.hpp"
 
@@ -45,24 +46,42 @@ float Plugin::Cylinder::intersect(const Raytracer::Ray &ray) const
 
     float delta = b * b - 4 * a * c;
 
-    if (delta < 0) {
-        return -1;
-    }
+    std::vector<float> intersections;
 
-    float t1 = (-b - sqrt(delta)) / (2 * a);
-    float t2 = (-b + sqrt(delta)) / (2 * a);
+    if (delta >= 0) {
+        float t1 = (-b - sqrt(delta)) / (2 * a);
+        float t2 = (-b + sqrt(delta)) / (2 * a);
 
-    float min_t = std::min(t1, t2);
-    float max_t = std::max(t1, t2);
+        float min_t = std::min(t1, t2);
+        float max_t = std::max(t1, t2);
 
-    for (float t : {min_t, max_t}) {
-        Component::Vector3f intersect = ray.origin + ray.direction * t;
-        float height = (intersect - getPosition()).dot(_axis);
+        for (float t : {min_t, max_t}) {
+            Component::Vector3f intersect = ray.origin + ray.direction * t;
+            float height = (intersect - getPosition()).dot(_axis);
 
-        if (height >= 0 && height <= _height) {
-            return t;
+            if (height >= 0 && height <= _height) {
+                intersections.push_back(t);
+            }
         }
     }
+
+    for (float face_height : {0.0f, _height}) {
+        float t = (face_height - o.dot(axis)) / d.dot(axis);
+
+        if (t > 0) {
+            Component::Vector3f intersect = ray.origin + ray.direction * t;
+            Component::Vector3f projected = intersect - getPosition() - axis * face_height;
+            
+            if (projected.dot(projected) <= r * r) {
+                intersections.push_back(t);
+            }
+        }
+    }
+
+    if (!intersections.empty()) {
+        return *std::min_element(intersections.begin(), intersections.end());
+    }
+
     return -1;
 }
 
