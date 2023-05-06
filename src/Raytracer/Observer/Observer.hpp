@@ -6,12 +6,12 @@
 */
 
 #pragma once
-#include "vector"
-#include "string"
-#include "iostream" // à enlever
 #include <filesystem>
 #include <chrono>
 #include <algorithm>
+#include <vector>
+#include <string>
+#include "ScenesManager.hpp"
 
 namespace Raytracer {
     /**
@@ -22,16 +22,7 @@ namespace Raytracer {
      */
     class Observer {
         public:
-            /**
-             * @brief The constructor of Observer
-             * 
-             * For each scenes passed in parameter, the observer will subscribe
-             * each scene.
-             * 
-             * @param allScenes vector of strings that contain the path of 
-             * all the scenes
-             */
-            Observer(std::vector<std::string> allScenes = {});
+            Observer(ScenesManager &sceneManager);
 
             ~Observer() = default;
 
@@ -78,8 +69,12 @@ namespace Raytracer {
              * This function will check if the file exists
              */
             std::time_t getTimeStamp(const std::string &path);
-            private:
-                std::vector<std::string> _allSubScenes;
-                std::vector<std::time_t> _lastUpdates;
+
+        private:
+            void replaceScene(const std::string &path);
+
+            std::vector<std::string> _allSubScenes = {};
+            std::vector<std::time_t> _lastUpdates;
+            ScenesManager &_sceneManager;
     };
 };

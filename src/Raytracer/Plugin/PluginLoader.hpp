@@ -37,12 +37,18 @@ namespace Raytracer {
              * @param directory string that define the path of the plugins 
              */
             void loadPluginsFromDirectory(const std::string& directory);
+            /**
+             * @brief Get the instance of the PluginLoader object
+             */
+            static PluginLoader& getInstance();
+
 
         private:
             /**
              * @brief Finds all plugin files in the given directory.
              * 
-             * This function will search the specified directory for all files with the ".so" extension, indicating that they are dynamic libraries containing plugins.
+             * This function will search the specified directory for all files with the ".so" extension,
+             * indicating that they are dynamic libraries containing plugins.
              * 
              * @param directory The path to the directory to search.
              */
@@ -51,7 +57,8 @@ namespace Raytracer {
             /**
              * @brief Loads a single plugin from the specified file path.
              * 
-             * This function will load a single plugin from the specified file path, register its entities and materials with the factory, and add the plugin to the list of loaded plugins.
+             * This function will load a single plugin from the specified file path,
+             * register its entities and materials with the factory, and add the plugin to the list of loaded plugins.
              * 
              * @param filepath The path to the plugin file.
              */

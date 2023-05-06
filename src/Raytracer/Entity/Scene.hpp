@@ -64,6 +64,11 @@ namespace Raytracer {
         [[nodiscard]] IEntity &getEntity(int index) const;
 
         /**
+         * @brief Get the resolution of the cam in the scene
+         */
+        Component::Vector3f getResolution() const;
+
+        /**
          * @brief Function that get all entities
          *
          * This function will get all the entities contains inside _entities.

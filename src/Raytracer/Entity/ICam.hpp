@@ -24,5 +24,11 @@ namespace Raytracer {
              * @brief Gets the field of view of the camera
              */
             virtual double getFieldOfView() const = 0;
+
+            /**
+             * @brief Get the resolution of the cam in the scene
+             */
+            [[nodiscard]] virtual Component::Vector3f getResolution() const = 0;
+
     };
 };

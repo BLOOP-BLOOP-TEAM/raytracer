@@ -8,10 +8,15 @@
 #include "ACam.hpp"
 
 Raytracer::ACam::ACam(const std::string &typeCam, const Component::Vector3f &position, const Component::Vector3f &rotation,
-            double fieldOfView) : AEntity(Raytracer::CompType::CAM, position), _typeCam(typeCam), _rotation(rotation),
-                                                        _fieldOfView(fieldOfView) {}
-double Raytracer::ACam::getFieldOfView() const
-{
+            bool isEdited, double field_of_view, const Component::Vector3f &resolution) 
+    : AEntity(Raytracer::CompType::CAM, position), _typeCam(typeCam), _rotation(rotation),
+        _isEdited(false), _fieldOfView(field_of_view), _resolution(resolution) {}
+
+Component::Vector3f Raytracer::ACam::getResolution() const {
+    return _resolution;
+}
+
+double Raytracer::ACam::getFieldOfView() const {
     return _fieldOfView;
 }
 
@@ -28,4 +33,12 @@ void Raytracer::ACam::setRotation(const Component::Vector3f &rotation)
 const std::string &Raytracer::ACam::getTypeCam() const
 {
     return _typeCam;
+}
+
+const bool Raytracer::ACam::isEdited() const {
+    return _isEdited;
+}
+
+void Raytracer::ACam::setEdit(bool status) {
+    _isEdited = status;
 }

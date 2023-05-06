@@ -30,7 +30,7 @@ namespace Raytracer {
             /**
              * @brief Loads all configuration files in a folder.
              */
-            std::unique_ptr<std::vector<std::unique_ptr<Raytracer::Scene>>> loadConfigFolder();
+            static std::unique_ptr<std::vector<std::unique_ptr<Raytracer::Scene>>> loadConfigFolder();
 
             /**
              * @brief Loads a configuration file at the given path.

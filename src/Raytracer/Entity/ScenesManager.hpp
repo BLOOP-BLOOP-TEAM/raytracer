@@ -38,7 +38,11 @@ namespace Raytracer {
          */
         void addScene(std::unique_ptr<Scene> scene);
 
-        void addMultipleScenes(std::vector<std::unique_ptr<Scene>> &scenes);
+        void addMultipleScenes(std::unique_ptr<std::vector<std::unique_ptr<Scene>>> scenes);
+
+        void replaceScene(std::unique_ptr<Scene> newScene, const std::string &path);
+
+        void removeScene(const std::string &path);
 
         /**
          * @brief Function that get the actual scene
@@ -65,6 +69,10 @@ namespace Raytracer {
          * @param eventManager an EventManager object that handle all the events
          */
         void update(Raytracer::EventManager &eventManager);
+
+        [[nodiscard]] ACam &getCam() const;
+
+        void moveCamera(std::string key);
 
     protected:
     private:
