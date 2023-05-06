@@ -7,19 +7,20 @@
 
 #include "Color.hpp"
 
+#include "Color.hpp"
+
 Component::Color::Color() : r(0.0), g(0.0), b(0.0) {}
 
-Component::Color::Color(float red, float green, float blue) : r(red), g(green), b(blue) {}
+Component::Color::Color(double red, double green, double blue) : r(red), g(green), b(blue) {}
 
 void Component::Color::clamp()
 {
-    r = std::clamp(r, 0.0f, 1.0f);
-    g = std::clamp(g, 0.0f, 1.0f);
-    b = std::clamp(b, 0.0f, 1.0f);
+    r = std::clamp(r, 0.0, 1.0);
+    g = std::clamp(g, 0.0, 1.0);
+    b = std::clamp(b, 0.0, 1.0);
 }
 
-
-Component::Color Component::Color::operator*(float scalar) const
+Component::Color Component::Color::operator*(double scalar) const
 {
     return Component::Color(r * scalar, g * scalar, b * scalar);
 }
@@ -28,7 +29,6 @@ Component::Color Component::Color::operator*(const Component::Color &other) cons
 {
     return Component::Color(r * other.r, g * other.g, b * other.b);
 }
-
 
 Component::Color Component::Color::operator+(const Component::Color &other) const
 {

@@ -18,7 +18,7 @@ namespace Raytracer {
 
         ~APrimitive() override = default;
 
-        [[nodiscard]] float intersect(const Ray &ray) const override;
+        [[nodiscard]] double intersect(const Ray &ray) const override;
 
         void setMaterial(IMaterial *material) override;
 

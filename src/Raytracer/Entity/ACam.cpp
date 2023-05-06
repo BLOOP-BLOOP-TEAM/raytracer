@@ -7,10 +7,16 @@
 
 #include "ACam.hpp"
 
-Raytracer::ACam::ACam(const std::string &typeCam, const Component::Vector3f &position, const Component::Vector3f &rotation,
-            float field_of_view) : AEntity(Raytracer::CompType::CAM, position), _typeCam(typeCam), _rotation(rotation), _fieldOfView(field_of_view), _isEdited(false) {}
-
 float Raytracer::ACam::getFieldOfView() const {
+            double field_of_view, const Component::Vector3f &resolution) : AEntity(Raytracer::CompType::CAM, position), _typeCam(typeCam),
+            _rotation(rotation), _fieldOfView(field_of_view), _isEdited(false), _resolution(resolution) {}
+
+Component::Vector3f Raytracer::ACam::getResolution() const {
+    return _resolution;
+}
+
+double Raytracer::ACam::getFieldOfView() const
+{
     return _fieldOfView;
 }
 

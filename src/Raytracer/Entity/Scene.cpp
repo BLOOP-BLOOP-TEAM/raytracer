@@ -13,8 +13,17 @@
 
 static const std::string FOLDER_PPM = "./PPM/";
 
-Raytracer::Scene::Scene(std::string name, std::string nameFile) : _image(std::make_unique<Image>(1920, 1080)), _fileName(std::move(nameFile)), _isCalculate(
-        false), _name(std::move(name))
+Component::Vector3f Raytracer::Scene::getResolution() const
+{
+    for (IEntity* entity : _entities) {
+        if (entity->getType() == Raytracer::CompType::CAM)
+            return (dynamic_cast<ICam*>(entity))->getResolution();
+    }
+    return Component::Vector3f(1920, 1080, 0);
+}
+
+Raytracer::Scene::Scene(const std::string &name, const std::string &nameFile) : _image(std::make_unique<Image>(getResolution().x, getResolution().y)), _fileName(nameFile), _isCalculate(
+        false), _name(name)
 {
     std::cout << "Creating scene" << std::endl;
 }

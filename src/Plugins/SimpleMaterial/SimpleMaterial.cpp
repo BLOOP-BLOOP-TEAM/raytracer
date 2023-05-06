@@ -14,15 +14,15 @@
 
 static const std::string SIMPLEMATERIAL = "SimpleMaterial";
 
-Plugin::SimpleMaterial::SimpleMaterial(const Component::Color &baseColor, float diffuseFactor, float reflectivity)
+Plugin::SimpleMaterial::SimpleMaterial(const Component::Color &baseColor, double diffuseFactor, double reflectivity)
         : Raytracer::AMaterial(SIMPLEMATERIAL), _baseColor(baseColor), _diffuseFactor(diffuseFactor), _reflectivity(reflectivity) {}
 
 Component::Color Plugin::SimpleMaterial::computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
-                                                      const Component::Vector3f &lightDirection, float lightIntensity,
+                                                      const Component::Vector3f &lightDirection, double lightIntensity,
                                                       const Component::Color &ambientLightColor,
-                                                      float ambientLightIntensity) const
+                                                      double ambientLightIntensity) const
 {
-    float cosTheta = std::max(0.0f, normal.dot(lightDirection));
+    double cosTheta = std::max(0.0, normal.dot(lightDirection));
 
 
     Component::Color ambientColor = _baseColor * ambientLightIntensity;
@@ -39,17 +39,17 @@ Component::Color Plugin::SimpleMaterial::getDiffuse() const
     return _baseColor;
 }
 
-float Plugin::SimpleMaterial::getSpecular() const
+double Plugin::SimpleMaterial::getSpecular() const
 {
     return 0.0f;
 }
 
-float Plugin::SimpleMaterial::getShininess() const
+double Plugin::SimpleMaterial::getShininess() const
 {
     return 1.0f;
 }
 
-float Plugin::SimpleMaterial::getReflectivity() const
+double Plugin::SimpleMaterial::getReflectivity() const
 {
     return _reflectivity;
 }
@@ -57,8 +57,8 @@ float Plugin::SimpleMaterial::getReflectivity() const
 Raytracer::IMaterial *createMaterial(const libconfig::Setting &setting)
 {
     Component::Color baseColor(setting["baseColor"][0], setting["baseColor"][1], setting["baseColor"][2]);
-    float diffuseFactor = 0.0f;
-    float reflectivity = 0.0f;
+    double diffuseFactor = 0.0f;
+    double reflectivity = 0.0f;
 
     setting.lookupValue("diffuseFactor", diffuseFactor);
     setting.lookupValue("reflectivity", reflectivity);

@@ -6,17 +6,17 @@
 */
 
 #pragma once
-#include "vector"
-#include "string"
-#include "iostream" // à enlever
 #include <filesystem>
 #include <chrono>
 #include <algorithm>
+#include <vector>
+#include <string>
+#include "ScenesManager.hpp"
 
 namespace Raytracer {
     class Observer {
         public:
-            Observer(std::vector<std::string> allScenes = {});
+            Observer(ScenesManager &sceneManager);
 
             ~Observer() = default;
 
@@ -31,7 +31,10 @@ namespace Raytracer {
             std::time_t getTimeStamp(const std::string &path);
 
         private:
-            std::vector<std::string> _allSubScenes;
+            void replaceScene(const std::string &path);
+
+            std::vector<std::string> _allSubScenes = {};
             std::vector<std::time_t> _lastUpdates;
+            ScenesManager &_sceneManager;
     };
 };
