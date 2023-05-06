@@ -7,6 +7,7 @@
 
 #include <filesystem>
 #include <vector>
+#include "AMaterial.hpp"
 #include "IEntity.hpp"
 #include "APrimitive.hpp"
 #include "ConfigLoader.hpp"
@@ -88,8 +89,10 @@ Raytracer::IMaterial *Raytracer::ConfigLoader::getMaterialFromName(const Raytrac
         auto material = static_cast<Raytracer::IMaterial *>(element);
         auto materialType = static_cast<Raytracer::AMaterial *>(material)->getType();
 
-        if (materialType == name)
+        if (materialType == name) {
+            std::cout << "Material found : " << name << std::endl;
             return material;
+        }
     }
     return nullptr;
 }

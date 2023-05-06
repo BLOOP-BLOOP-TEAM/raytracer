@@ -17,8 +17,7 @@ namespace Raytracer {
     DisplayModule::DisplayModule(unsigned int width, unsigned int height, const std::string& title, ScenesManager &scenesManager)
             : _width(width), _height(height), _window(sf::VideoMode(width, height), title), _scenesManager(scenesManager), _pixels(sf::Points, width * height) {}
 
-    DisplayModule::~DisplayModule() {
-    }
+    DisplayModule::~DisplayModule() {}
 
     std::string DisplayModule::Vector3fToString(Component::Vector3f vec) {
         std::stringstream ss;
@@ -136,11 +135,13 @@ namespace Raytracer {
         _window.display();
     }
 
-    bool DisplayModule::isOpen() const {
+    bool DisplayModule::isOpen() const
+    {
         return _window.isOpen();
     }
 
-    sf::RenderWindow &DisplayModule::getWindow() {
+    sf::RenderWindow &DisplayModule::getWindow()
+    {
         return _window;
     }
 }

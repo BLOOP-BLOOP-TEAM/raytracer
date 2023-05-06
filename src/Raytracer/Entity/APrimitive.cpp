@@ -23,8 +23,9 @@ float Raytracer::APrimitive::intersect(const Ray &ray) const
 
 void Raytracer::APrimitive::setMaterial(IMaterial *material)
 {
-    if (_material == nullptr)
+    if (material == nullptr)
         return;
+    std::cout << "APrimitive::setMaterial real" << std::endl;
     _material = material;
 }
 
@@ -39,10 +40,12 @@ Component::Color Raytracer::APrimitive::getColor(const Component::Vector3f &hit_
 
 }
 
-Raytracer::IMaterial& Raytracer::APrimitive::getMaterial() const {
+Raytracer::IMaterial& Raytracer::APrimitive::getMaterial() const
+{
     return *_material;
 }
 
-const std::string &Raytracer::APrimitive::getTypePrimitive() const {
+const std::string &Raytracer::APrimitive::getTypePrimitive() const
+{
     return _typePrimitive;
 }
