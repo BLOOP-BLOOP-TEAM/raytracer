@@ -85,7 +85,6 @@ namespace Raytracer {
     }
 
     void DisplayModule::updateText(sf::Text &sfText, const Component::Text &textComponent) {
-        // std::cout << textComponent.text << std::endl;
         sfText.setString(textComponent.text);
         sfText.setPosition({textComponent.pos.x, textComponent.pos.y});
         sfText.setFillColor(sf::Color(textComponent.textColor.r,
@@ -119,10 +118,8 @@ namespace Raytracer {
 
     void DisplayModule::updateCameraValues() {
         for (auto &text :_allTexts) {
-            if (text.id == ID_CAMERA_POS_VALUE) {
-                std::cout << getCameraPos() << std::endl;
+            if (text.id == ID_CAMERA_POS_VALUE)
                 text.text = getCameraPos();
-            }
         }
     }
 

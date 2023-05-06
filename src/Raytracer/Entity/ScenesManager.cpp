@@ -46,22 +46,19 @@ void Raytracer::ScenesManager::setSceneActual(int scene)
 void Raytracer::ScenesManager::moveCamera(std::string key)
 {
     ACam &cam = getCam();
-    float x = cam.getPosition().x;
-    float y = cam.getPosition().y;
-    float z = cam.getPosition().z;
 
     switch (key[4]) {
         case 'Z':
-            cam.translate({x, y + 1, z});
+            cam.translate({0, 1, 0});
             break;
         case 'Q':
-            cam.translate({x - 1, y, z});
+            cam.translate({-1, 0, 0});
             break;
         case 'S':
-            cam.translate({x, y - 1, z});
+            cam.translate({0, -1, 0});
             break;
         case 'D':
-            cam.translate({x + 1, y, z});
+            cam.translate({1, 0, 0});
             break;
         default:
             break;
