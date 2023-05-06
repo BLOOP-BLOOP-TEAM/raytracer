@@ -41,16 +41,6 @@ Component::Vector3f Component::Vector3f:: operator/(float s) const
     return std::sqrt(x * x + y * y + z * z);
 }
 
-[[nodiscard]] Component::Vector3f Component::Vector3f::normalize() const
-{
-    return *this / length();
-}
-
-[[nodiscard]] float Component::Vector3f::dot(const Vector3f& v) const
-{
-    return x * v.x + y * v.y + z * v.z;
-}
-
 [[nodiscard]] Component::Vector3f Component::Vector3f::rotate(const Vector3f& rotation) const
 {
     float rx = rotation.x * M_PI / 180.0f;
@@ -68,4 +58,21 @@ Component::Vector3f Component::Vector3f:: operator/(float s) const
                 + z * std::cos(rx) * std::cos(ry);
 
     return rotated;
+}
+
+Component::Vector3f Component::Vector3f::cross(const Component::Vector3f &other) const
+{
+    return {y * other.z - z * other.y,
+                    z * other.x - x * other.z,
+                    x * other.y - y * other.x};
+}
+
+float Component::Vector3f::dot(const Component::Vector3f &v) const
+{
+    return x * v.x + y * v.y + z * v.z;
+}
+
+Component::Vector3f Component::Vector3f::normalize() const
+{
+    return *this / length();
 }

@@ -42,6 +42,8 @@ namespace Component {
 
         [[nodiscard]] float dot(const Vector3f& v) const;
 
-        [[nodiscard]] Vector3f rotate(const Vector3f& rotation) const;
+        [[nodiscard]] Vector3f cross(const Vector3f& other) const;
+
+        [[nodiscard]] Component::Vector3f rotate(const Vector3f& rotation) const;
     };
 }

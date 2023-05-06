@@ -12,22 +12,44 @@
 #include <SFML/Graphics.hpp>
 
 namespace Raytracer {
+    /**
+     * @brief The EventManager class provides an interface for handling events in a SFML window.
+     */
     class EventManager {
-    public:
-        explicit EventManager(sf::RenderWindow &window);
+        public:
+            /**
+             * @brief Constructor for EventManager class.
+             * 
+             * @param window The SFML window to listen for events on.
+             */
+            explicit EventManager(sf::RenderWindow &window);
 
-        ~EventManager() = default;
+            /**
+             * @brief Default destructor for EventManager class.
+             */
+            ~EventManager() = default;
 
-        void update();
+            /**
+             * @brief Updates the list of events that have occurred since the last update.
+             */
+            void update();
 
-        [[nodiscard]] bool isEventTriggered(const std::string &event) const;
+            /**
+             * @brief Checks if the given event has occurred.
+             * 
+             * @param event The name of the event to check for.
+             */
+            [[nodiscard]] bool isEventTriggered(const std::string &event) const;
 
-        void clear();
+            /**
+             * @brief Clears the list of events that have occurred since the last update.
+             */
+            void clear();
 
-    protected:
-    private:
-        std::vector<std::string> _events;
-        sf::RenderWindow &_window;
-        sf::Event _event;
+        protected:
+        private:
+            std::vector<std::string> _events;
+            sf::RenderWindow &_window;
+            sf::Event _event;
     };
-}
+};

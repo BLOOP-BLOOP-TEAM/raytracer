@@ -7,8 +7,9 @@
 
 #pragma once
 
-#include "IEntity.hpp"
 #include <libconfig.h++>
+#include "IEntity.hpp"
+#include "IMaterial.hpp"
 
 #ifdef _WIN32
     #define EXPORT __declspec(dllexport)
@@ -20,11 +21,11 @@ extern "C"
 {
     enum LibType { ENTITY, MATERIAL };
 
-    EXPORT Raytracer::IEntity *CreateEntity(const libconfig::Setting &setting);
+    EXPORT Raytracer::IEntity *createEntity(const libconfig::Setting &setting);
 
     EXPORT void destroyEntity(Raytracer::IEntity *entity);
 
-    EXPORT Raytracer::IMaterial *CreateMaterial(const libconfig::Setting &setting);
+    EXPORT Raytracer::IMaterial *createMaterial(const libconfig::Setting &setting);
 
     EXPORT void destroyMaterial(Raytracer::IMaterial *material);
 

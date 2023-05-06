@@ -24,10 +24,5 @@ namespace Raytracer {
          * @brief Gets the field of view of the camera
          */
         virtual float getFieldOfView() const = 0;
-
-        /**
-         * @brief Gets the aspect ratio of the camera
-         */
-        virtual float getAspectRatio() const = 0;
     };
 };

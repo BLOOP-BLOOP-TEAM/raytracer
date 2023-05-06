@@ -31,7 +31,9 @@ namespace Raytracer {
              * @param lightDirection The direction of the light source
              * @param lightIntensity The intensity of the light source
              */
-            virtual Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal, const Component::Vector3f &lightDirection, float lightIntensity) const = 0;
+            [[nodiscard]] virtual Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
+                                                    const Component::Vector3f &lightDirection, float lightIntensity,
+                                                    const Component::Color &ambientLightColor, float ambientLightIntensity) const = 0;
 
             /**
              * @brief Gets the diffuse color of the material
@@ -47,5 +49,7 @@ namespace Raytracer {
              * @brief Gets the shininess of the material
              */
             virtual float getShininess() const = 0;
+
+            [[nodiscard]] virtual float getReflectivity() const = 0;
     };
 }

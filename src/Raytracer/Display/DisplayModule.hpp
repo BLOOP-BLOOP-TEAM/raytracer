@@ -12,23 +12,46 @@
 #include "Image.hpp"
 
 namespace Raytracer {
-class DisplayModule {
-    public:
-        DisplayModule(unsigned int width, unsigned int height, const std::string& title);
+    /**
+     * @brief The DisplayModule class
+     * 
+     * This class is responsible for displaying the rendered image on screen
+     */
+    class DisplayModule {
+        public:
+            /**
+             * @brief Construct a new Display Module object
+             * 
+             * @param width Width of the window
+             * @param height Height of the window
+             * @param title Title of the window
+             */
+            DisplayModule(unsigned int width, unsigned int height, const std::string& title);
 
-        ~DisplayModule();
+            ~DisplayModule();
 
-        void update(const Image &image);
+            /**
+             * @brief Update the content of the window with an image
+             * 
+             * @param image The image to display
+             */
+            void update(const Image &image);
 
-        bool isOpen() const;
+            /**
+             * @brief Check if the window is open
+             */
+            bool isOpen() const;
 
-        sf::RenderWindow &getWindow();
+            /**
+             * @brief Get the window object
+             */
+            sf::RenderWindow &getWindow();
 
-    protected:
-    private:
-        unsigned int _width;
-        unsigned int _height;
-        sf::RenderWindow _window;
-        sf::VertexArray _pixels;
+        protected:
+        private:
+            unsigned int _width;
+            unsigned int _height;
+            sf::RenderWindow _window;
+            sf::VertexArray _pixels;
     };
-}
+};

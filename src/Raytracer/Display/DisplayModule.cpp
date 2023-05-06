@@ -13,10 +13,10 @@ namespace Raytracer {
             : _width(width), _height(height), _window(sf::VideoMode(width, height), title), _pixels(sf::Points, width * height) {
     }
 
-    DisplayModule::~DisplayModule() {
-    }
+    DisplayModule::~DisplayModule() {}
 
-    void DisplayModule::update(const Image &image) {
+    void DisplayModule::update(const Image &image)
+    {
         // Mettre à jour les pixels
         for (unsigned int y = 0; y < _height; ++y) {
             for (unsigned int x = 0; x < _width; ++x) {
@@ -33,11 +33,13 @@ namespace Raytracer {
         _window.display();
     }
 
-    bool DisplayModule::isOpen() const {
+    bool DisplayModule::isOpen() const
+    {
         return _window.isOpen();
     }
 
-    sf::RenderWindow &DisplayModule::getWindow() {
+    sf::RenderWindow &DisplayModule::getWindow()
+    {
         return _window;
     }
 }

@@ -6,42 +6,76 @@
 */
 
 #include <libconfig.h++>
+#include <iostream>
+#include "Api.hpp"
 #include "IEntity.hpp"
 #include "SimpleMaterial.hpp"
 #include "AMaterial.hpp"
 
-Plugin::SimpleMaterial::SimpleMaterial(const Component::Color &baseColor, float diffuseFactor)
-        : Raytracer::AMaterial("SimpleMaterial"), _baseColor(baseColor), _diffuseFactor(diffuseFactor) {}
+static const std::string SIMPLEMATERIAL = "SimpleMaterial";
+
+Plugin::SimpleMaterial::SimpleMaterial(const Component::Color &baseColor, float diffuseFactor, float reflectivity)
+        : Raytracer::AMaterial(SIMPLEMATERIAL), _baseColor(baseColor), _diffuseFactor(diffuseFactor), _reflectivity(reflectivity) {}
 
 Component::Color Plugin::SimpleMaterial::computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
-                                                      const Component::Vector3f &lightDirection, float lightIntensity) const {
+                                                      const Component::Vector3f &lightDirection, float lightIntensity,
+                                                      const Component::Color &ambientLightColor,
+                                                      float ambientLightIntensity) const
+{
     float cosTheta = std::max(0.0f, normal.dot(lightDirection));
+
+
+    Component::Color ambientColor = _baseColor * ambientLightIntensity;
+
     Component::Color color = _baseColor * (_diffuseFactor * cosTheta);
+    color = color + ambientColor;
+
     return color;
 }
 
-Component::Color Plugin::SimpleMaterial::getDiffuse() const {
+
+Component::Color Plugin::SimpleMaterial::getDiffuse() const
+{
     return _baseColor;
 }
 
-float Plugin::SimpleMaterial::getSpecular() const {
+float Plugin::SimpleMaterial::getSpecular() const
+{
     return 0.0f;
 }
 
-float Plugin::SimpleMaterial::getShininess() const {
+float Plugin::SimpleMaterial::getShininess() const
+{
     return 1.0f;
 }
 
-Raytracer::IMaterial *createMaterial(const libconfig::Setting &setting) {
+float Plugin::SimpleMaterial::getReflectivity() const
+{
+    return _reflectivity;
+}
+
+Raytracer::IMaterial *createMaterial(const libconfig::Setting &setting)
+{
     Component::Color baseColor(setting["baseColor"][0], setting["baseColor"][1], setting["baseColor"][2]);
-    float diffuseFactor = setting["diffuseFactor"];
-    return new Plugin::SimpleMaterial(baseColor, diffuseFactor);
+    float diffuseFactor = 0.0f;
+    float reflectivity = 0.0f;
+
+    setting.lookupValue("diffuseFactor", diffuseFactor);
+    setting.lookupValue("reflectivity", reflectivity);
+    return new Plugin::SimpleMaterial(baseColor, diffuseFactor, reflectivity);
 }
 
-const char *getName() {
-    return "SimpleMaterial";
+const char *getName()
+{
+    return SIMPLEMATERIAL.c_str();
 }
 
-Raytracer::CompType getType() {
-    return Raytracer::CompType::MATERIAL;
+LibType getType()
+{
+    return LibType::MATERIAL;
+}
+
+void destroyMaterial(Raytracer::IMaterial *material)
+{
+    delete material;
 }

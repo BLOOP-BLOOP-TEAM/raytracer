@@ -14,7 +14,7 @@
 
 #include "AEntity.hpp"
 #include "ICam.hpp"
-
+#include <iostream>
 namespace Raytracer {
     /**
      * @brief The ACam class
@@ -30,22 +30,16 @@ namespace Raytracer {
              * @param position a Vector3f object representing the position of the camera
              * @param rotation a Vector3f object representing the rotation of the camera
              * @param field_of_view a float value representing the field of view of the camera
-             * @param aspect_ratio a float value representing the aspect ratio of the camera
              */
             ACam(const std::string &typeCam, const Component::Vector3f &position, const Component::Vector3f &rotation,
-                 float field_of_view, float aspect_ratio);
+                float field_of_view);
 
-            ~ACam() override = default;
+            ~ACam() override { std::cout << "ACam::~ACam" << std::endl; };
 
             /**
              * @brief Returns the field of view of the camera
              */
             [[nodiscard]] float getFieldOfView() const override;
-
-            /**
-             * @brief Returns the aspect ratio of the camera
-             */
-            [[nodiscard]] float getAspectRatio() const override;
 
             /**
              * @brief Returns the rotation of the camera
@@ -69,7 +63,6 @@ namespace Raytracer {
         std::string _typeCam;
         Component::Vector3f _rotation;
         float _fieldOfView;
-        float _aspectRatio;
     };
 };
 

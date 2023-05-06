@@ -28,9 +28,10 @@ namespace Raytracer {
          * This constructor will init the _image variable and 
          * the _fileName variable with the given parameter
          *
-         * @param name string that correspond to the name of the file
+         * @param name string that correspond to the name given to the scene
+         * @param fileName string that correpsond to the name of the file
          */
-        Scene(const std::string &name);
+        Scene(std::string name, std::string fileName);
 
         ~Scene();
 
@@ -131,7 +132,7 @@ namespace Raytracer {
          * 
          * This function will get the actual state of _isCalculate
          */
-        [[nodiscard]] const bool &getIsCalculate();
+        [[nodiscard]] const bool &getIsCalculate() const;
 
     protected:
     private:
@@ -139,6 +140,7 @@ namespace Raytracer {
         std::vector<IMaterial *> _materials;
         std::unique_ptr<Image> _image;
         std::string _fileName;
+        std::string _name;
         bool _isCalculate;
     };
 };
