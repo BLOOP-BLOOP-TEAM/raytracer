@@ -34,6 +34,8 @@ namespace Raytracer {
 
             void updateText(sf::Text &sfText, const Component::Text &textComponent);
 
+            void updateCameraValues();
+
             sf::RenderWindow &getWindow();
 
             std::string getCameraPos();

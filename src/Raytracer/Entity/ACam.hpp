@@ -11,7 +11,6 @@
 #include "ICam.hpp"
 #include "AEntity.hpp"
 #include "Vector3f.hpp"
-
 #include "AEntity.hpp"
 #include "ICam.hpp"
 
@@ -28,12 +27,14 @@ namespace Raytracer {
         [[nodiscard]] const Component::Vector3f &getRotation() const;
         void setRotation(const Component::Vector3f &rotation);
         [[nodiscard]] const std::string &getTypeCam() const;
+        [[nodiscard]] const bool isEdited() const;
+        void setEdit(bool status);
 
     protected:
     private:
         std::string _typeCam;
         Component::Vector3f _rotation;
         float _fieldOfView;
+        bool _isEdited;
     };
 };
-

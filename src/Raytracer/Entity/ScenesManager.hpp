@@ -29,6 +29,10 @@ namespace Raytracer {
 
         void update(Raytracer::EventManager &eventManager);
 
+        [[nodiscard]] ACam &getCam() const;
+
+        void moveCamera(std::string key);
+
     protected:
     private:
         std::vector<std::unique_ptr<Scene>> _scenes;
