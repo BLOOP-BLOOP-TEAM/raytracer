@@ -9,6 +9,7 @@
 #include <vector>
 #include "IEntity.hpp"
 #include "APrimitive.hpp"
+#include "RaytracerException.hpp"
 #include "LoadConfig.hpp"
 
 static const std::string FOLDER_NAME = "Scenes";
@@ -25,10 +26,6 @@ static const std::vector<std::string> elementTypes = {
     LIGHTS,
     MATERIALS
 };
-
-Raytracer::LoadConfig::LoadConfig()
-{
-}
 
 bool Raytracer::LoadConfig::isAGoodConfigFile(libconfig::Config &cfg, const std::string &path)
 {
@@ -57,7 +54,7 @@ std::vector<std::unique_ptr<Raytracer::Scene>> Raytracer::LoadConfig::loadConfig
         if (entry.path().filename().extension() != ".cfg")
             continue;
         scene = loadConfigFile(entry.path());
-        if (scene != nullptr)
+        if (scene)
             scenes.push_back(std::move(scene));
     }
     return scenes;
@@ -139,8 +136,13 @@ std::unique_ptr<Raytracer::Scene> Raytracer::LoadConfig::loadConfigFile(const st
         std::cerr << "configLoader: loadConfigFile: " << tex.what() << " : " << tex.getPath() << std::endl;
     } catch (const libconfig::SettingException &ex) {
         std::cerr << "configLoader: loadConfigFile: " << ex.what() << std::endl;
+    } catch (const std::exception &e) {
+        std::cerr << "configLoader: loadConfigFile: " << e.what() << std::endl;
     }
     applyMaterialsToPrimitives(*scene, materialsToApply);
+    if (!scene) {
+        throw Raytracer::RaytracerException("LoadConfig: loadConfigFile: scene is null");
+    }
     return scene;
 }
 

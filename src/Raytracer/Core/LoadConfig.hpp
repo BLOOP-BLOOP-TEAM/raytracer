@@ -20,10 +20,10 @@
 namespace Raytracer {
     class LoadConfig {
         public:
-            LoadConfig();
+            LoadConfig() = default;
             ~LoadConfig() = default;
 
-            std::vector<std::unique_ptr<Raytracer::Scene>> loadConfigFolder();
+            static std::vector<std::unique_ptr<Raytracer::Scene>> loadConfigFolder();
             static std::unique_ptr<Raytracer::Scene> loadConfigFile(const std::string &path);
         protected:
         private:

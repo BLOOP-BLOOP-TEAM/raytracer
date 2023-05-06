@@ -18,12 +18,13 @@
 namespace Raytracer {
     class ACam : public ICam, public AEntity {
     public:
-        ACam(const std::string &typeCam, const Component::Vector3f &position, const Component::Vector3f &rotation,
-             float field_of_view);
+        ACam(const std::string &typeCam, const Component::Vector3f &position, const Component::Vector3f &rotation, const float fieldOfView, const Component::Vector3f &resolution);
 
         ~ACam() override = default;
 
         [[nodiscard]] float getFieldOfView() const override;
+
+        [[nodiscard]] Component::Vector3f getResolution() const override;
 
         [[nodiscard]] const Component::Vector3f &getRotation() const;
         void setRotation(const Component::Vector3f &rotation);
@@ -33,6 +34,7 @@ namespace Raytracer {
     private:
         std::string _typeCam;
         Component::Vector3f _rotation;
+        Component::Vector3f _resolution;
         float _fieldOfView;
     };
 };

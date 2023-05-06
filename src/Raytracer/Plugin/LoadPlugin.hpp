@@ -23,6 +23,8 @@ namespace Raytracer {
         ~LoadPlugin();
 
         void loadPluginsFromDirectory(const std::string& directory);
+        LoadPlugin& operator=(const LoadPlugin&) = delete;
+        static LoadPlugin& getInstance();
 
     private:
         static std::vector<std::string> findPluginFiles(const std::string& directory);

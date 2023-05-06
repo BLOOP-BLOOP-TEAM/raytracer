@@ -26,6 +26,32 @@ void Raytracer::ScenesManager::addMultipleScenes(std::vector<std::unique_ptr<Sce
         _scenes.push_back(std::move(scene));
 }
 
+void Raytracer::ScenesManager::removeScene(const std::string &path)
+{
+    unsigned int scenesSize = _scenes.size();
+
+    for (unsigned int i = 0; i < scenesSize; i++) {
+        if (_scenes[i]->getFileName() == path) {
+            _scenes.erase(_scenes.begin() + i);
+            return;
+        }
+    }
+    throw Raytracer::RaytracerException("Scene not found");
+}
+
+void Raytracer::ScenesManager::replaceScene(std::unique_ptr<Scene> newScene, const std::string &path)
+{
+    unsigned int scenesSize = _scenes.size();
+
+    for (unsigned int i = 0; i < scenesSize; i++) {
+        if (_scenes[i]->getFileName() == path) {
+            _scenes[i] = std::move(newScene);
+            return;
+        }
+    }
+    throw Raytracer::RaytracerException("Scene not found");
+}
+
 Raytracer::Scene &Raytracer::ScenesManager::getSceneActual() const
 {
     if (_sceneActual < 0 || _sceneActual >= _scenes.size())

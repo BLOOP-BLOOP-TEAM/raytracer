@@ -93,3 +93,10 @@ void Raytracer::LoadPlugin::loadPlugin(const std::string& filepath)
         std::cerr << "Error: " << e.what() << "\n";
     }
 }
+
+Raytracer::LoadPlugin&  Raytracer::LoadPlugin::getInstance()
+{
+    static Raytracer::LoadPlugin instance;
+
+    return instance;
+}

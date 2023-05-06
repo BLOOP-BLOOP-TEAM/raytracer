@@ -17,6 +17,8 @@ namespace Raytracer {
 
         [[nodiscard]] virtual float getFieldOfView() const = 0;
 
+        [[nodiscard]] virtual Component::Vector3f getResolution() const = 0;
+
     protected:
     private:
     };

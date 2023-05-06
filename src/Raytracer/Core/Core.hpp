@@ -24,9 +24,9 @@ namespace Raytracer {
 
     protected:
     private:
-        ScenesManager _scenesManager;
         DisplayModule _displayModule;
         EventManager _eventManager;
+        ScenesManager _scenesManager;
         Observer _observer;
     };
 };

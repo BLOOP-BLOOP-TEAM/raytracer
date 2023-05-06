@@ -23,6 +23,10 @@ namespace Raytracer {
 
         void addMultipleScenes(std::vector<std::unique_ptr<Scene>> scenes);
 
+        void replaceScene(std::unique_ptr<Scene> newScene, const std::string &path);
+
+        void removeScene(const std::string &path);
+
         [[nodiscard]] Scene &getSceneActual() const;
 
         void setSceneActual(int scene);

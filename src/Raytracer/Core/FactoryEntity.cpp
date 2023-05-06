@@ -14,8 +14,12 @@
 #include "RaytracerException.hpp"
 Raytracer::IEntity* Raytracer::FactoryEntity::createEntity(const std::string &name, const libconfig::Setting &setting)
 {
+    Raytracer::IEntity *result = nullptr;
 
-    Raytracer::IEntity *result = _entities[name].first(setting);
+    if (_entities.find(name) == _entities.end()) {
+        throw Raytracer::RaytracerException("Error: Entity not found");
+    }
+    result = _entities[name].first(setting);
 
     if (result == nullptr) {
         throw Raytracer::RaytracerException("Error: Entity not found");

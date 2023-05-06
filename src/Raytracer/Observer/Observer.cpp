@@ -5,15 +5,13 @@
 ** Observer
 */
 
+#include "LoadConfig.hpp"
 #include "Observer.hpp"
 
 static const std::string FOLDER_NAME = "Scenes";
 
-Raytracer::Observer::Observer(const std::vector<std::string> allScenes) {
-    int nbrFiles = allScenes.size();
-
-    for (int i = 0; i < nbrFiles; i++)
-        subscribe(allScenes[i]);
+Raytracer::Observer::Observer(ScenesManager &sceneManager) : _sceneManager(sceneManager)
+{
 }
 
 void Raytracer::Observer::subscribe(const std::string &path) {
@@ -31,7 +29,7 @@ void Raytracer::Observer::unsubscribe(const std::string &path) {
         index = it - _allSubScenes.begin();
         _allSubScenes.erase(_allSubScenes.begin() + index);
         _lastUpdates.erase(_lastUpdates.begin() + index);
-        // appelle de la fonction qui détruit la scène
+        _sceneManager.removeScene(path);
     }
 }
 
@@ -49,16 +47,32 @@ std::time_t Raytracer::Observer::getTimeStamp(const std::string &path) {
     return timeStamp;
 }
 
+void Raytracer::Observer::replaceScene(const std::string &path)
+{
+    std::unique_ptr<Raytracer::Scene> newScene;
+
+    newScene = Raytracer::LoadConfig::loadConfigFile(path);
+
+    if (!newScene) {
+        std::cout << "Delete la scene" << std::endl;
+        unsubscribe(path);
+        return;
+    }
+    _sceneManager.replaceScene(std::move(newScene), path);
+}
+
 void Raytracer::Observer::notify(const std::string &path)
 {
     int index = 0;
-    // appelle de la fonction qui load la scène
 
     for (const auto &subScene : _allSubScenes) {
         if (subScene == path)
             break;
         index += 1;
     }
+    if (index == _allSubScenes.size())
+        return;
+    replaceScene(path);
     _lastUpdates[index] = getTimeStamp(path);
 }
 
