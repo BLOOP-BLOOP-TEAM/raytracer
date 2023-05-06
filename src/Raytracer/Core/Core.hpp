@@ -7,26 +7,28 @@
 
 #pragma once
 
+#include <memory>
 #include "DisplayModule.hpp"
 #include "EventManager.hpp"
 #include "ScenesManager.hpp"
-#include "LoadPlugin.hpp"
+#include "PluginLoader.hpp"
 #include "Observer.hpp"
-#include "LoadConfig.hpp"
+#include "ConfigLoader.hpp"
 
 namespace Raytracer {
     class Core {
     public:
         Core();
-
-        ~Core() = default;
+        ~Core();
         void run();
 
     protected:
     private:
-        DisplayModule _displayModule;
-        EventManager _eventManager;
-        ScenesManager _scenesManager;
-        Observer _observer;
+        std::unique_ptr<PluginLoader> _loadPlugin;
+        std::unique_ptr<ScenesManager> _scenesManager;
+        std::unique_ptr<DisplayModule> _displayModule;
+        std::unique_ptr<EventManager> _eventManager;
+        std::unique_ptr<Observer> _observer;
     };
 };
+

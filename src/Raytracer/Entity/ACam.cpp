@@ -7,26 +7,30 @@
 
 #include "ACam.hpp"
 
-Raytracer::ACam::ACam(const std::string &typeCam, const Component::Vector3f &position, const Component::Vector3f &rotation, const float fieldOfView,
-            const Component::Vector3f &resolution) : AEntity(Raytracer::CompType::CAM, position), _typeCam(typeCam), _rotation(rotation),
-            _fieldOfView(fieldOfView), _resolution(resolution) {}
+Raytracer::ACam::ACam(const std::string &typeCam, const Component::Vector3f &position, const Component::Vector3f &rotation,
+            double field_of_view, const Component::Vector3f &resolution) : AEntity(Raytracer::CompType::CAM, position), _typeCam(typeCam),
+            _rotation(rotation), _fieldOfView(field_of_view), _resolution(resolution) {}
 
 Component::Vector3f Raytracer::ACam::getResolution() const {
     return _resolution;
 }
 
-float Raytracer::ACam::getFieldOfView() const {
+double Raytracer::ACam::getFieldOfView() const
+{
     return _fieldOfView;
 }
 
-const Component::Vector3f &Raytracer::ACam::getRotation() const {
+const Component::Vector3f &Raytracer::ACam::getRotation() const
+{
     return _rotation;
 }
 
-void Raytracer::ACam::setRotation(const Component::Vector3f &rotation) {
+void Raytracer::ACam::setRotation(const Component::Vector3f &rotation)
+{
     _rotation = rotation;
 }
 
-const std::string &Raytracer::ACam::getTypeCam() const {
+const std::string &Raytracer::ACam::getTypeCam() const
+{
     return _typeCam;
 }

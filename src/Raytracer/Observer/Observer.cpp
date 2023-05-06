@@ -5,7 +5,7 @@
 ** Observer
 */
 
-#include "LoadConfig.hpp"
+#include "ConfigLoader.hpp"
 #include "Observer.hpp"
 
 static const std::string FOLDER_NAME = "Scenes";
@@ -51,7 +51,7 @@ void Raytracer::Observer::replaceScene(const std::string &path)
 {
     std::unique_ptr<Raytracer::Scene> newScene;
 
-    newScene = Raytracer::LoadConfig::loadConfigFile(path);
+    newScene = Raytracer::ConfigLoader::loadConfigFile(path);
 
     if (!newScene) {
         std::cout << "Delete la scene" << std::endl;

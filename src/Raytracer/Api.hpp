@@ -7,9 +7,9 @@
 
 #pragma once
 
+#include <libconfig.h++>
 #include "IEntity.hpp"
 #include "IMaterial.hpp"
-#include <libconfig.h++>
 
 #ifdef _WIN32
     #define EXPORT __declspec(dllexport)

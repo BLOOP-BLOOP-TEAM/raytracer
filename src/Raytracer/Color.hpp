@@ -11,17 +11,18 @@
 
 namespace Component {
     struct Color {
-        int r;
-        int g;
-        int b;
+        double r;
+        double g;
+        double b;
 
         Color();
-        Color(int red, int green, int blue);
+        Color(double red, double green, double blue);
 
         void clamp();
 
-        Component::Color operator*(float scalar) const;
+        Component::Color operator*(double scalar) const;
         Component::Color operator*(const Component::Color &other) const;
         Component::Color operator+(const Component::Color &other) const;
+        [[nodiscard]] Component::Color toInteger() const;
     };
 };

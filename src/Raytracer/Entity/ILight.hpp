@@ -16,7 +16,7 @@ namespace Raytracer {
         virtual ~ILight() = default;
 
         virtual const Component::Color& getColor() const = 0;
-        virtual float getIntensity() const = 0;
+        virtual double getIntensity() const = 0;
 
     protected:
     private:

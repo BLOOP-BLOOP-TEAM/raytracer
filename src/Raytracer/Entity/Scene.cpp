@@ -5,6 +5,7 @@
 ** Scene
 */
 
+#include <utility>
 #include "Scene.hpp"
 #include "FactoryEntity.hpp"
 #include "FactoryMaterial.hpp"
@@ -21,14 +22,18 @@ Component::Vector3f Raytracer::Scene::getResolution() const
     return Component::Vector3f(1920, 1080, 0);
 }
 
-Raytracer::Scene::Scene(const std::string &name) : _fileName(name), _isCalculate(false), _image(std::make_unique<Image>(getResolution().x, getResolution().y))
+Raytracer::Scene::Scene(const std::string &name, const std::string &nameFile) : _image(std::make_unique<Image>(getResolution().x, getResolution().y)), _fileName(nameFile), _isCalculate(
+        false), _name(name)
 {
+    std::cout << "Creating scene" << std::endl;
 }
 
-Raytracer::Scene::~Scene() {
+Raytracer::Scene::~Scene()
+{
     FactoryEntity& factoryEntity = FactoryEntity::getInstance();
     FactoryMaterial& factoryMaterial = FactoryMaterial::getInstance();
 
+    std::cout << "Destroying scene" << std::endl;
     for (IEntity* entity : _entities) {
         if (entity)
             factoryEntity.destroyEntity(entity);
@@ -43,7 +48,7 @@ Raytracer::Scene::~Scene() {
 void Raytracer::Scene::calculateImage()
 {
     _image->calculateImage(_entities);
-    _image->write_ppm(FOLDER_PPM + _fileName + ".ppm");
+    _image->write_ppm(FOLDER_PPM + _name + ".ppm");
     setIsCalculate();
 }
 
@@ -100,7 +105,7 @@ void Raytracer::Scene::setIsCalculate()
     _isCalculate = !_isCalculate;
 }
 
-const bool &Raytracer::Scene::getIsCalculate()
+const bool &Raytracer::Scene::getIsCalculate() const
 {
     return _isCalculate;
 }

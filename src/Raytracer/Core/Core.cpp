@@ -9,22 +9,32 @@
 
 static const std::string FOLDER = "./plugins";
 
-Raytracer::Core::Core() : _scenesManager(), _displayModule(1920, 1080, "Raytracer"), _eventManager(_displayModule.getWindow()), _observer(_scenesManager)
+Raytracer::Core::Core()
+        : _loadPlugin(std::make_unique<PluginLoader>()),
+          _scenesManager(std::make_unique<ScenesManager>()),
+          _displayModule(std::make_unique<DisplayModule>(1920, 1080, "Raytracer")),
+          _eventManager(std::make_unique<EventManager>(_displayModule->getWindow())),
+          _observer(std::make_unique<Observer>(*_scenesManager))
 {
-    Raytracer::LoadPlugin::getInstance().loadPluginsFromDirectory(FOLDER);
-    _scenesManager.addMultipleScenes(LoadConfig::loadConfigFolder());
-    auto &actualScene = _scenesManager.getSceneActual();
-    _observer.subscribe(actualScene.getFileName());
+    Raytracer::PluginLoader::getInstance().loadPluginsFromDirectory(FOLDER);
+    _scenesManager->addMultipleScenes(ConfigLoader::loadConfigFolder());
+    auto &actualScene = _scenesManager->getSceneActual();
+    _observer->subscribe(actualScene.getFileName());
     actualScene.calculateImage();
+}
+
+Raytracer::Core::~Core()
+{
+    _scenesManager.reset();
 }
 
 void Raytracer::Core::run()
 {
-    while (!_eventManager.isEventTriggered("Quit")) {
-        _eventManager.clear();
-        _eventManager.update();
-        _scenesManager.update(_eventManager);
-        _observer.checkEditedFiles();
-        _displayModule.update(_scenesManager.getSceneActual().getImage());
+    while (!_eventManager->isEventTriggered("Quit")) {
+        _eventManager->clear();
+        _eventManager->update();
+        _scenesManager->update(*_eventManager);
+        _observer->checkEditedFiles();
+        _displayModule->update(_scenesManager->getSceneActual().getImage());
     }
 }

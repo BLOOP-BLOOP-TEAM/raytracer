@@ -9,47 +9,48 @@
 
 Component::Matrix3x3::Matrix3x3()
 {
-    for (float & i : m) {
+    for (double & i : m) {
         i = 0;
     }
 }
 
-Component::Matrix3x3::Matrix3x3(float m0, float m1, float m2, float m3, float m4, float m5, float m6, float m7,
-                                float m8)
-                                {
+Component::Matrix3x3::Matrix3x3(double m0, double m1, double m2, double m3, double m4, double m5, double m6, double m7,
+                                double m8)
+{
     m[0] = m0; m[1] = m1; m[2] = m2;
     m[3] = m3; m[4] = m4; m[5] = m5;
     m[6] = m6; m[7] = m7; m[8] = m8;
 }
 
-Component::Matrix3x3 Component::Matrix3x3::fromEulerAngles(const Component::Vector3f &angles)
+Component::Matrix3x3 Component::Matrix3x3::fromEulerAngles(const Component::Vector3f &eulerAngles)
 {
-    float sx = sinf(angles.x);
-    float cx = cosf(angles.x);
-    float sy = sinf(angles.y);
-    float cy = cosf(angles.y);
-    float sz = sinf(angles.z);
-    float cz = cosf(angles.z);
+    double cos_x = cos(eulerAngles.x);
+    double sin_x = sin(eulerAngles.x);
+    double cos_y = cos(eulerAngles.y);
+    double sin_y = sin(eulerAngles.y);
+    double cos_z = cos(eulerAngles.z);
+    double sin_z = sin(eulerAngles.z);
 
-    Matrix3x3 rx{
+    Component::Matrix3x3 Rx = {
             1, 0, 0,
-            0, cx, -sx,
-            0, sx, cx
+            0, cos_x, -sin_x,
+            0, sin_x, cos_x,
     };
 
-    Matrix3x3 ry{
-            cy, 0, sy,
+    Component::Matrix3x3 Ry = {
+            cos_y, 0, sin_y,
             0, 1, 0,
-            -sy, 0, cy
+            -sin_y, 0, cos_y,
     };
 
-    Matrix3x3 rz{
-            cz, -sz, 0,
-            sz, cz, 0,
-            0, 0, 1
+    Component::Matrix3x3 Rz = {
+            cos_z, -sin_z, 0,
+            sin_z, cos_z, 0,
+            0, 0, 1,
     };
 
-    return rz * ry * rx;
+    // Modifiez l'ordre des multiplications de matrice ici, par exemple : Rz * Rx * Ry
+    return Rz * Ry * Rx;
 }
 
 Component::Matrix3x3 Component::Matrix3x3::operator*(const Component::Matrix3x3 &other) const
