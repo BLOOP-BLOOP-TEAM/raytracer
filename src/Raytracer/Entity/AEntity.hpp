@@ -60,11 +60,11 @@ namespace Raytracer {
              * @brief Function that gets the type of the entity
              */
             [[nodiscard]] Raytracer::CompType getType() const final;
-    protected:
-        Component::Vector3f _position;
-        Component::Vector3f _rotation;
-        Component::Vector3f _scale;
-    private:
-        Raytracer::CompType _type;
+        protected:
+            Component::Vector3f _position;
+            Component::Vector3f _rotation;
+            Component::Vector3f _scale;
+        private:
+            Raytracer::CompType _type;
     };
 };

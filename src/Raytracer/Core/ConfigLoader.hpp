@@ -23,14 +23,8 @@ namespace Raytracer {
      */
     class ConfigLoader {
         public:
-            /**
-             * @brief Constructor for ConfigLoader class.
-             */
             ConfigLoader();
 
-            /**
-             * @brief Default destructor for ConfigLoader class.
-             */
             ~ConfigLoader() = default;
 
             /**
@@ -47,14 +41,70 @@ namespace Raytracer {
 
         protected:
         private:
+            /**
+             * @brief Loads a plugin type from a configuration file.
+             * 
+             * @param type The type of the plugin.
+             * @param root The root setting of the configuration file.
+             * @param scene The scene to add the plugin to.
+             * @param materialsToApply A map of materials to apply to primitives.
+             */
             static void loadPluginType(const std::string &type, const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
+
+            /**
+             * @brief Loads all primitives from a configuration file.
+             * 
+             * @param root The root setting of the configuration file.
+             * @param scene The scene to add the primitives to.
+             * @param materialsToApply A map of materials to apply to primitives.
+             */
             static void loadPrimitives(const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
+
+            /**
+             * @brief Loads all lights from a configuration file.
+             * 
+             * @param root The root setting of the configuration file.
+             * @param scene The scene to add the lights to.
+             */
             static void loadLights(const libconfig::Setting &root, Raytracer::Scene &scene);
+
+            /**
+             * @brief Loads all materials from a configuration file.
+             * 
+             * @param root The root setting of the configuration file.
+             * @param scene The scene to add the materials to.
+             */
             static void loadMaterials(const libconfig::Setting &root, Raytracer::Scene &scene);
+
+            /**
+             * @brief Checks if a configuration file is valid.
+             * 
+             * @param cfg The configuration to check.
+             * @param path The path of the configuration file.
+             */
             static bool isAGoodConfigFile(libconfig::Config &cfg, const std::string &path);
+
+            /**
+             * @brief Applies materials to primitives in a scene.
+             * 
+             * @param scene The scene to apply the materials to.
+             * @param materialsToApply A map of materials to apply to primitives.
+             */
             static void applyMaterialsToPrimitives(Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
+
+            /**
+             * @brief Gets a material from its name.
+             * 
+             * @param scene The scene containing the material.
+             * @param name The name of the material.
+             */
             static Raytracer::IMaterial *getMaterialFromName(const Raytracer::Scene &scene, const std::string &name);
 
+            /**
+             * @brief Extracts the file name from a file path.
+             * 
+             * @param path The file path.
+             */
             static std::string extractFileName(const std::string &path);
     };
 };

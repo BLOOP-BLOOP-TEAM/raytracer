@@ -23,7 +23,7 @@ namespace Raytracer {
     class Observer {
         public:
             /**
-             * @brief the constructor of Observer
+             * @brief The constructor of Observer
              * 
              * For each scenes passed in parameter, the observer will subscribe
              * each scene.
@@ -36,19 +36,24 @@ namespace Raytracer {
             ~Observer() = default;
 
             /**
-             * @brief the function that check files
+             * @brief Function that check files
              * 
              * This function will check if a file has been updated or not
              */
             void checkEditedFiles();
 
             /**
-             * TODO DOC
+             * @brief Notify if there is any change
+             * 
+             * This function will notify when a config file has changed and load 
+             * the new config file
+             * 
+             * @param path the path to the file
              */
             void notify(const std::string &path);
 
             /**
-             * @brief the function that subscribe scene.
+             * @brief Function that subscribe scene.
              * 
              * Subscribe a scene and add it to the allSubScenes variable
              * The config file of the scene will be checked by the observer.
@@ -58,7 +63,7 @@ namespace Raytracer {
             void subscribe(const std::string &path);
 
             /**
-             * @brief the function that unsubscribe a scene
+             * @brief Function that unsubscribe a scene
              * 
              * The scene that will be given to this function will no longer be checked
              * by the observer.
@@ -68,7 +73,7 @@ namespace Raytracer {
             void unsubscribe(const std::string &path);
 
             /**
-             * @brief the function that get the time stamp of a file
+             * @brief Function that get the time stamp of a file
              * 
              * This function will check if the file exists
              */

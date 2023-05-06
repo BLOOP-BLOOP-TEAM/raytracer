@@ -15,17 +15,42 @@
 #include "Vector3f.hpp"
 
 namespace Component {
-
+    /**
+     * @brief Data structure that defines a Matrix 3x3
+     * 
+     * This data structure defines a matrix 3x3 with all function that she needs
+     */
     struct Matrix3x3 {
         float m[9]{};
 
         Matrix3x3();
+
+        /**
+         * @brief Constructor that creates a new 3x3 matrix and initializes its values using the provided arguments, in row-major order.
+         * 
+         * @param m0 The value in row 0, column 0.
+         * @param m1 The value in row 0, column 1.
+         * @param m2 The value in row 0, column 2.
+         * @param m3 The value in row 1, column 0.
+         * @param m4 The value in row 1, column 1.
+         * @param m5 The value in row 1, column 2.
+         * @param m6 The value in row 2, column 0.
+         * @param m7 The value in row 2, column 1.
+         * @param m8 The value in row 2, column 2.
+         */
         Matrix3x3(float m0, float m1, float m2,
                   float m3, float m4, float m5,
                   float m6, float m7, float m8);
 
+        /**
+         * @brief Creates a 3x3 rotation matrix from Euler angles.
+         * 
+         * @param angles The Euler angles to use for creating the rotation matrix.
+         */
         static Matrix3x3 fromEulerAngles(const Component::Vector3f &angles);
+
         Matrix3x3 operator*(const Matrix3x3 &other) const;
+
         Component::Vector3f operator*(const Component::Vector3f &vec) const;
     };
 

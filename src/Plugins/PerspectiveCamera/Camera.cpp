@@ -12,8 +12,8 @@
 
 static const std::string CAMERA = "camera";
 
-Plugin::Camera::Camera(const Component::Vector3f &position, const Component::Vector3f &rotation, float field_of_view)
-        : Raytracer::ACam(CAMERA, position, rotation, field_of_view)
+Plugin::Camera::Camera(const Component::Vector3f &position, const Component::Vector3f &rotation, float fieldOfView)
+        : Raytracer::ACam(CAMERA, position, rotation, fieldOfView)
 {
 }
 
@@ -22,10 +22,10 @@ Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
     Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
 
     Component::Vector3f rotation(setting["rotation"][0], setting["rotation"][1], setting["rotation"][2]);
-    float field_of_view = 0.0f;
+    float fieldOfView = 0.0f;
 
-    setting.lookupValue("fieldOfView", field_of_view);
-    return new Plugin::Camera(position, rotation, field_of_view);
+    setting.lookupValue("fieldOfView", fieldOfView);
+    return new Plugin::Camera(position, rotation, fieldOfView);
 }
 const char *getName()
 {

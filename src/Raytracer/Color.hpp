@@ -11,12 +11,11 @@
 
 namespace Component {
     /**
-     * @brief data structure of Color
+     * @brief Data structure representing a color with red, green, and blue components.
      * 
-     * This data structure is used to define the color of a pixel
+     * This data structure is used to define the color of a pixel.
      * 
-     * It contains all the data needed by a pixel and overriding operators
-     * to make calculations between two pixels.
+     * @note The values of the components should be in the range [0.0, 1.0].
      */
     struct Color {
         float r;
@@ -24,13 +23,32 @@ namespace Component {
         float b;
 
         Color();
+
+        /**
+         * @brief Constructor for Color.
+         * 
+         * @param red The value for the red component of the color.
+         * @param green The value for the green component of the color.
+         * @param blue The value for the blue component of the color.
+         */
         Color(float red, float green, float blue);
 
+        /**
+         * @brief Clamps the values of the color components to the range [0.0, 1.0].
+         */
         void clamp();
 
         Component::Color operator*(float scalar) const;
+
         Component::Color operator*(const Component::Color &other) const;
+    
         Component::Color operator+(const Component::Color &other) const;
+
+        /**
+         * @brief Converts the color components to integers in the range [0, 255].
+         * 
+         * @return The color with integer components.
+         */
         [[nodiscard]] Component::Color toInteger() const;
     };
 };

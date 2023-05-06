@@ -91,7 +91,8 @@ namespace Raytracer {
                                      const std::vector<Raytracer::ALight *> &lights, int recursionDepth = 4) ;
 
             /**
-             *
+             * @brief Finds the closest entity 
+             * 
              * @param origin the origin of the ray
              * @param direction the direction of the ray
              * @param entities the vector of entities to search through
@@ -101,56 +102,61 @@ namespace Raytracer {
                                                                      const std::vector<IEntity *> &entities, float &t_min) ;
 
             /**
-             * Checks if there is any shadow at a given point
-             * @param hit_point The point to check
-             * @param hit_normal The normal vector at the point
+             * @brief Checks if there is any shadow at a given point
+             * 
+             * @param hitPoint The point to check
+             * @param hitNormal The normal vector at the point
              * @param light_direction The direction of the light
              * @param entities The entities in the scene
              * @param light The light source to check
              */
-            bool checkShadows(const Component::Vector3f &hit_point, const Component::Vector3f &hit_normal,
+            bool checkShadows(const Component::Vector3f &hitPoint, const Component::Vector3f &hitNormal,
                               const Component::Vector3f &light_direction, const std::vector<IEntity *> &entities,
                               const Raytracer::ALight &light);
 
             /**
-             * Calculates the resulting pixel color due to lighting
-             * @param hit_point The point to illuminate
-             * @param hit_normal The normal vector at the point
+             * @brief Calculates the resulting pixel color due to lighting
+             * 
+             * @param hitPoint The point to illuminate
+             * @param hitNormal The normal vector at the point
              * @param material The material at the point
              * @param entities The entities in the scene
              * @param lights The lights in the scene
              */
-            Component::Color calculateLighting(const Component::Vector3f &hit_point, const Component::Vector3f &hit_normal,
+            Component::Color calculateLighting(const Component::Vector3f &hitPoint, const Component::Vector3f &hitNormal,
                                                const Raytracer::AMaterial &material, const std::vector<IEntity *> &entities,
                                                const std::vector<Raytracer::ALight *> &lights);
 
             /**
-             * Calculates the diffuse color of an illuminated point
-             * @param hit_point The point to illuminate
-             * @param hit_normal The normal vector at the point
+             * @brief Calculates the diffuse color of an illuminated point
+             * 
+             * @param hitPoint The point to illuminate
+             * @param hitNormal The normal vector at the point
              * @param light_direction The direction of the light
              * @param material The material at the point
-             * @param light_intensity The intensity of the light
+             * @param lightIntensity The intensity of the light
              */
-            Component::Color computeDiffuseColor(const Component::Vector3f &hit_point, const Component::Vector3f &hit_normal,
+            Component::Color computeDiffuseColor(const Component::Vector3f &hitPoint, const Component::Vector3f &hitNormal,
                                                  const Component::Vector3f &light_direction, const AMaterial &material,
-                                                 float light_intensity);
+                                                 float lightIntensity);
 
             /**
-             * Calculates the specular color of an illuminated point
-             * @param hit_point The point to illuminate
-             * @param hit_normal The normal vector at the point
+             * @brief Calculates the specular color of an illuminated point
+             * 
+             * @param hitPoint The point to illuminate
+             * @param hitNormal The normal vector at the point
              * @param light_direction The direction of the light
              * @param material The material at the point
              * @param light The light source to check
-             * @param light_intensity The intensity of the light
+             * @param lightIntensity The intensity of the light
              */
-            Component::Color computeSpecularColor(const Component::Vector3f &hit_point, const Component::Vector3f &hit_normal,
+            Component::Color computeSpecularColor(const Component::Vector3f &hitPoint, const Component::Vector3f &hitNormal,
                                                   const Component::Vector3f &light_direction, const AMaterial &material,
-                                                  const ALight &light, float light_intensity);
+                                                  const ALight &light, float lightIntensity);
 
             /**
-             * Computes the reflection direction for a given incident and normal vector
+             * @brief Computes the reflection direction for a given incident and normal vector
+             * 
              * @param incident The incident vector
              * @param normal The normal vector
              */

@@ -24,9 +24,6 @@ namespace Raytracer {
              */
             explicit EventManager(sf::RenderWindow &window);
 
-            /**
-             * @brief Default destructor for EventManager class.
-             */
             ~EventManager() = default;
 
             /**

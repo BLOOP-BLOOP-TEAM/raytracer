@@ -25,14 +25,14 @@ float Plugin::Plane::intersect(const Raytracer::Ray &ray) const
     return t >= 0 ? t : -1.0f;
 }
 
-Component::Vector3f Plugin::Plane::getNormal(const Component::Vector3f &hit_point) const
+Component::Vector3f Plugin::Plane::getNormal(const Component::Vector3f &hitPoint) const
 {
     return _normal;
 }
 
-Component::Color Plugin::Plane::getColor(const Component::Vector3f &hit_point) const {
-    int x = static_cast<int>(floor(hit_point.x));
-    int z = static_cast<int>(floor(hit_point.z));
+Component::Color Plugin::Plane::getColor(const Component::Vector3f &hitPoint) const {
+    int x = static_cast<int>(floor(hitPoint.x));
+    int z = static_cast<int>(floor(hitPoint.z));
     int sum = x + z;
 
     // Retournez la couleur du damier pour le point d'intersection donné

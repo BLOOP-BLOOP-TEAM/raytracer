@@ -16,14 +16,14 @@
 
 namespace Raytracer {
     /**
-     * @brief the Scene class
+     * @brief The Scene class
      * 
      * This will contain all object that a scene needs
      */
     class Scene {
     public:
         /**
-         * @brief the constructor of the Scene
+         * @brief The constructor of the Scene
          *
          * This constructor will init the _image variable and 
          * the _fileName variable with the given parameter
@@ -36,7 +36,7 @@ namespace Raytracer {
         ~Scene();
 
         /**
-         * @brief function that add an entity
+         * @brief Function that add an entity
          *
          * This function will add an entity to the _entities variable
          *
@@ -45,7 +45,7 @@ namespace Raytracer {
         void addEntity(IEntity *entity);
 
         /**
-         * @brief function that add an material
+         * @brief Function that add an material
          *
          * This function will add an material to the _materials variable
          *
@@ -54,7 +54,7 @@ namespace Raytracer {
         void addMaterial(IMaterial *material);
 
         /**
-         * @brief function that get an entity
+         * @brief Function that get an entity
          *
          * This function will get the entity inside the _entities variable
          * with the help of the index given.
@@ -64,14 +64,14 @@ namespace Raytracer {
         [[nodiscard]] IEntity &getEntity(int index) const;
 
         /**
-         * @brief function that get all entities
+         * @brief Function that get all entities
          *
          * This function will get all the entities contains inside _entities.
          */
         [[nodiscard]] const std::vector<IEntity *> &getEntities() const;
 
         /**
-         * @brief function that get an material
+         * @brief Function that get an material
          *
          * This function will get the material inside the _materials variable
          * with the help of the index given.
@@ -81,14 +81,14 @@ namespace Raytracer {
         [[nodiscard]] IMaterial &getMaterial(int index) const;
 
         /**
-         * @brief function that get all materials
+         * @brief Function that get all materials
          *
          * This function will get all the entities contains inside _materials.
          */
         [[nodiscard]] const std::vector<IMaterial *> &getMaterials() const;
 
         /**
-         * @brief function that calculate an image
+         * @brief Function that calculate an image
          * 
          * This function will use the method of the image to calculate
          * every pixel we want to print.
@@ -96,14 +96,14 @@ namespace Raytracer {
         void calculateImage();
 
         /**
-         * @brief function that get the image
+         * @brief Function that get the image
          * 
          * This function will return the image contained inside _image
          */
         [[nodiscard]] Image &getImage() const;
 
         /**
-         * @brief function that get the file name
+         * @brief Function that get the file name
          * 
          * This function will get the file name contained inside _fileName
          * This variable is init inside the constructor @see Scene()
@@ -111,7 +111,7 @@ namespace Raytracer {
         [[nodiscard]] const std::string &getFileName();
 
         /**
-         * @brief function that update the scene
+         * @brief Function that update the scene
          * 
          * This function update the all the object of the scene.
          * 
@@ -120,7 +120,7 @@ namespace Raytracer {
         void update(EventManager &eventManager);
 
         /**
-         * @brief function that set _isCalculate
+         * @brief Function that set _isCalculate
          * 
          * This function will turn the _isCalculate variable to true or false
          * taking in consideration the actual data set to isCalculate.
@@ -128,7 +128,7 @@ namespace Raytracer {
         void setIsCalculate();
         
         /**
-         * @brief function that get _isCalculate
+         * @brief Function that get _isCalculate
          * 
          * This function will get the actual state of _isCalculate
          */

@@ -11,7 +11,7 @@
 
 namespace Raytracer {
     /**
-     * @brief the Ray data structure
+     * @brief The Ray data structure
      * 
      * This data structure contains two Vector3F
      * One is called origin and the other one is called direction

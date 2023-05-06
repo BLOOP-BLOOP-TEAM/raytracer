@@ -46,11 +46,11 @@ namespace Raytracer {
              * @brief Function that gets the type of the light
              */
             [[nodiscard]] const std::string &getTypeLight() const;
-    protected:
-    private:
-        std::string _typeLight;
-        Component::Color _color;
-        float _intensity;
+        protected:
+        private:
+            std::string _typeLight;
+            Component::Color _color;
+            float _intensity;
     };
 };
 

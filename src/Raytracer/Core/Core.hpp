@@ -21,9 +21,6 @@ namespace Raytracer {
      */
     class Core {
         public:
-            /**
-             * @brief Constructor for Core class.
-             */
             Core();
 
             ~Core();

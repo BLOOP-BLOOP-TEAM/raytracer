@@ -15,7 +15,7 @@
 
 namespace Raytracer {
     /**
-     * @brief the ScenesManager class
+     * @brief The ScenesManager class
      *
      * This is the class that will handle all the scenes loaded.
      */
@@ -30,7 +30,7 @@ namespace Raytracer {
         ~ScenesManager() = default;
 
         /**
-         * @brief function that add scene
+         * @brief Function that add scene
          *
          * This function take a scene and add it to _scenes variable
          *
@@ -41,14 +41,14 @@ namespace Raytracer {
         void addMultipleScenes(std::vector<std::unique_ptr<Scene>> &scenes);
 
         /**
-         * @brief function that get the actual scene
+         * @brief Function that get the actual scene
          *
          * This function is a getter that return the actual scene selected.
          */
         [[nodiscard]] Scene &getSceneActual() const;
 
         /**
-         * @brief function that set the actual scene
+         * @brief Function that set the actual scene
          *
          * This function set the _sceneActual variable to a number that is given
          * On error this function will throw a RaytracerException.
@@ -58,7 +58,7 @@ namespace Raytracer {
         void setSceneActual(int scene);
 
         /**
-         * @brief function that update
+         * @brief Function that update
          *
          * This function will update the actual scene that is selected
          *

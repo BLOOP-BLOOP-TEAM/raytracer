@@ -43,9 +43,9 @@ float Plugin::Sphere::intersect(const Raytracer::Ray &ray) const
     }
 }
 
-Component::Vector3f Plugin::Sphere::getNormal(const Component::Vector3f &hit_point) const
+Component::Vector3f Plugin::Sphere::getNormal(const Component::Vector3f &hitPoint) const
 {
-    return (hit_point - getPosition()).normalize();
+    return (hitPoint - getPosition()).normalize();
 }
 
 Raytracer::IEntity *createEntity(const libconfig::Setting &setting)

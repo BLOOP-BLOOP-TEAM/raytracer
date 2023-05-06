@@ -69,7 +69,7 @@ namespace Raytracer {
             [[nodiscard]] const std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const libconfig::Setting &)>, std::function<void(Raytracer::IEntity *entity)>>>& getEntities() const;
 
 
-    private:
-        std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const libconfig::Setting &)>, std::function<void(Raytracer::IEntity *entity)>>> _entities;
+        private:
+            std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const libconfig::Setting &)>, std::function<void(Raytracer::IEntity *entity)>>> _entities;
     };
 };
