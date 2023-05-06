@@ -28,6 +28,6 @@ namespace Raytracer {
             /**
              * @brief Gets the intensity of the light
              */
-            virtual float getIntensity() const = 0;
+            virtual double getIntensity() const = 0;
     };
 };

@@ -18,7 +18,7 @@ namespace Plugin
              * @param diffuseFactor The diffuse factor of the material.
              * @param reflectivity The reflectivity of the material.
              */
-            PlaneMaterial(const Component::Color &color1, const Component::Color &color2, float squareSize, float diffuseFactor, float reflectivity);
+            PlaneMaterial(const Component::Color &color1, const Component::Color &color2, double squareSize, double diffuseFactor, double reflectivity);
 
             ~PlaneMaterial() override = default;
 
@@ -30,24 +30,24 @@ namespace Plugin
             /**
              * @brief Gets the specular reflection factor of the material.
              */
-            [[nodiscard]] float getSpecular() const override;
+            [[nodiscard]] double getSpecular() const override;
 
             /**
              * @brief Gets the shininess of the material.
              */
-            [[nodiscard]] float getShininess() const override;
+            [[nodiscard]] double getShininess() const override;
 
             /**
              * @brief Gets the reflectivity of the material.
              */
-            [[nodiscard]] float getReflectivity() const override;
+            [[nodiscard]] double getReflectivity() const override;
 
         private:
             Component::Color _color1;
             Component::Color _color2;
-            float _squareSize;
-            float _reflectivity;
-            float _diffuseFactor;
+            double _squareSize;
+            double _reflectivity;
+            double _diffuseFactor;
 
             /**
              * @brief Computes the color of the material at a given point, taking into account the lighting and ambient color.
@@ -60,7 +60,7 @@ namespace Plugin
              * @param ambientLightIntensity The intensity of the ambient light.
              */
             [[nodiscard]] Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
-                                                        const Component::Vector3f &lightDirection, float lightIntensity,
-                                                        const Component::Color &ambientLightColor, float ambientLightIntensity) const override;
+                                                        const Component::Vector3f &lightDirection, double lightIntensity,
+                                                        const Component::Color &ambientLightColor, double ambientLightIntensity) const override;
     };
 }

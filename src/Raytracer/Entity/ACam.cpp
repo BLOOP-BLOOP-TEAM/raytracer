@@ -8,9 +8,9 @@
 #include "ACam.hpp"
 
 Raytracer::ACam::ACam(const std::string &typeCam, const Component::Vector3f &position, const Component::Vector3f &rotation,
-            float fieldOfView) : AEntity(Raytracer::CompType::CAM, position), _typeCam(typeCam), _rotation(rotation),
+            double fieldOfView) : AEntity(Raytracer::CompType::CAM, position), _typeCam(typeCam), _rotation(rotation),
                                                         _fieldOfView(fieldOfView) {}
-float Raytracer::ACam::getFieldOfView() const
+double Raytracer::ACam::getFieldOfView() const
 {
     return _fieldOfView;
 }

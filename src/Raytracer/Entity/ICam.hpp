@@ -23,6 +23,6 @@ namespace Raytracer {
             /**
              * @brief Gets the field of view of the camera
              */
-            virtual float getFieldOfView() const = 0;
+            virtual double getFieldOfView() const = 0;
     };
 };

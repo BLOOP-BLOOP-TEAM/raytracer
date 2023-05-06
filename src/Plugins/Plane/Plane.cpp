@@ -14,14 +14,14 @@ static const std::string PLANE = "Plane";
 Plugin::Plane::Plane(const Component::Vector3f &position, const Component::Vector3f &normal)
         : APrimitive(PLANE, position), _normal(normal.normalize()) {}
 
-float Plugin::Plane::intersect(const Raytracer::Ray &ray) const
+double Plugin::Plane::intersect(const Raytracer::Ray &ray) const
 {
-    float denom = _normal.dot(ray.direction);
+    double denom = _normal.dot(ray.direction);
 
     if (std::abs(denom) < 1e-6) {
         return -1.0f;
     }
-    float t = (_position - ray.origin).dot(_normal) / denom;
+    double t = (_position - ray.origin).dot(_normal) / denom;
     return t >= 0 ? t : -1.0f;
 }
 

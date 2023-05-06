@@ -23,7 +23,7 @@ namespace Plugin {
              * @param position The center position of the sphere.
              * @param radius The radius of the sphere.
              */
-            Sphere(const Component::Vector3f &position, float radius);
+            Sphere(const Component::Vector3f &position, double radius);
 
             ~Sphere() override = default;
 
@@ -32,7 +32,7 @@ namespace Plugin {
              * 
              * @param ray The ray to test for intersection with the sphere.
              */
-            [[nodiscard]] float intersect(const Raytracer::Ray &ray) const override;
+            [[nodiscard]] double intersect(const Raytracer::Ray &ray) const override;
 
             /**
              * @brief Calculates the surface normal at a given point on the sphere.
@@ -43,6 +43,6 @@ namespace Plugin {
 
         protected:
         private:
-            float _radius;
+            double _radius;
     };
 }

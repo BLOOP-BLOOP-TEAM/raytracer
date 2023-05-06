@@ -36,7 +36,7 @@ namespace Raytracer {
              * 
              * @param ray The Ray object to check for intersection
              */
-            [[nodiscard]] float intersect(const Ray &ray) const override;
+            [[nodiscard]] double intersect(const Ray &ray) const override;
     
             /**
              * @brief Function that sets the material of the primitive

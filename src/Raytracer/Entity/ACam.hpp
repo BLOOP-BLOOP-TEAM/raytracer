@@ -29,17 +29,17 @@ namespace Raytracer {
              * @param typeCam a string representing the type of camera
              * @param position a Vector3f object representing the position of the camera
              * @param rotation a Vector3f object representing the rotation of the camera
-             * @param fieldOfView a float value representing the field of view of the camera
+             * @param fieldOfView a double value representing the field of view of the camera
              */
             ACam(const std::string &typeCam, const Component::Vector3f &position, const Component::Vector3f &rotation,
-                float fieldOfView);
+                double fieldOfView);
 
             ~ACam() override { std::cout << "ACam::~ACam" << std::endl; };
 
             /**
              * @brief Returns the field of view of the camera
              */
-            [[nodiscard]] float getFieldOfView() const override;
+            [[nodiscard]] double getFieldOfView() const override;
 
             /**
              * @brief Returns the rotation of the camera
@@ -62,7 +62,7 @@ namespace Raytracer {
         private:
             std::string _typeCam;
             Component::Vector3f _rotation;
-            float _fieldOfView;
+            double _fieldOfView;
     };
 };
 

@@ -12,25 +12,25 @@
 
 static const std::string SPHERE = "sphere";
 
-Plugin::Sphere::Sphere(const Component::Vector3f &position, float radius) : APrimitive(SPHERE, position), _radius(radius)
+Plugin::Sphere::Sphere(const Component::Vector3f &position, double radius) : APrimitive(SPHERE, position), _radius(radius)
 {
 
 }
 
-float Plugin::Sphere::intersect(const Raytracer::Ray &ray) const
+double Plugin::Sphere::intersect(const Raytracer::Ray &ray) const
 {
     Component::Vector3f L = ray.origin - getPosition();
-    float a = ray.direction.dot(ray.direction);
-    float b = 2 * ray.direction.dot(L);
-    float c = L.dot(L) - _radius * _radius;
-    float delta = b * b - 4 * a * c;
+    double a = ray.direction.dot(ray.direction);
+    double b = 2 * ray.direction.dot(L);
+    double c = L.dot(L) - _radius * _radius;
+    double delta = b * b - 4 * a * c;
 
     if (delta < 0) {
         return -1;
     }
 
-    float t1 = (-b - sqrt(delta)) / (2 * a);
-    float t2 = (-b + sqrt(delta)) / (2 * a);
+    double t1 = (-b - sqrt(delta)) / (2 * a);
+    double t2 = (-b + sqrt(delta)) / (2 * a);
 
     if (t1 > 0 && t2 > 0) {
         return std::min(t1, t2);
@@ -51,7 +51,7 @@ Component::Vector3f Plugin::Sphere::getNormal(const Component::Vector3f &hitPoin
 Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
 {
     Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
-    float radius = 0;
+    double radius = 0;
 
     setting.lookupValue("radius", radius);
     return new Plugin::Sphere(position, radius);

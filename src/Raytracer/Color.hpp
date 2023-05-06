@@ -18,9 +18,9 @@ namespace Component {
      * @note The values of the components should be in the range [0.0, 1.0].
      */
     struct Color {
-        float r;
-        float g;
-        float b;
+        double r;
+        double g;
+        double b;
 
         Color();
 
@@ -31,14 +31,14 @@ namespace Component {
          * @param green The value for the green component of the color.
          * @param blue The value for the blue component of the color.
          */
-        Color(float red, float green, float blue);
+        Color(double red, double green, double blue);
 
         /**
          * @brief Clamps the values of the color components to the range [0.0, 1.0].
          */
         void clamp();
 
-        Component::Color operator*(float scalar) const;
+        Component::Color operator*(double scalar) const;
 
         Component::Color operator*(const Component::Color &other) const;
     

@@ -21,7 +21,7 @@ namespace Component {
      * This data structure defines a matrix 3x3 with all function that she needs
      */
     struct Matrix3x3 {
-        float m[9]{};
+        double m[9]{};
 
         Matrix3x3();
 
@@ -38,9 +38,9 @@ namespace Component {
          * @param m7 The value in row 2, column 1.
          * @param m8 The value in row 2, column 2.
          */
-        Matrix3x3(float m0, float m1, float m2,
-                  float m3, float m4, float m5,
-                  float m6, float m7, float m8);
+        Matrix3x3(double m0, double m1, double m2,
+                  double m3, double m4, double m5,
+                  double m6, double m7, double m8);
 
         /**
          * @brief Creates a 3x3 rotation matrix from Euler angles.

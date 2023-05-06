@@ -26,9 +26,9 @@ namespace Raytracer {
              * @param type The type of the light as a string
              * @param position The position of the light as a Vector3f
              * @param color The color of the light as a Color
-             * @param intensity The intensity of the light as a float
+             * @param intensity The intensity of the light as a double
              */
-            ALight(std::string type, const Component::Vector3f &position, const Component::Color &color, float intensity);
+            ALight(std::string type, const Component::Vector3f &position, const Component::Color &color, double intensity);
 
             ~ALight() override = default;
 
@@ -40,7 +40,7 @@ namespace Raytracer {
             /**
              * @brief Function that gets the intensity of the light
              */
-            [[nodiscard]] float getIntensity() const override;
+            [[nodiscard]] double getIntensity() const override;
 
             /**
              * @brief Function that gets the type of the light
@@ -50,7 +50,7 @@ namespace Raytracer {
         private:
             std::string _typeLight;
             Component::Color _color;
-            float _intensity;
+            double _intensity;
     };
 };
 

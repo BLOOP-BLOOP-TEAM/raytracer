@@ -34,9 +34,7 @@ namespace Raytracer {
              * @param entities a reference to a vector of entities
              * @param pixels a reference to a vector of vectors of colors to store the calculated pixels
              */
-            Calculator(int width, int height, std::vector<IEntity *> &entities, std::vector<std::vector<Component::Color>>& pixels)
-                    : width(width), height(height), entities(entities), pixels(pixels), ambientLightColor(1.0f, 1.0f, 1.0f),
-                      ambientLightIntensity(0.1f) {}
+            Calculator(int width, int height, std::vector<IEntity *> &entities, std::vector<std::vector<Component::Color>>& pixels);
 
             ~Calculator() = default;
 
@@ -52,7 +50,7 @@ namespace Raytracer {
             std::vector<IEntity *> &entities;
             std::vector<std::vector<Component::Color>>& pixels;
             Component::Color ambientLightColor;
-            float ambientLightIntensity;
+            double ambientLightIntensity;
 
             /**
              * @brief Finds the camera among the entities.
@@ -99,7 +97,7 @@ namespace Raytracer {
              * @param t_min the minimum distance to consider for the intersection
              */
             Raytracer::IEntity &findClosestEntity(const Component::Vector3f &origin, const Component::Vector3f &direction,
-                                                                     const std::vector<IEntity *> &entities, float &t_min) ;
+                                                                     const std::vector<IEntity *> &entities, double &t_min) ;
 
             /**
              * @brief Checks if there is any shadow at a given point
@@ -138,7 +136,7 @@ namespace Raytracer {
              */
             Component::Color computeDiffuseColor(const Component::Vector3f &hitPoint, const Component::Vector3f &hitNormal,
                                                  const Component::Vector3f &light_direction, const AMaterial &material,
-                                                 float lightIntensity);
+                                                 double lightIntensity);
 
             /**
              * @brief Calculates the specular color of an illuminated point
@@ -152,7 +150,7 @@ namespace Raytracer {
              */
             Component::Color computeSpecularColor(const Component::Vector3f &hitPoint, const Component::Vector3f &hitNormal,
                                                   const Component::Vector3f &light_direction, const AMaterial &material,
-                                                  const ALight &light, float lightIntensity);
+                                                  const ALight &light, double lightIntensity);
 
             /**
              * @brief Computes the reflection direction for a given incident and normal vector
@@ -161,5 +159,19 @@ namespace Raytracer {
              * @param normal The normal vector
              */
             Component::Vector3f getReflectionDirection(const Component::Vector3f &incident, const Component::Vector3f &normal);
+
+            /**
+             * @brief Calculates the average color of a pixel based on subpixels
+             * 
+             * @param x The x coordinate of the pixel
+             * @param y The y coordinate of the pixel
+             * @param camera A pointer to the camera object used to render the scene
+             * @param entities A vector containing pointers to all entities in the scene
+             * @param lights A vector containing pointers to all lights in the scene
+             * @param subPixelsPerAxis The number of subpixels to use per axis (the total number of subpixels will be this value squared)
+             * @return The average color of the pixel
+             */
+            Component::Color getAverageColor(int x, int y, const ACam *camera, const std::vector<IEntity *> &entities,
+                                         const std::vector<Raytracer::ALight *> &lights, int subPixelsPerAxis);
     };
 };

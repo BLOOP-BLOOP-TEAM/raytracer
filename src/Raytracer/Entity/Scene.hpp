@@ -28,10 +28,10 @@ namespace Raytracer {
          * This constructor will init the _image variable and 
          * the _fileName variable with the given parameter
          *
-         * @param name string that correspond to the name given to the scene
-         * @param fileName string that correpsond to the name of the file
+         * @param name string reference that correspond to the name given to the scene
+         * @param fileName string reference that correpsond to the name of the file
          */
-        Scene(std::string name, std::string fileName);
+        Scene(const std::string &name, const std::string &fileName);
 
         ~Scene();
 

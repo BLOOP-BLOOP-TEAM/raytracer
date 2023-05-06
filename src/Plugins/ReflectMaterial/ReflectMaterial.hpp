@@ -25,7 +25,7 @@ namespace Plugin {
              * @param diffuseFactor The diffuse factor of the material.
              * @param reflectivity The reflectivity of the material.
              */
-            ReflectMaterial(const Component::Color &baseColor, float diffuseFactor, float reflectivity);
+            ReflectMaterial(const Component::Color &baseColor, double diffuseFactor, double reflectivity);
 
             ~ReflectMaterial() override = default;
 
@@ -37,17 +37,17 @@ namespace Plugin {
             /**
              * @brief Gets the specular reflection factor of the material.
              */
-            [[nodiscard]] float getSpecular() const override;
+            [[nodiscard]] double getSpecular() const override;
 
             /**
              * @brief Gets the shininess of the material.
              */
-            [[nodiscard]] float getShininess() const override;
+            [[nodiscard]] double getShininess() const override;
 
         private:
             Component::Color _baseColor;
-            float _diffuseFactor;
-            float _reflectivity;
+            double _diffuseFactor;
+            double _reflectivity;
 
             /**
              * @brief Computes the color of the material at a given point, taking into account the lighting and ambient color.
@@ -60,12 +60,12 @@ namespace Plugin {
              * @param ambientLightIntensity The intensity of the ambient light.
              */
             [[nodiscard]] Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
-                                          const Component::Vector3f &lightDirection, float lightIntensity,
-                                          const Component::Color &ambientLightColor, float ambientLightIntensity) const override;
+                                          const Component::Vector3f &lightDirection, double lightIntensity,
+                                          const Component::Color &ambientLightColor, double ambientLightIntensity) const override;
 
             /**
              * @brief Gets the reflectivity of the material.
              */
-            [[nodiscard]] float getReflectivity() const override;
+            [[nodiscard]] double getReflectivity() const override;
     };
 }

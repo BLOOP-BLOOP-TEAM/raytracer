@@ -15,7 +15,7 @@ Raytracer::APrimitive::APrimitive(std::string type, const Component::Vector3f &p
 {
 }
 
-float Raytracer::APrimitive::intersect(const Ray &ray) const
+double Raytracer::APrimitive::intersect(const Ray &ray) const
 {
     std::cout << "APrimitive::intersect" << std::endl;
     return 0;

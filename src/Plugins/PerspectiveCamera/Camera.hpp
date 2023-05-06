@@ -22,7 +22,7 @@ namespace Plugin {
              * @param rotation The rotation of the camera.
              * @param fieldOfView The field of view of the camera.
              */
-            Camera(const Component::Vector3f &position, const Component::Vector3f &rotation, float fieldOfView);
+            Camera(const Component::Vector3f &position, const Component::Vector3f &rotation, double fieldOfView);
 
             ~Camera() override = default;
     };

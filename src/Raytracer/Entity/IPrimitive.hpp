@@ -30,7 +30,7 @@ namespace Raytracer {
              * 
              * @param ray The Ray object to check for intersection
              */
-            virtual float intersect(const Ray &ray) const = 0 ;
+            virtual double intersect(const Ray &ray) const = 0 ;
 
             /**
              * @brief function that set material

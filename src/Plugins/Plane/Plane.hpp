@@ -32,7 +32,7 @@ namespace Plugin {
              * 
              * @param ray The ray to intersect with the plane.
              */
-            float intersect(const Raytracer::Ray &ray) const override;
+            double intersect(const Raytracer::Ray &ray) const override;
 
             /**
              * @brief Gets the normal vector of the plane at a given point.

@@ -21,27 +21,27 @@ namespace Component {
      * It contains some functions too that will make calculations.
      */
     struct Vector3f {
-        float x;
-        float y;
-        float z;
+        double x;
+        double y;
+        double z;
 
         Vector3f();
-        Vector3f(float x, float y, float z);
+        Vector3f(double x, double y, double z);
 
         Vector3f operator+(const Vector3f& v) const;
 
         Vector3f operator-(const Vector3f& v) const;
 
-        Component::Vector3f operator*(float scalar) const;
+        Component::Vector3f operator*(double scalar) const;
 
         Vector3f operator*(const Vector3f& v) const;
 
-        Vector3f operator/(float s) const;
+        Vector3f operator/(double s) const;
 
         /**
          * @brief Computes the length of the vector
          */
-        [[nodiscard]] float length() const;
+        [[nodiscard]] double length() const;
 
         /**
          * @brief Normalizes the vector
@@ -53,7 +53,7 @@ namespace Component {
          * 
          * @param v The vector to compute the dot product with
          */
-        [[nodiscard]] float dot(const Vector3f& v) const;
+        [[nodiscard]] double dot(const Vector3f& v) const;
 
         /**
          * @brief Computes the cross product between two vectors
