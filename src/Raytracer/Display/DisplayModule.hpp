@@ -12,6 +12,7 @@
 #include "Image.hpp"
 #include "Text.hpp"
 #include "ScenesManager.hpp"
+#include "RaytracerException.hpp"
 
 namespace Raytracer {
     class DisplayModule {
@@ -33,6 +34,8 @@ namespace Raytracer {
             void setText(const Component::Text &textComponent);
 
             void updateText(sf::Text &sfText, const Component::Text &textComponent);
+
+            void updateCameraValues();
 
             sf::RenderWindow &getWindow();
 

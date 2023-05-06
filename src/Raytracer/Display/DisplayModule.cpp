@@ -7,6 +7,11 @@
 
 #include "DisplayModule.hpp"
 
+static const std::string ID_CAMERA_POS_TITLE = "#cameraPosTitle";
+static const std::string ID_CAMERA_POS_VALUE = "#cameraPosValue";
+static const std::string ID_CAMERA_ROTATION_TITLE = "#cameraRotationTitle";
+static const std::string ID_CAMERA_ROTATION_VALUE = "#cameraRotationValue";
+
 namespace Raytracer {
 
     DisplayModule::DisplayModule(unsigned int width, unsigned int height, const std::string& title, ScenesManager &scenesManager)
@@ -30,7 +35,9 @@ namespace Raytracer {
     }
 
     std::string DisplayModule::getCameraRotation() {
-        for (const auto &entity: _scenesManager.getSceneActual().getEntities()) {
+        const std::vector<Raytracer::IEntity *> &entities = _scenesManager.getSceneActual().getEntities();
+
+        for (const auto &entity: entities) {
             if (entity->getType() == CompType::CAM) {
                 ACam *cam = static_cast<ACam *>(entity);
                 return Vector3fToString(cam->getRotation());
@@ -40,12 +47,11 @@ namespace Raytracer {
     }
 
     void DisplayModule::initGuy() {
-        std::string cameraPos = getCameraPos();
-        Component::Text CameraPosTitle("#cameraPosTitle", FONT, "Camera Position :", 15, {10, 10, 0}, {255, 0, 0}, {0, 0, 0});
-        Component::Text CameraPosValue("#cameraPosValue", FONT, getCameraPos(), 15, {150, 10, 0}, {255, 0, 0}, {0, 0, 0});
+        Component::Text CameraPosTitle(ID_CAMERA_POS_TITLE, FONT, "Camera Position :", 15, {10, 10, 0}, {255, 0, 0}, {0, 0, 0});
+        Component::Text CameraPosValue(ID_CAMERA_POS_VALUE, FONT, getCameraPos(), 15, {150, 10, 0}, {255, 0, 0}, {0, 0, 0});
 
-        Component::Text CameraRotationTitle("#cameraRotationTitle", FONT, "Camera Rotation :", 15, {10, 30, 0}, {255, 0, 0}, {0, 0, 0});
-        Component::Text CameraRotationValue("#cameraRotationValue", FONT, getCameraRotation(), 15, {150, 30, 0}, {255, 0, 0}, {0, 0, 0});
+        Component::Text CameraRotationTitle(ID_CAMERA_ROTATION_TITLE, FONT, "Camera Rotation :", 15, {10, 30, 0}, {255, 0, 0}, {0, 0, 0});
+        Component::Text CameraRotationValue(ID_CAMERA_ROTATION_VALUE, FONT, getCameraRotation(), 15, {150, 30, 0}, {255, 0, 0}, {0, 0, 0});
 
         _allTexts.push_back(CameraPosTitle);
         _allTexts.push_back(CameraPosValue);
@@ -58,7 +64,7 @@ namespace Raytracer {
         if (fontIt == _allFonts.end()) {
             sf::Font font;
             if (!font.loadFromFile(textComponent.fontPath))
-                throw(std::invalid_argument("Impossible de charger la font")); // a modifier
+                throw Raytracer::RaytracerException("Impossible de charger la font");
             _allFonts.insert({textComponent.fontPath, font});
             fontIt = _allFonts.find(textComponent.fontPath);
         }
@@ -109,11 +115,19 @@ namespace Raytracer {
         }
     }
 
+    void DisplayModule::updateCameraValues() {
+        for (auto &text :_allTexts) {
+            if (text.id == ID_CAMERA_POS_VALUE)
+                text.text = getCameraPos();
+        }
+    }
+
     void DisplayModule::update(const Image &image) {
         // Dessiner et afficher les pixels
         _window.clear();
         displayPixels(image);
         _window.draw(_pixels);
+        updateCameraValues();
         displayGuy();
         _window.display();
     }

@@ -52,6 +52,7 @@ Component::Matrix3x3 Component::Matrix3x3::fromEulerAngles(const Component::Vect
     // Modifiez l'ordre des multiplications de matrice ici, par exemple : Rz * Rx * Ry
     return Rz * Ry * Rx;
 }
+
 Component::Matrix3x3 Component::Matrix3x3::operator*(const Component::Matrix3x3 &other) const
 {
     Matrix3x3 result;

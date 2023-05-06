@@ -27,6 +27,7 @@ Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
     setting.lookupValue("fieldOfView", field_of_view);
     return new Plugin::Camera(position, rotation, field_of_view);
 }
+
 const char *getName()
 {
     return CAMERA.c_str();
