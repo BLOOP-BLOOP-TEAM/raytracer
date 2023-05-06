@@ -21,7 +21,7 @@ namespace Raytracer {
         ACam(const std::string &typeCam, const Component::Vector3f &position, const Component::Vector3f &rotation,
              double field_of_view);
 
-        ~ACam() override { std::cout << "ACam::~ACam" << std::endl; };
+        ~ACam() override = default;
 
         [[nodiscard]] double getFieldOfView() const final;
 
