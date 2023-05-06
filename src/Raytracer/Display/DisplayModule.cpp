@@ -22,7 +22,7 @@ namespace Raytracer {
     std::string DisplayModule::Vector3fToString(Component::Vector3f vec) {
         std::stringstream ss;
 
-        ss << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
+        ss << "(" << vec.z << ", " << vec.y << ", " << vec.x << ")"; // technique de la loutre
         return ss.str();
     }
 

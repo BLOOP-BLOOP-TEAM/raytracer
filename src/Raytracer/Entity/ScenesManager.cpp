@@ -15,6 +15,8 @@ static const std::string keyD = "KEY_D_PRESSED";
 static const std::string keyZ = "KEY_Z_PRESSED";
 static const std::string keyQ = "KEY_Q_PRESSED";
 static const std::string keyS = "KEY_S_PRESSED";
+static const std::string keyA = "KEY_A_PRESSED";
+static const std::string keyE = "KEY_E_PRESSED";
 
 Raytracer::ScenesManager::ScenesManager() : _sceneActual(0)
 {
@@ -52,12 +54,18 @@ void Raytracer::ScenesManager::moveCamera(std::string key)
             cam.translate({0, 1, 0});
             break;
         case 'Q':
-            cam.translate({-1, 0, 0});
+            cam.translate({0, 0, 1});
             break;
         case 'S':
             cam.translate({0, -1, 0});
             break;
         case 'D':
+            cam.translate({0, 0, -1});
+            break;
+        case 'A':
+            cam.translate({-1, 0, 0});
+            break;
+        case 'E':
             cam.translate({1, 0, 0});
             break;
         default:
@@ -85,6 +93,8 @@ void Raytracer::ScenesManager::update(Raytracer::EventManager &eventManager)
                         eventManager.isEventTriggered(keyQ) ? keyQ :
                         eventManager.isEventTriggered(keyS) ? keyS :
                         eventManager.isEventTriggered(keyD) ? keyD :
+                        eventManager.isEventTriggered(keyA) ? keyA :
+                        eventManager.isEventTriggered(keyE) ? keyE :
                         "";
 
     if (eventManager.isEventTriggered(keyLeft))
