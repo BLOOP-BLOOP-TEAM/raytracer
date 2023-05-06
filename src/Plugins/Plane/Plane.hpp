@@ -17,7 +17,7 @@ namespace Plugin {
         Plane(const Component::Vector3f &position, const Component::Vector3f &normal);
         virtual ~Plane() = default;
 
-        float intersect(const Raytracer::Ray &ray) const override;
+        double intersect(const Raytracer::Ray &ray) const override;
         Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
         Component::Color getColor(const Component::Vector3f &hit_point) const override;
 

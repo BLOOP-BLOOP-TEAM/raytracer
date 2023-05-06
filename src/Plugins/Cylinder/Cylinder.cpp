@@ -13,7 +13,7 @@
 
 static const std::string cylinderName = "Cylinder";
 
-Plugin::Cylinder::Cylinder(const Component::Vector3f &position, float radius, float height,
+Plugin::Cylinder::Cylinder(const Component::Vector3f &position, double radius, double height,
                             Component::Vector3f &basePoint, Component::Vector3f &topPoint)
     : APrimitive("Cylinder", position), _radius(radius), _height(height)
 {
@@ -32,32 +32,32 @@ Component::Vector3f Plugin::Cylinder::calculateCylinderAxis(const Component::Vec
     return axis;
 }
 
-float Plugin::Cylinder::intersect(const Raytracer::Ray &ray) const
+double Plugin::Cylinder::intersect(const Raytracer::Ray &ray) const
 {
     Component::Vector3f d = ray.direction;
     Component::Vector3f o = ray.origin - getPosition();
     Component::Vector3f axis = _axis;
-    float h = _height;
-    float r = _radius;
+    double h = _height;
+    double r = _radius;
 
-    float a = d.dot(d) - pow(d.dot(axis), 2);
-    float b = 2 * (d.dot(o) - d.dot(axis) * o.dot(axis));
-    float c = o.dot(o) - pow(o.dot(axis), 2) - r * r;
+    double a = d.dot(d) - pow(d.dot(axis), 2);
+    double b = 2 * (d.dot(o) - d.dot(axis) * o.dot(axis));
+    double c = o.dot(o) - pow(o.dot(axis), 2) - r * r;
 
-    float delta = b * b - 4 * a * c;
+    double delta = b * b - 4 * a * c;
 
-    std::vector<float> intersections;
+    std::vector<double> intersections;
 
     if (delta >= 0) {
-        float t1 = (-b - sqrt(delta)) / (2 * a);
-        float t2 = (-b + sqrt(delta)) / (2 * a);
+        double t1 = (-b - sqrt(delta)) / (2 * a);
+        double t2 = (-b + sqrt(delta)) / (2 * a);
 
-        float min_t = std::min(t1, t2);
-        float max_t = std::max(t1, t2);
+        double min_t = std::min(t1, t2);
+        double max_t = std::max(t1, t2);
 
-        for (float t : {min_t, max_t}) {
+        for (double t : {min_t, max_t}) {
             Component::Vector3f intersect = ray.origin + ray.direction * t;
-            float height = (intersect - getPosition()).dot(_axis);
+            double height = (intersect - getPosition()).dot(_axis);
 
             if (height >= 0 && height <= _height) {
                 intersections.push_back(t);
@@ -65,8 +65,8 @@ float Plugin::Cylinder::intersect(const Raytracer::Ray &ray) const
         }
     }
 
-    for (float face_height : {0.0f, _height}) {
-        float t = (face_height - o.dot(axis)) / d.dot(axis);
+    for (double face_height : {0.0, _height}) {
+        double t = (face_height - o.dot(axis)) / d.dot(axis);
 
         if (t > 0) {
             Component::Vector3f intersect = ray.origin + ray.direction * t;
@@ -95,8 +95,8 @@ Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
     Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
     Component::Vector3f basePoint(setting["basePoint"][0], setting["basePoint"][1], setting["basePoint"][2]);
     Component::Vector3f topPoint(setting["topPoint"][0], setting["topPoint"][1], setting["topPoint"][2]);
-    float height = 0;
-    float radius = 0;
+    double height = 0;
+    double radius = 0;
 
     setting.lookupValue("radius", radius);
     setting.lookupValue("height", height);
