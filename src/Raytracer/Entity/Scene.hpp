@@ -17,7 +17,7 @@
 namespace Raytracer {
     class Scene {
     public:
-        Scene(std::string name, std::string fileName);
+        Scene(const std::string &name, const std::string &fileName);
 
         ~Scene();
 

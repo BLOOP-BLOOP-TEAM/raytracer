@@ -14,16 +14,16 @@
 namespace Plugin {
 class Sphere : public Raytracer::APrimitive {
     public:
-        Sphere(const Component::Vector3f &position, float radius);
+        Sphere(const Component::Vector3f &position, double radius);
 
         ~Sphere() override = default;
 
-        [[nodiscard]] float intersect(const Raytracer::Ray &ray) const override;
+        [[nodiscard]] double intersect(const Raytracer::Ray &ray) const override;
 
         [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
 
     protected:
     private:
-        float _radius;
+        double _radius;
     };
 }

@@ -84,5 +84,4 @@ set_target_properties(plugin_plane_material PROPERTIES
         )
 
 
-set(CMAKE_BUILD_TYPE Debug)
 add_subdirectory(src)

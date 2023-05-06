@@ -11,28 +11,28 @@
 
 namespace Component {
     struct Vector3f {
-        float x;
-        float y;
-        float z;
+        double x;
+        double y;
+        double z;
 
         Vector3f();
-        Vector3f(float x, float y, float z);
+        Vector3f(double x, double y, double z);
 
         Vector3f operator+(const Vector3f& v) const;
 
         Vector3f operator-(const Vector3f& v) const;
 
-        Component::Vector3f operator*(float scalar) const;
+        Component::Vector3f operator*(double scalar) const;
 
         Vector3f operator*(const Vector3f& v) const;
 
-        Vector3f operator/(float s) const;
+        Vector3f operator/(double s) const;
 
-        [[nodiscard]] float length() const;
+        [[nodiscard]] double length() const;
 
         [[nodiscard]] Vector3f normalize() const;
 
-        [[nodiscard]] float dot(const Vector3f& v) const;
+        [[nodiscard]] double dot(const Vector3f& v) const;
 
         [[nodiscard]] Vector3f cross(const Vector3f& other) const;
 

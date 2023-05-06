@@ -54,5 +54,3 @@ target_sources(plugin_sphere PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/APrimitive.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/AEntity.cpp"
         )
-
-set(CMAKE_BUILD_TYPE Debug)

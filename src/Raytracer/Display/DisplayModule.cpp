@@ -99,7 +99,7 @@ namespace Raytracer {
             for (unsigned int x = 0; x < _width; ++x) {
                 Component::Color color = image.get_pixel(x, y);
                 size_t index = y * _width + x;
-                _pixels[index].position = sf::Vector2f(static_cast<float>(x), static_cast<float>(y));
+                _pixels[index].position = sf::Vector2f(static_cast<double>(x), static_cast<double>(y));
                 _pixels[index].color = sf::Color(color.r, color.g, color.b);
             }
         }
