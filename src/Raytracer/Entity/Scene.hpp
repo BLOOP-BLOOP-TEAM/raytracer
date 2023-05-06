@@ -43,7 +43,7 @@ namespace Raytracer {
 
         void setIsCalculate();
 
-        [[nodiscard]] const bool &getIsCalculate();
+        [[nodiscard]] const bool &getIsCalculate() const;
 
     protected:
     private:
