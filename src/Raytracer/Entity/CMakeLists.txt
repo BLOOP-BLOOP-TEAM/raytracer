@@ -38,7 +38,6 @@ target_sources(plugin_directional_light PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/AEntity.cpp"
         )
 
-
 target_sources(plugin_simple_material PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/AMaterial.cpp"
         )
