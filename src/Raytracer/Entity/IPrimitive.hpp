@@ -22,9 +22,9 @@ namespace Raytracer {
 
         virtual void setMaterial(IMaterial *material) = 0;
 
-        [[nodiscard]] virtual Component::Vector3f getNormal(const Component::Vector3f &hit_point) const = 0;
+        [[nodiscard]] virtual Component::Vector3f getNormal(const Component::Vector3f &hitPoint) const = 0;
 
-        [[nodiscard]] virtual Component::Color getColor(const Component::Vector3f &hit_point) const = 0;
+        [[nodiscard]] virtual Component::Color getColor(const Component::Vector3f &hitPoint) const = 0;
 
         [[nodiscard]] virtual IMaterial &getMaterial() const = 0;
     protected:

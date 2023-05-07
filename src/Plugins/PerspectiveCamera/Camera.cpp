@@ -12,8 +12,8 @@
 
 static const std::string CAMERA = "camera";
 
-Plugin::Camera::Camera(const Component::Vector3f &position, const Component::Vector3f &rotation, bool isEdited, double field_of_view, const Component::Vector3f &resolution)
-        : Raytracer::ACam(CAMERA, position, rotation, isEdited, field_of_view, resolution)
+Plugin::Camera::Camera(const Component::Vector3f &position, const Component::Vector3f &rotation, bool isEdited, double fieldOfView, const Component::Vector3f &resolution)
+        : Raytracer::ACam(CAMERA, position, rotation, isEdited, fieldOfView, resolution)
 {
 }
 
