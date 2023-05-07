@@ -16,3 +16,11 @@ const std::string &Raytracer::AMaterial::getType()
 {
     return (_type);
 }
+
+double Raytracer::AMaterial::getRefractivity() const {
+    return _refractivity;
+}
+
+double Raytracer::AMaterial::getRefractiveIndex() const {
+    return _refractiveIndex;
+}

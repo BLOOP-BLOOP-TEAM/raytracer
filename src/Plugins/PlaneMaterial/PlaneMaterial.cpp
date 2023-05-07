@@ -75,10 +75,14 @@ Raytracer::IMaterial *createMaterial(const libconfig::Setting &setting)
     setting.lookupValue("squareSize", squareSize);
     double diffuseFactor = 0.0f;
     double reflectivity = 0.0f;
+    double refractivity = 0.0f;
+    double refractiveIndex = 0.0f;
 
 
     setting.lookupValue("diffuseFactor", diffuseFactor);
     setting.lookupValue("reflectivity", reflectivity);
+    setting.lookupValue("refractivity", refractivity);
+    setting.lookupValue("refractiveIndex", refractiveIndex);
     return new Plugin::PlaneMaterial(baseColor, baseColorSecond, squareSize, diffuseFactor, reflectivity);
 }
 

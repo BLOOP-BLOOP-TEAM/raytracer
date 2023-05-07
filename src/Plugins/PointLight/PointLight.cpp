@@ -17,6 +17,11 @@ Plugin::PointLight::PointLight(const Component::Vector3f &position, const Compon
 {
 }
 
+bool Plugin::PointLight::isIlluminating(const Component::Vector3f &origin, const Component::Vector3f &direction) const
+{
+    return true;
+}
+
 Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
 {
     Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
