@@ -30,7 +30,7 @@ namespace Raytracer {
         [[nodiscard]] const Component::Vector3f &getRotation() const;
         void setRotation(const Component::Vector3f &rotation);
         [[nodiscard]] const std::string &getTypeCam() const;
-        [[nodiscard]] const bool isEdited() const;
+        [[nodiscard]] bool isEdited() const;
         void setEdit(bool status);
 
     protected:

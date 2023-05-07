@@ -5,18 +5,19 @@
 ** RaytracerException
 */
 
-#include <string>
 #include <exception>
+#include <string>
 
 namespace Raytracer {
     class RaytracerException : public std::exception {
-        public:
-            RaytracerException(const std::string &message);
-            
-            const char *what() const noexcept override;
+    public:
+        explicit RaytracerException(const std::string &message);
 
-        protected:
-        private:
-            std::string _message;
+        [[nodiscard]] const std::string &message() const noexcept;
+
+    private:
+        [[nodiscard]] const char *what() const noexcept override;
+
+        std::string _message;
     };
 }

@@ -22,6 +22,8 @@ namespace Raytracer {
 
             [[nodiscard]] virtual Component::Color getDiffuse() const = 0;
 
+            [[nodiscard]] virtual double getDiffuseFactor() const = 0;
+
             [[nodiscard]] virtual double getSpecular() const = 0;
 
             [[nodiscard]] virtual double getShininess() const = 0;
@@ -31,5 +33,9 @@ namespace Raytracer {
             [[nodiscard]] virtual double getRefractivity() const = 0;
 
             [[nodiscard]] virtual double getRefractiveIndex() const = 0;
+
+            [[nodiscard]] virtual const std::string &getType() = 0;
+
+
     };
 }
