@@ -84,7 +84,7 @@ Component::Vector3f Raytracer::Calculator::getRefractionDirection(const Componen
 Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                                 const std::vector<IEntity *> &entities,
                                                 const std::vector<Raytracer::ALight *> &lights,
-                                                int recursionDepth = 4)
+                                                int recursionDepth = 100)
 {
     double t_min = std::numeric_limits<double>::max();
     IEntity &intersected_object = findClosestEntity(origin, direction, entities, t_min);
@@ -103,14 +103,14 @@ Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origi
     AMaterial &material = static_cast<Raytracer::AMaterial &>(object_material);
 
     Component::Color local_color = calculateLighting(hit_point, hit_normal, material, entities, lights);
-    Component::Color reflected_color(0, 0, 0);
-    Component::Color refracted_color(0, 0, 0);
+    Component::Color reflected_color(1.0, 0.0, 0.0);
+    Component::Color refracted_color(0.0, 0.0, 0.0);
 
     if (recursionDepth > 0) {
-        if (material.getReflectivity() > 0) {
+//        if (material.getReflectivity() > 0) {
             Component::Vector3f reflectionDirection = getReflectionDirection(direction, hit_normal);
             reflected_color = castRay(hit_point, reflectionDirection, entities, lights, recursionDepth - 1);
-        }
+//        }
 
         if (material.getRefractivity() > 0) {
             Component::Vector3f refractionDirection = getRefractionDirection(direction, hit_normal, material.getRefractiveIndex());
@@ -151,13 +151,18 @@ Component::Color Raytracer::Calculator::calculateLighting(const Component::Vecto
         // Calculer la couleur diffuse et spéculaire
         if (!in_shadow) {
             if (light.isIlluminating(hit_point, light_direction)) {
-                Component::Color diffuse_color = computeDiffuseColor(hit_point, hit_normal, light_direction, material, light_intensity);
-                Component::Color specular_color = computeSpecularColor(hit_point, hit_normal, light_direction, material, light, light_intensity);
+                double distance = (light.getPosition() - hit_point).length();
+                double attenuation_factor = 0.1; // Changez cette valeur pour ajuster l'atténuation
+                double attenuation = std::pow(distance, attenuation_factor);
+
+                Component::Color diffuse_color = computeDiffuseColor(hit_point, hit_normal, light_direction, material, light_intensity / attenuation);
+                Component::Color specular_color = computeSpecularColor(hit_point, hit_normal, light_direction, material, light, light_intensity / attenuation);
 
                 diffuse_color.clamp();
                 specular_color.clamp();
                 // Ajouter la couleur diffuse et spéculaire
                 final_color = final_color + diffuse_color + specular_color;
+                final_color.clamp();
             }
         }
     }

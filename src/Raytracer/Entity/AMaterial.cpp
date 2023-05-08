@@ -56,5 +56,5 @@ double Raytracer::AMaterial::getShininess() const
 
 double Raytracer::AMaterial::getReflectivity() const
 {
-    return _reflectivity;
+    return _reflectivity / (255 * 8);
 }
