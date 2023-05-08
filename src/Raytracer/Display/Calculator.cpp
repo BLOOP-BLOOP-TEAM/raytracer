@@ -149,20 +149,20 @@ Component::Color Raytracer::Calculator::calculateLighting(const Component::Vecto
         bool inShadow = checkShadows(hitPoint, hitNormal, lightDirection, entities, light);
 
         // Calculer la couleur diffuse et spéculaire
-        if (!in_shadow) {
-            if (light.isIlluminating(hit_point, light_direction)) {
-                double distance = (light.getPosition() - hit_point).length();
+        if (!inShadow) {
+            if (light.isIlluminating(hitPoint, lightDirection)) {
+                double distance = (light.getPosition() - hitPoint).length();
                 double attenuation_factor = 0.1; // Changez cette valeur pour ajuster l'atténuation
                 double attenuation = std::pow(distance, attenuation_factor);
 
-                Component::Color diffuse_color = computeDiffuseColor(hit_point, hit_normal, light_direction, material, light_intensity / attenuation);
-                Component::Color specular_color = computeSpecularColor(hit_point, hit_normal, light_direction, material, light, light_intensity / attenuation);
+                Component::Color diffuseColor = computeDiffuseColor(hitPoint, hitNormal, lightDirection, material, lightIntensity / attenuation);
+                Component::Color specularColor = computeSpecularColor(hitPoint, hitNormal, lightDirection, material, light, lightIntensity / attenuation);
 
                 diffuseColor.clamp();
                 specularColor.clamp();
                 // Ajouter la couleur diffuse et spéculaire
-                final_color = final_color + diffuse_color + specular_color;
-                final_color.clamp();
+                finalColor = finalColor + diffuseColor + specularColor;
+                finalColor.clamp();
             }
         }
     }
