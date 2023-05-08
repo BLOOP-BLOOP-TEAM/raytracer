@@ -84,7 +84,7 @@ Component::Vector3f Raytracer::Calculator::getRefractionDirection(const Componen
 Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                                 const std::vector<IEntity *> &entities,
                                                 const std::vector<Raytracer::ALight *> &lights,
-                                                int recursionDepth = 4)
+                                                int recursionDepth = 100)
 {
     double minT = std::numeric_limits<double>::max();
     IEntity &intersectedObject = findClosestEntity(origin, direction, entities, minT);
@@ -151,13 +151,18 @@ Component::Color Raytracer::Calculator::calculateLighting(const Component::Vecto
         // Calculer la couleur diffuse et spéculaire
         if (!inShadow) {
             if (light.isIlluminating(hitPoint, lightDirection)) {
-                Component::Color diffuseColor = computeDiffuseColor(hitPoint, hitNormal, lightDirection, material, lightIntensity);
-                Component::Color specularColor = computeSpecularColor(hitPoint, hitNormal, lightDirection, material, light, lightIntensity);
+                double distance = (light.getPosition() - hitPoint).length();
+                double attenuation_factor = 0.1; // Changez cette valeur pour ajuster l'atténuation
+                double attenuation = std::pow(distance, attenuation_factor);
+
+                Component::Color diffuseColor = computeDiffuseColor(hitPoint, hitNormal, lightDirection, material, lightIntensity / attenuation);
+                Component::Color specularColor = computeSpecularColor(hitPoint, hitNormal, lightDirection, material, light, lightIntensity / attenuation);
 
                 diffuseColor.clamp();
                 specularColor.clamp();
                 // Ajouter la couleur diffuse et spéculaire
                 finalColor = finalColor + diffuseColor + specularColor;
+                finalColor.clamp();
             }
         }
     }

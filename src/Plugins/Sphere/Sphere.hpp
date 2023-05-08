@@ -12,19 +12,20 @@
 #include "Vector3f.hpp"
 
 namespace Plugin {
-class Sphere : public Raytracer::APrimitive {
-    public:
-        Sphere(const Component::Vector3f &position, double radius);
+    class Sphere : public Raytracer::APrimitive {
+        public:
+            Sphere(const Component::Vector3f &position, double radius);
 
-        ~Sphere() override = default;
+            ~Sphere() override = default;
 
-        [[nodiscard]] double intersect(const Raytracer::Ray &ray) const override;
+            [[nodiscard]] double intersect(const Raytracer::Ray &ray) const override;
 
-        [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
+            [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
 
-    protected:
-    private:
-        double _radius;
+        protected:
 
-};
+        private:
+            double _radius;
+
+    };
 }
