@@ -73,7 +73,7 @@ namespace Raytracer {
 
         text.setFont(fontIt->second);
         text.setString(textComponent.text);
-        text.setPosition({textComponent.pos.x, textComponent.pos.y});
+        text.setPosition({static_cast<float>(textComponent.pos.x), static_cast<float>(textComponent.pos.y)});
         text.setFillColor(sf::Color(textComponent.textColor.r,
             textComponent.textColor.g,
             textComponent.textColor.b,
@@ -85,7 +85,7 @@ namespace Raytracer {
 
     void DisplayModule::updateText(sf::Text &sfText, const Component::Text &textComponent) {
         sfText.setString(textComponent.text);
-        sfText.setPosition({textComponent.pos.x, textComponent.pos.y});
+        sfText.setPosition({static_cast<float>(textComponent.pos.x), static_cast<float>(textComponent.pos.y)});
         sfText.setFillColor(sf::Color(textComponent.textColor.r,
             textComponent.textColor.g,
             textComponent.textColor.b,
