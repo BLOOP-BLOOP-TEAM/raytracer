@@ -14,7 +14,6 @@
 #include "ConfigLoader.hpp"
 
 static const std::string FOLDER_NAME = "Scenes";
-
 static const std::string PRIMITIVES = "primitives";
 static const std::string CAMERA = "camera";
 static const std::string LIGHTS = "lights";

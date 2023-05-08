@@ -25,5 +25,6 @@ class Sphere : public Raytracer::APrimitive {
     protected:
     private:
         double _radius;
-    };
+
+};
 }

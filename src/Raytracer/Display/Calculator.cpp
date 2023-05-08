@@ -287,3 +287,7 @@ void Raytracer::Calculator::calculatePixels()
         std::cerr << "Error: " << e.what() << std::endl;
     }
 }
+
+Raytracer::Calculator::Calculator(int width, int height, std::vector<IEntity *> &entities,
+                                  std::vector<std::vector<Component::Color>> &pixels) : width(width), height(height), entities(entities), pixels(pixels), ambientLightColor(1.0f, 1.0f, 1.0f),
+                                  ambientLightIntensity(0.1f) {}

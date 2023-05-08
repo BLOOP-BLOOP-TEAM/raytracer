@@ -18,13 +18,11 @@ namespace Raytracer {
 
         ~APrimitive() override = default;
 
-        [[nodiscard]] double intersect(const Ray &ray) const override;
+        [[nodiscard]] double intersect(const Ray &ray) const override = 0;
 
         void setMaterial(IMaterial *material) override;
 
-        [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
-
-        [[nodiscard]] Component::Color getColor(const Component::Vector3f &hit_point) const override;
+        [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override = 0;
 
         [[nodiscard]] IMaterial &getMaterial() const override;
 

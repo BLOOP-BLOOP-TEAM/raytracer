@@ -14,26 +14,19 @@
 namespace Plugin {
     class ReflectMaterial : public Raytracer::AMaterial {
     public:
-        ReflectMaterial(const Component::Color &baseColor, double diffuseFactor, double reflectivity);
+
+        ReflectMaterial(const Component::Color &baseColor, double diffuseFactor, double reflectivity,
+                        double refractivity,
+                        double refractiveIndex, const Component::Color &diffuse, double specular, double shininess);
 
         ~ReflectMaterial() override = default;
 
-
-        [[nodiscard]] Component::Color getDiffuse() const override;
-
-        [[nodiscard]] double getSpecular() const override;
-
-        [[nodiscard]] double getShininess() const override;
-
     private:
         Component::Color _baseColor;
-        double _diffuseFactor;
-        double _reflectivity;
 
         [[nodiscard]] Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
                                       const Component::Vector3f &lightDirection, double lightIntensity,
                                       const Component::Color &ambientLightColor, double ambientLightIntensity) const override;
 
-        [[nodiscard]] double getReflectivity() const override;
     };
 }

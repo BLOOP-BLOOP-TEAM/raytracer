@@ -23,9 +23,7 @@
 namespace Raytracer {
     class Calculator {
     public:
-        Calculator(int width, int height, std::vector<IEntity *> &entities, std::vector<std::vector<Component::Color>>& pixels)
-                : width(width), height(height), entities(entities), pixels(pixels), ambientLightColor(1.0f, 1.0f, 1.0f),
-                  ambientLightIntensity(0.1f) {}
+        Calculator(int width, int height, std::vector<IEntity *> &entities, std::vector<std::vector<Component::Color>>& pixels);
 
         ~Calculator() = default;
 
