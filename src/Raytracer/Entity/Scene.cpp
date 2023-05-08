@@ -48,7 +48,7 @@ Raytracer::Scene::~Scene()
 void Raytracer::Scene::calculateImage()
 {
     _image->calculateImage(_entities);
-    _image->write_ppm(FOLDER_PPM + _name + ".ppm");
+    _image->writePPM(FOLDER_PPM + _name + ".ppm");
     setIsCalculate();
 }
 
