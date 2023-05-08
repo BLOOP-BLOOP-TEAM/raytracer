@@ -21,6 +21,7 @@ namespace Raytracer {
         [[nodiscard]] const Component::Color& getColor() const override;
         [[nodiscard]] double getIntensity() const override;
         [[nodiscard]] const std::string &getTypeLight() const;
+        [[nodiscard]] bool isIlluminating(const Component::Vector3f &origin, const Component::Vector3f &direction) const override = 0;
 
     protected:
     private:

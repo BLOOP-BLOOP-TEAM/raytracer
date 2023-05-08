@@ -10,10 +10,10 @@
 #include "AMaterial.hpp"
 #include "IEntity.hpp"
 #include "APrimitive.hpp"
+#include "RaytracerException.hpp"
 #include "ConfigLoader.hpp"
 
 static const std::string FOLDER_NAME = "Scenes";
-
 static const std::string PRIMITIVES = "primitives";
 static const std::string CAMERA = "camera";
 static const std::string LIGHTS = "lights";
@@ -149,8 +149,13 @@ std::unique_ptr<Raytracer::Scene> Raytracer::ConfigLoader::loadConfigFile(const 
         std::cerr << "configLoader: loadConfigFile: " << tex.what() << " : " << tex.getPath() << std::endl;
     } catch (const libconfig::SettingException &ex) {
         std::cerr << "configLoader: loadConfigFile: " << ex.what() << std::endl;
+    } catch (const std::exception &e) {
+        std::cerr << "configLoader: loadConfigFile: " << e.what() << std::endl;
     }
     applyMaterialsToPrimitives(*scene, materialsToApply);
+    if (!scene) {
+        throw Raytracer::RaytracerException("LoadConfig: loadConfigFile: scene is null");
+    }
     return scene;
 }
 

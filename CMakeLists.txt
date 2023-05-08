@@ -24,8 +24,7 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBCONFIG++ REQUIRED IMPORTED_TARGET libconfig++)
 find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 
-
-target_link_libraries(raytracer PRIVATE sfml-graphics sfml-window sfml-system PkgConfig::LIBCONFIG++)
+target_link_libraries(raytracer PRIVATE sfml-graphics sfml-window sfml-system PkgConfig::LIBCONFIG++ ${CMAKE_DL_LIBS})
 
 ##############################################################################
 # Plugin .so libs
@@ -47,6 +46,14 @@ set_target_properties(plugin_plane PROPERTIES
 
 add_library(plugin_point_light SHARED)
 set_target_properties(plugin_point_light PROPERTIES
+        CXX_STANDARD 20
+        COMPILE_FLAGS "-fno-gnu-unique"
+        PREFIX ""
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+        )
+
+add_library(plugin_directional_light SHARED)
+set_target_properties(plugin_directional_light PROPERTIES
         CXX_STANDARD 20
         COMPILE_FLAGS "-fno-gnu-unique"
         PREFIX ""
@@ -76,6 +83,14 @@ set_target_properties(plugin_reflect_material PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
         )
 
+add_library(plugin_cylinder SHARED)
+set_target_properties(plugin_cylinder PROPERTIES
+        CXX_STANDARD 20
+        COMPILE_FLAGS "-fno-gnu-unique"
+        PREFIX ""
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+        )
+
 add_library(plugin_plane_material SHARED)
 set_target_properties(plugin_plane_material PROPERTIES
         CXX_STANDARD 20
@@ -83,6 +98,5 @@ set_target_properties(plugin_plane_material PROPERTIES
         PREFIX ""
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
         )
-
 
 add_subdirectory(src)

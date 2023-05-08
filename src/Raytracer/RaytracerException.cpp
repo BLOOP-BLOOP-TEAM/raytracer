@@ -7,12 +7,14 @@
 
 #include "RaytracerException.hpp"
 
-Raytracer::RaytracerException::RaytracerException(const std::string &mess)
-    : _message(mess)
-{
-}
+namespace Raytracer {
+    RaytracerException::RaytracerException(const std::string &message) : _message(message) {}
 
-const char *Raytracer::RaytracerException::what() const noexcept
-{
-    return (_message.c_str());
+    const std::string &RaytracerException::message() const noexcept {
+        return _message;
+    }
+
+    const char *RaytracerException::what() const noexcept {
+        return _message.c_str();
+    }
 }
