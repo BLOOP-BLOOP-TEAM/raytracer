@@ -20,7 +20,7 @@ namespace Plugin {
 
             [[nodiscard]] double intersect(const Raytracer::Ray &ray) const override;
 
-            [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
+            [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hitPoint) const override;
 
         protected:
         private:

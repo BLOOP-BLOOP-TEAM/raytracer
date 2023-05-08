@@ -43,7 +43,7 @@ double Plugin::Sphere::intersect(const Raytracer::Ray &ray) const
     }
 }
 
-Component::Vector3f Plugin::Sphere::getNormal(const Component::Vector3f &hit_point) const
+Component::Vector3f Plugin::Sphere::getNormal(const Component::Vector3f &hitPoint) const
 {
     Component::Vector3f normal = hit_point - getPosition();
     return normal.normalize();

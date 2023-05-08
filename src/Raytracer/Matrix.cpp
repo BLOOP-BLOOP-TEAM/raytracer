@@ -24,28 +24,28 @@ Component::Matrix3x3::Matrix3x3(double m0, double m1, double m2, double m3, doub
 
 Component::Matrix3x3 Component::Matrix3x3::fromEulerAngles(const Component::Vector3f &eulerAngles)
 {
-    double cos_x = cos(eulerAngles.x);
-    double sin_x = sin(eulerAngles.x);
-    double cos_y = cos(eulerAngles.y);
-    double sin_y = sin(eulerAngles.y);
-    double cos_z = cos(eulerAngles.z);
-    double sin_z = sin(eulerAngles.z);
+    double cosX = cos(eulerAngles.x);
+    double sinX = sin(eulerAngles.x);
+    double cosY = cos(eulerAngles.y);
+    double sinY = sin(eulerAngles.y);
+    double cosZ = cos(eulerAngles.z);
+    double sinZ = sin(eulerAngles.z);
 
     Component::Matrix3x3 Rx = {
             1, 0, 0,
-            0, cos_x, -sin_x,
-            0, sin_x, cos_x,
+            0, cosX, -sinX,
+            0, sinX, cosX,
     };
 
     Component::Matrix3x3 Ry = {
-            cos_y, 0, sin_y,
+            cosY, 0, sinY,
             0, 1, 0,
-            -sin_y, 0, cos_y,
+            -sinY, 0, cosY,
     };
 
     Component::Matrix3x3 Rz = {
-            cos_z, -sin_z, 0,
-            sin_z, cos_z, 0,
+            cosZ, -sinZ, 0,
+            sinZ, cosZ, 0,
             0, 0, 1,
     };
 
