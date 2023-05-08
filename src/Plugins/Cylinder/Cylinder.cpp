@@ -52,10 +52,10 @@ double Plugin::Cylinder::intersect(const Raytracer::Ray &ray) const
         double t1 = (-b - sqrt(delta)) / (2 * a);
         double t2 = (-b + sqrt(delta)) / (2 * a);
 
-        double min_t = std::min(t1, t2);
-        double max_t = std::max(t1, t2);
+        double minT = std::min(t1, t2);
+        double maxT = std::max(t1, t2);
 
-        for (double t : {min_t, max_t}) {
+        for (double t : {minT, maxT}) {
             Component::Vector3f intersect = ray.origin + ray.direction * t;
             double height = (intersect - getPosition()).dot(_axis);
 
@@ -65,12 +65,12 @@ double Plugin::Cylinder::intersect(const Raytracer::Ray &ray) const
         }
     }
 
-    for (double face_height : {0.0, _height}) {
-        double t = (face_height - o.dot(axis)) / d.dot(axis);
+    for (double faceHeight : {0.0, _height}) {
+        double t = (faceHeight - o.dot(axis)) / d.dot(axis);
 
         if (t > 0) {
             Component::Vector3f intersect = ray.origin + ray.direction * t;
-            Component::Vector3f projected = intersect - getPosition() - axis * face_height;
+            Component::Vector3f projected = intersect - getPosition() - axis * faceHeight;
             
             if (projected.dot(projected) <= r * r) {
                 intersections.push_back(t);
@@ -85,9 +85,9 @@ double Plugin::Cylinder::intersect(const Raytracer::Ray &ray) const
     return -1;
 }
 
-Component::Vector3f Plugin::Cylinder::getNormal(const Component::Vector3f &hit_point) const
+Component::Vector3f Plugin::Cylinder::getNormal(const Component::Vector3f &hitPoint) const
 {
-    return (hit_point - getPosition()).normalize();
+    return (hitPoint - getPosition()).normalize();
 }
 
 Raytracer::IEntity *createEntity(const libconfig::Setting &setting)

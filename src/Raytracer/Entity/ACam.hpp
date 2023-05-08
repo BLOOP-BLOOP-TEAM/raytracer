@@ -19,7 +19,7 @@ namespace Raytracer {
     class ACam : public ICam, public AEntity {
     public:
         ACam(const std::string &typeCam, const Component::Vector3f &position, const Component::Vector3f &rotation,
-             bool isEdited, double field_of_view, const Component::Vector3f &resolution);
+             bool isEdited, double fieldOfView, const Component::Vector3f &resolution);
 
         ~ACam() override = default;
 
