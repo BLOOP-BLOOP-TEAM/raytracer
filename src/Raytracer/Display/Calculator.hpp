@@ -85,8 +85,8 @@ namespace Raytracer {
              * @param recursionDepth the maximum recursion depth for reflections
              */
             Component::Color castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
-                                     const std::vector<IEntity *> &entities,
-                                     const std::vector<Raytracer::ALight *> &lights, int recursionDepth = 4) ;
+                                 const std::vector<IEntity *> &entities,
+                                 const std::vector<Raytracer::ALight *> &lights, int recursionDepth);
 
             /**
              * @brief Finds the closest entity 
@@ -173,5 +173,9 @@ namespace Raytracer {
              */
             Component::Color getAverageColor(int x, int y, const ACam *camera, const std::vector<IEntity *> &entities,
                                          const std::vector<Raytracer::ALight *> &lights, int subPixelsPerAxis);
+
+        Component::Vector3f
+        getRefractionDirection(const Component::Vector3f &incident, const Component::Vector3f &normal,
+                               double refractiveIndex);
     };
 };

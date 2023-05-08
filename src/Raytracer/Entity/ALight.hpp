@@ -38,6 +38,14 @@ namespace Raytracer {
             [[nodiscard]] const Component::Color& getColor() const override;
 
             /**
+             * @brief Check if the light is illuminating a point in the scene
+             * 
+             * @param origin The origin of the ray
+             * @param direction The direction of the ray
+             */
+            [[nodiscard]] bool isIlluminating(const Component::Vector3f &origin, const Component::Vector3f &direction) const override = 0;
+
+            /**
              * @brief Function that gets the intensity of the light
              */
             [[nodiscard]] double getIntensity() const override;

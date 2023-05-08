@@ -24,6 +24,14 @@ namespace Raytracer {
              * @brief Gets the color of the light
              */
             virtual const Component::Color& getColor() const = 0;
+            
+            /**
+             * @brief Check if the light is illuminating a point in the scene
+             * 
+             * @param origin The origin of the ray
+             * @param direction The direction of the ray
+             */
+            virtual bool isIlluminating(const Component::Vector3f &origin, const Component::Vector3f &direction) const = 0;
 
             /**
              * @brief Gets the intensity of the light

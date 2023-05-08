@@ -45,7 +45,13 @@ namespace Raytracer {
             [[nodiscard]] double getShininess() const override = 0;
 
             [[nodiscard]] double getReflectivity() const override = 0;
+
+            [[nodiscard]] double getRefractivity() const override;
+
+            [[nodiscard]] double getRefractiveIndex() const override;
         protected:
             const std::string _type;
+            double _refractivity;
+            double _refractiveIndex;
     };
 }

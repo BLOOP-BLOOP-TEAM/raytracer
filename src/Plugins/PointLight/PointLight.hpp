@@ -25,5 +25,7 @@ namespace Plugin {
         PointLight(const Component::Vector3f &position, const Component::Color &color, double intensity);
 
         ~PointLight() override = default;
+
+        [[nodiscard]] bool isIlluminating(const Component::Vector3f &origin, const Component::Vector3f &direction) const override;
     };
 }
