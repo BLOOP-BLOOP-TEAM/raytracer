@@ -23,7 +23,7 @@ namespace Raytracer {
             ConfigLoader();
             ~ConfigLoader() = default;
 
-        std::unique_ptr<std::vector<std::unique_ptr<Raytracer::Scene>>> loadConfigFolder();
+            static std::unique_ptr<std::vector<std::unique_ptr<Raytracer::Scene>>> loadConfigFolder();
             static std::unique_ptr<Raytracer::Scene> loadConfigFile(const std::string &path);
         protected:
         private:

@@ -21,6 +21,8 @@ namespace Raytracer {
 
         ~Scene();
 
+        Component::Vector3f getResolution() const;
+
         void addEntity(IEntity *entity);
 
         void addMaterial(IMaterial *material);

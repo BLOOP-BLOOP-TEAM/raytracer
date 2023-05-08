@@ -52,6 +52,14 @@ set_target_properties(plugin_point_light PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
         )
 
+add_library(plugin_directional_light SHARED)
+set_target_properties(plugin_directional_light PROPERTIES
+        CXX_STANDARD 20
+        COMPILE_FLAGS "-fno-gnu-unique"
+        PREFIX ""
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+        )
+
 add_library(plugin_simple_material SHARED)
 set_target_properties(plugin_simple_material PROPERTIES
         CXX_STANDARD 20
@@ -75,6 +83,14 @@ set_target_properties(plugin_reflect_material PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
         )
 
+add_library(plugin_cylinder SHARED)
+set_target_properties(plugin_cylinder PROPERTIES
+        CXX_STANDARD 20
+        COMPILE_FLAGS "-fno-gnu-unique"
+        PREFIX ""
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+        )
+
 add_library(plugin_plane_material SHARED)
 set_target_properties(plugin_plane_material PROPERTIES
         CXX_STANDARD 20
@@ -82,6 +98,5 @@ set_target_properties(plugin_plane_material PROPERTIES
         PREFIX ""
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
         )
-
 
 add_subdirectory(src)

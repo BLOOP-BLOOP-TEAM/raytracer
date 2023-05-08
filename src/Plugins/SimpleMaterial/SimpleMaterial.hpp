@@ -16,24 +16,19 @@ namespace Plugin {
     public:
         SimpleMaterial(const Component::Color &baseColor, double diffuseFactor, double reflectivity);
 
+        SimpleMaterial(const Component::Color &baseColor, double diffuseFactor, double refractivity,
+                       double refractiveIndex,
+                       double reflectivity, const Component::Color &diffuse, double specular, double shininess);
+
         ~SimpleMaterial() override = default;
 
 
-        [[nodiscard]] Component::Color getDiffuse() const override;
-
-        [[nodiscard]] double getSpecular() const override;
-
-        [[nodiscard]] double getShininess() const override;
-
     private:
         Component::Color _baseColor;
-        double _diffuseFactor;
-        double _reflectivity;
 
         [[nodiscard]] Component::Color computeColor(const Component::Vector3f &hitPoint, const Component::Vector3f &normal,
                                       const Component::Vector3f &lightDirection, double lightIntensity,
                                       const Component::Color &ambientLightColor, double ambientLightIntensity) const override;
 
-        [[nodiscard]] double getReflectivity() const override;
     };
 }

@@ -23,7 +23,7 @@ namespace Raytracer {
     std::string DisplayModule::Vector3fToString(Component::Vector3f vec) {
         std::stringstream ss;
 
-        ss << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
+        ss << "(" << vec.z << ", " << vec.y << ", " << vec.x << ")"; // technique de la loutre
         return ss.str();
     }
 
@@ -74,7 +74,7 @@ namespace Raytracer {
 
         text.setFont(fontIt->second);
         text.setString(textComponent.text);
-        text.setPosition({(float)textComponent.pos.x, (float)textComponent.pos.y});
+        text.setPosition({static_cast<float>(textComponent.pos.x), static_cast<float>(textComponent.pos.y)});
         text.setFillColor(sf::Color(textComponent.textColor.r,
             textComponent.textColor.g,
             textComponent.textColor.b,
@@ -86,7 +86,7 @@ namespace Raytracer {
 
     void DisplayModule::updateText(sf::Text &sfText, const Component::Text &textComponent) {
         sfText.setString(textComponent.text);
-        sfText.setPosition({(float)textComponent.pos.x, (float)textComponent.pos.y});
+        sfText.setPosition({static_cast<float>(textComponent.pos.x), static_cast<float>(textComponent.pos.y)});
         sfText.setFillColor(sf::Color(textComponent.textColor.r,
             textComponent.textColor.g,
             textComponent.textColor.b,
@@ -98,7 +98,7 @@ namespace Raytracer {
         // Mettre à jour les pixels
         for (unsigned int y = 0; y < _height; ++y) {
             for (unsigned int x = 0; x < _width; ++x) {
-                Component::Color color = image.get_pixel(x, y);
+                Component::Color color = image.getPixel(x, y);
                 size_t index = y * _width + x;
                 _pixels[index].position = sf::Vector2f(static_cast<double>(x), static_cast<double>(y));
                 _pixels[index].color = sf::Color(color.r, color.g, color.b);
