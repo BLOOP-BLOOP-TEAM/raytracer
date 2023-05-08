@@ -27,7 +27,7 @@ namespace Raytracer {
             RaytracerException(const std::string &message);
             
             /**
-            * @brief function that print the message set
+            * @brief Function that print the message set
             *
             * This function is used when an error is catched to print the
             * message set on the construction of the object.

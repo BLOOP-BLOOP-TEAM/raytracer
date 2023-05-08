@@ -17,8 +17,14 @@ namespace Plugin {
                          const Component::Vector3f &direction);
 
         ~DirectionalLight() override = default;
-
-            [[nodiscard]] bool isIlluminating(const Component::Vector3f &origin, const Component::Vector3f &direction) const override;
+        
+        /**
+         * @brief Check if the light is illuminating a point in the scene
+         * 
+         * @param origin The origin of the ray
+         * @param direction The direction of the ray
+         */
+        [[nodiscard]] bool isIlluminating(const Component::Vector3f &origin, const Component::Vector3f &direction) const override;
         private:
             Component::Vector3f _direction;
     };

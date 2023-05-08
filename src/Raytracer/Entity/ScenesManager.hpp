@@ -38,10 +38,26 @@ namespace Raytracer {
          */
         void addScene(std::unique_ptr<Scene> scene);
 
+        /**
+         * @brief Add multiple scenes to the manager
+         * 
+         * @param scenes A vector of unique pointers to Scene objects to be added
+         */
         void addMultipleScenes(std::unique_ptr<std::vector<std::unique_ptr<Scene>>> scenes);
 
+        /**
+         * @brief Replace a scene in the manager with a new one
+         * 
+         * @param newScene A unique pointer to the new Scene object
+         * @param path The path of the scene to be replaced
+         */
         void replaceScene(std::unique_ptr<Scene> newScene, const std::string &path);
 
+        /**
+         * @brief Remove a scene from the manager
+         * 
+         * @param path The path of the scene to be removed
+         */
         void removeScene(const std::string &path);
 
         /**

@@ -46,8 +46,6 @@ namespace Component {
 
         /**
          * @brief Converts the color components to integers in the range [0, 255].
-         * 
-         * @return The color with integer components.
          */
         [[nodiscard]] Component::Color toInteger() const;
     };

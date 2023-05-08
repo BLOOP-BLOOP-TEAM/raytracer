@@ -37,18 +37,36 @@ namespace Raytracer {
                                                     const Component::Vector3f &lightDirection, double lightIntensity,
                                                     const Component::Color &ambientLightColor, double ambientLightIntensity) const override = 0;
 
-
+            /**
+             * @brief Get the diffuse color of the material
+             */
             [[nodiscard]] Component::Color getDiffuse() const override = 0;
 
+            /**
+             * @brief Get the specular coefficient of the material
+             */
             [[nodiscard]] double getSpecular() const override = 0;
 
+            /**
+             * @brief Get the shininess coefficient of the material
+             */
             [[nodiscard]] double getShininess() const override = 0;
 
+            /**
+             * @brief Get the reflectivity of the material
+             */
             [[nodiscard]] double getReflectivity() const override = 0;
 
+            /**
+             * @brief Get the refractivity of the material
+             */
             [[nodiscard]] double getRefractivity() const override;
 
+            /**
+             * @brief Get the refractive index of the material
+             */
             [[nodiscard]] double getRefractiveIndex() const override;
+
         protected:
             const std::string _type;
             double _refractivity;

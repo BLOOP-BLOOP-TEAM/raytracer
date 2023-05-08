@@ -50,10 +50,19 @@ namespace Raytracer {
              */
             virtual double getShininess() const = 0;
 
+            /**
+             * @brief Get the reflectivity of the material
+             */
             [[nodiscard]] virtual double getReflectivity() const = 0;
 
+            /**
+             * @brief Get the refractivity of the material
+             */
             [[nodiscard]] virtual double getRefractivity() const = 0;
 
+            /**
+             * @brief Get the refractive index of the material
+             */
             [[nodiscard]] virtual double getRefractiveIndex() const = 0;
     };
 }

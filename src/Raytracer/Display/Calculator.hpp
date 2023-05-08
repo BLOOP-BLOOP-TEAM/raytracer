@@ -169,7 +169,6 @@ namespace Raytracer {
              * @param entities A vector containing pointers to all entities in the scene
              * @param lights A vector containing pointers to all lights in the scene
              * @param subPixelsPerAxis The number of subpixels to use per axis (the total number of subpixels will be this value squared)
-             * @return The average color of the pixel
              */
             Component::Color getAverageColor(int x, int y, const ACam *camera, const std::vector<IEntity *> &entities,
                                          const std::vector<Raytracer::ALight *> &lights, int subPixelsPerAxis);

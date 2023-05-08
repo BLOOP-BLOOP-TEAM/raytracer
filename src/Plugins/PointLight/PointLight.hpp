@@ -26,6 +26,12 @@ namespace Plugin {
 
         ~PointLight() override = default;
 
+        /**
+         * @brief Check if the light is illuminating a point in the scene
+         * 
+         * @param origin The origin of the ray
+         * @param direction The direction of the ray
+         */
         [[nodiscard]] bool isIlluminating(const Component::Vector3f &origin, const Component::Vector3f &direction) const override;
     };
 }
