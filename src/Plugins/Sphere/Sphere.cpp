@@ -6,7 +6,7 @@
 */
 
 #include <iostream>
-#include <libconfig.h++>
+#include <map>
 #include "Api.hpp"
 #include "Sphere.hpp"
 
@@ -49,12 +49,14 @@ Component::Vector3f Plugin::Sphere::getNormal(const Component::Vector3f &hitPoin
     return normal.normalize();
 }
 
-Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
+Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
 {
-    Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
-    double radius = 0;
+    Component::Vector3f position(std::get<double>(setting.find("position_x")->second), std::get<double>(setting.find("position_y")->second), std::get<double>(setting.find("position_z")->second));
+    double radius = std::get<double>(setting.find("radius")->second);
 
-    setting.lookupValue("radius", radius);
+    std::cout << std::endl << std::endl << std::endl << "Sphere created" << std::endl;
+    std::cout << "position: " << position.x << " " << position.y << " " << position.z << std::endl;
+    std::cout << "radius: " << radius << std::endl << std::endl << std::endl << std::endl;
     return new Plugin::Sphere(position, radius);
 }
 

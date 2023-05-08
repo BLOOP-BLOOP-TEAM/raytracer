@@ -14,7 +14,7 @@
 #include "APrimitive.hpp"
 #include "RaytracerException.hpp"
 
-Raytracer::IEntity* Raytracer::FactoryEntity::createEntity(const std::string &name, const libconfig::Setting &setting)
+Raytracer::IEntity* Raytracer::FactoryEntity::createEntity(const std::string &name, const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
 {
     Raytracer::IEntity *result = _entities[name].first(setting);
 
@@ -44,14 +44,9 @@ void Raytracer::FactoryEntity::destroyEntity(Raytracer::IEntity *entity)
     }
 }
 
-void Raytracer::FactoryEntity::addCreator(const std::string &name, const std::function<Raytracer::IEntity *(const libconfig::Setting &)>& funcCreate, const std::function<void(Raytracer::IEntity *entity)>& funcDestroy)
+void Raytracer::FactoryEntity::addCreator(const std::string &name, const std::function<Raytracer::IEntity *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>& funcCreate, const std::function<void(Raytracer::IEntity *entity)>& funcDestroy)
 {
     _entities[name] = std::make_pair(funcCreate, funcDestroy);
-}
-
-const std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const libconfig::Setting &)>, std::function<void(Raytracer::IEntity *entity)>>>& Raytracer::FactoryEntity::getEntities() const
-{
-    return _entities;
 }
 
 Raytracer::FactoryEntity &Raytracer::FactoryEntity::getInstance()

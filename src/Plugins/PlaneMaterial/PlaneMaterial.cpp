@@ -5,8 +5,8 @@
 ** SimpleMaterial
 */
 
-#include <libconfig.h++>
 #include <iostream>
+#include <map>
 #include "Api.hpp"
 #include "IEntity.hpp"
 #include "PlaneMaterial.hpp"
@@ -51,27 +51,30 @@ Component::Color Plugin::PlaneMaterial::computeColor(const Component::Vector3f &
     return color;
 }
 
-Raytracer::IMaterial *createMaterial(const libconfig::Setting &setting)
+Raytracer::IMaterial *createMaterial(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
 {
-    Component::Color baseColor(setting["baseColor"][0], setting["baseColor"][1], setting["baseColor"][2]);
-    Component::Color baseColorSecond(setting["baseColorSecond"][0], setting["baseColorSecond"][1], setting["baseColorSecond"][2]);
-    Component::Color colorDiffuse(setting["diffuse"][0], setting["diffuse"][1], setting["diffuse"][2]);
-    double squareSize = 0.0f;
-    setting.lookupValue("squareSize", squareSize);
-    double diffuseFactor = 0.0f;
-    double reflectivity = 0.0f;
-    double refractivity = 0.0f;
-    double refractiveIndex = 0.0f;
-    double specular = 0.0f;
-    double shininess = 0.0f;
+    Component::Color baseColor(std::get<double>(setting.find("baseColor_r")->second), std::get<double>(setting.find("baseColor_g")->second), std::get<double>(setting.find("baseColor_b")->second));
+    Component::Color baseColorSecond(std::get<double>(setting.find("baseColorSecond_r")->second), std::get<double>(setting.find("baseColorSecond_g")->second), std::get<double>(setting.find("baseColorSecond_b")->second));
+    Component::Color colorDiffuse(std::get<double>(setting.find("diffuse_r")->second), std::get<double>(setting.find("diffuse_g")->second), std::get<double>(setting.find("diffuse_b")->second));
+    double squareSize = std::get<double>(setting.find("squareSize")->second);
+    double diffuseFactor = std::get<double>(setting.find("diffuseFactor")->second);
+    double reflectivity = std::get<double>(setting.find("reflectivity")->second);
+    double refractivity = std::get<double>(setting.find("refractivity")->second);
+    double refractiveIndex = std::get<double>(setting.find("refractiveIndex")->second);
+    double specular = std::get<double>(setting.find("specular")->second);
+    double shininess = std::get<double>(setting.find("shininess")->second);
 
-
-    setting.lookupValue("diffuseFactor", diffuseFactor);
-    setting.lookupValue("reflectivity", reflectivity);
-    setting.lookupValue("refractivity", refractivity);
-    setting.lookupValue("refractiveIndex", refractiveIndex);
-    setting.lookupValue("specular", specular);
-    setting.lookupValue("shininess", shininess);
+    std::cout << std::endl << std::endl << std::endl << "Creating PlaneMaterial" << std::endl;
+    std::cout << "baseColor: " << baseColor.r << " " << baseColor.g << " " << baseColor.b << std::endl;
+    std::cout << "baseColorSecond: " << baseColorSecond.r << " " << baseColorSecond.g << " " << baseColorSecond.b << std::endl;
+    std::cout << "colorDiffuse: " << colorDiffuse.r << " " << colorDiffuse.g << " " << colorDiffuse.b << std::endl;
+    std::cout << "squareSize: " << squareSize << std::endl;
+    std::cout << "diffuseFactor: " << diffuseFactor << std::endl;
+    std::cout << "reflectivity: " << reflectivity << std::endl;
+    std::cout << "refractivity: " << refractivity << std::endl;
+    std::cout << "refractiveIndex: " << refractiveIndex << std::endl;
+    std::cout << "specular: " << specular << std::endl;
+    std::cout << "shininess: " << shininess << std::endl;
     return new Plugin::PlaneMaterial(baseColor, baseColorSecond, squareSize, diffuseFactor, reflectivity, refractivity, refractiveIndex, colorDiffuse ,specular, shininess);
 }
 

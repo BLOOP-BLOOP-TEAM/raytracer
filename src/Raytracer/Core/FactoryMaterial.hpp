@@ -21,12 +21,11 @@ namespace Raytracer {
         FactoryMaterial(const FactoryMaterial&) = delete;
         FactoryMaterial& operator=(const FactoryMaterial&) = delete;
         static FactoryMaterial& getInstance();
-        Raytracer::IMaterial *createMaterial(const std::string &name, const libconfig::Setting &);
+        Raytracer::IMaterial *createMaterial(const std::string &name, const std::map<std::string, std::variant<double, int, std::string, bool>> &);
         void destroyMaterial(Raytracer::IMaterial *material);
-        void addCreator(const std::string &name, std::function<Raytracer::IMaterial *(const libconfig::Setting &)> funcCreate, std::function<void(Raytracer::IMaterial *material)> funcDestroy);
-        [[nodiscard]] const std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(const libconfig::Setting &)>, std::function<void(Raytracer::IMaterial *material)>>>& getMaterials() const;
+        void addCreator(const std::string &name, std::function<Raytracer::IMaterial *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)> funcCreate, std::function<void(Raytracer::IMaterial *material)> funcDestroy);
 
     private:
-        std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(const libconfig::Setting &)>, std::function<void(Raytracer::IMaterial *material)>>> _materials;
+        std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>, std::function<void(Raytracer::IMaterial *material)>>> _materials;
     };
 }
