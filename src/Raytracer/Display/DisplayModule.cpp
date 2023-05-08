@@ -11,6 +11,7 @@ static const std::string ID_CAMERA_POS_TITLE = "#cameraPosTitle";
 static const std::string ID_CAMERA_POS_VALUE = "#cameraPosValue";
 static const std::string ID_CAMERA_ROTATION_TITLE = "#cameraRotationTitle";
 static const std::string ID_CAMERA_ROTATION_VALUE = "#cameraRotationValue";
+static const std::string UNDEFINED = "UNDEFINED";
 
 namespace Raytracer {
 
@@ -31,7 +32,7 @@ namespace Raytracer {
             if (entity->getType() == CompType::CAM)
                 return Vector3fToString(entity->getPosition());
         }
-        return "UNDEFINED";
+        return UNDEFINED;
     }
 
     std::string DisplayModule::getCameraRotation() {
@@ -43,7 +44,7 @@ namespace Raytracer {
                 return Vector3fToString(cam->getRotation());
             }
         }
-        return "UNDEFINED";
+        return UNDEFINED;
     }
 
     void DisplayModule::initGuy() {
@@ -73,7 +74,7 @@ namespace Raytracer {
 
         text.setFont(fontIt->second);
         text.setString(textComponent.text);
-        text.setPosition({textComponent.pos.x, textComponent.pos.y});
+        text.setPosition({(float)textComponent.pos.x, (float)textComponent.pos.y});
         text.setFillColor(sf::Color(textComponent.textColor.r,
             textComponent.textColor.g,
             textComponent.textColor.b,
@@ -85,7 +86,7 @@ namespace Raytracer {
 
     void DisplayModule::updateText(sf::Text &sfText, const Component::Text &textComponent) {
         sfText.setString(textComponent.text);
-        sfText.setPosition({textComponent.pos.x, textComponent.pos.y});
+        sfText.setPosition({(float)textComponent.pos.x, (float)textComponent.pos.y});
         sfText.setFillColor(sf::Color(textComponent.textColor.r,
             textComponent.textColor.g,
             textComponent.textColor.b,
