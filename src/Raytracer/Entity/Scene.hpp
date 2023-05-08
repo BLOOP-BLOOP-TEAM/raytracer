@@ -12,6 +12,7 @@
 #include <memory>
 #include "IEntity.hpp"
 #include "Image.hpp"
+#include "Skybox.hpp"
 #include "EventManager.hpp"
 
 namespace Raytracer {
@@ -54,6 +55,7 @@ namespace Raytracer {
         std::unique_ptr<Image> _image;
         std::string _fileName;
         std::string _name;
+        Skybox _skybox;
         bool _isCalculate;
     };
 };

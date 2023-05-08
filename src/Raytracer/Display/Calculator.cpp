@@ -93,6 +93,7 @@ Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origi
 
     // S'il n'y a pas d'intersection, retourner une couleur d'arrière-plan
     if (minT == std::numeric_limits<double>::max()) {
+        finalColor = skybox.getColorFromRay(direction);
         return finalColor;
     }
 
@@ -152,7 +153,7 @@ Component::Color Raytracer::Calculator::calculateLighting(const Component::Vecto
         if (!inShadow) {
             if (light.isIlluminating(hitPoint, lightDirection)) {
                 double distance = (light.getPosition() - hitPoint).length();
-                double attenuation_factor = 0.1; // Changez cette valeur pour ajuster l'atténuation
+                double attenuation_factor = 0.1;
                 double attenuation = std::pow(distance, attenuation_factor);
 
                 Component::Color diffuseColor = computeDiffuseColor(hitPoint, hitNormal, lightDirection, material, lightIntensity / attenuation);
@@ -294,5 +295,5 @@ void Raytracer::Calculator::calculatePixels()
 }
 
 Raytracer::Calculator::Calculator(int width, int height, std::vector<IEntity *> &entities,
-                                  std::vector<std::vector<Component::Color>> &pixels) : width(width), height(height), entities(entities), pixels(pixels), ambientLightColor(1.0f, 1.0f, 1.0f),
-                                  ambientLightIntensity(0.1f) {}
+                                  std::vector<std::vector<Component::Color>> &pixels, Skybox &skybox) : width(width), height(height), entities(entities), pixels(pixels), ambientLightColor(1.0f, 1.0f, 1.0f),
+                                  ambientLightIntensity(0.1f), skybox(skybox) {}

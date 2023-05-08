@@ -17,18 +17,16 @@
 namespace Raytracer {
 
     class Skybox {
-
     public:
-        explicit Skybox(const std::string &filename);
+        explicit Skybox(const std::string& filename);
 
-        [[nodiscard]] Component::Color getColor(const Component::Vector3f &direction) const;
+        ~Skybox();
+        Component::Color getColorFromRay(const Component::Vector3f &direction);
 
     private:
-        std::vector<Component::Color> _skyboxData;
+        int m_width, m_height, m_channels;
+        std::vector<unsigned char> m_data;
 
-        int _skyboxWidth;
-        int _skyboxHeight;
-
-        void load(const std::string &filename);
+        unsigned char* getPixel(float u, float v);
     };
 }

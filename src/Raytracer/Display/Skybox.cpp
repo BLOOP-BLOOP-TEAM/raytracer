@@ -1,71 +1,61 @@
-/*
-** EPITECH PROJECT, 2023
-** Raytracer
-** File description:
-** Skybox
-*/
-
+#include <iostream>
+#include <string>
+#include <cmath>
+#include "stb_image.h"
+#include "Color.hpp"
+#include "Vector3f.hpp"
 #include "Skybox.hpp"
 
-Raytracer::Skybox::Skybox(const std::string &filename) {
-    load(filename);
-}
-
-Component::Color Raytracer::Skybox::getColor(const Component::Vector3f &direction) const
+Raytracer::Skybox::Skybox(const std::string &filename)
 {
-    // Convertir la direction en coordonnées de texture
-    double u = 0.5 + std::atan2(direction.z, direction.x) / (2 * M_PI);
-    double v = 0.5 - std::asin(direction.y) / M_PI;
+    int width, height, channels;
+    unsigned char *image_data = stbi_load(filename.c_str(), &width, &height, &channels, STBI_rgb_alpha);
 
-    // Interpoler la couleur de la skybox en fonction des coordonnées de texture
-    int x = static_cast<int>(u * _skyboxWidth);
-    int y = static_cast<int>(v * _skyboxHeight);
-    int index = y * _skyboxWidth + x;
-
-    // Retourner la couleur correspondante de la skybox
-    return _skyboxData[index];
+    if (image_data) {
+        m_width = width;
+        m_height = height;
+        m_channels = channels;
+        m_data.assign(image_data, image_data + width * height * channels);
+        stbi_image_free(image_data);
+    } else {
+        throw std::runtime_error("Failed to load skybox image");
+    }
 }
 
-void Raytracer::Skybox::load(const std::string &filename) {
-    {
-//        FILE *infile;
-//        if ((infile = fopen(filename.c_str(), "rb")) == NULL) {
-//            std::cerr << "Can't open " << filename << std::endl;
-//            return;
-//        }
-//
-//        jpeg_decompress_struct cinfo;
-//        jpeg_error_mgr jerr;
-//        cinfo.err = jpeg_std_error(&jerr);
-//        jpeg_create_decompress(&cinfo);
-//        jpeg_stdio_src(&cinfo, infile);
-//        jpeg_read_header(&cinfo, TRUE);
-//        jpeg_start_decompress(&cinfo);
-//
-//        _skyboxWidth = cinfo.output_width;
-//        _skyboxHeight = cinfo.output_height;
-//
-//        int row_stride = cinfo.output_width * cinfo.output_components;
-//        JSAMPARRAY buffer = (*cinfo.mem->alloc_sarray)((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
-//
-//        _skyboxData.resize(_skyboxWidth * _skyboxHeight);
-//
-//        int y = 0;
-//        while (cinfo.output_scanline < cinfo.output_height) {
-//            jpeg_read_scanlines(&cinfo, buffer, 1);
-//            for (unsigned int x = 0; x < cinfo.output_width; ++x) {
-//                _skyboxData[y * _skyboxWidth + x] = Component::Color(
-//                        buffer[0][x * cinfo.output_components + 0],
-//                        buffer[0][x * cinfo.output_components + 1],
-//                        buffer[0][x * cinfo.output_components + 2]
-//                );
-//            }
-//            ++y;
-//        }
-//
-//        jpeg_finish_decompress(&cinfo);
-//        jpeg_destroy_decompress(&cinfo);
-//
-//        fclose(infile);
-    }
+Component::Color Raytracer::Skybox::getColorFromRay(const Component::Vector3f &direction)
+{
+    // Convertir le rayon en coordonnées sphériques
+    float theta = std::acos(direction.y);
+    float phi = std::atan2(direction.z, direction.x) + M_PI;
+
+    // Convertir les coordonnées sphériques en coordonnées UV
+    float u = phi / (2 * M_PI);
+    float v = theta / M_PI;
+
+    // Obtenir le pixel de l'image de la skybox
+    unsigned char *pixel = getPixel(u, v);
+
+    // Utilisez les valeurs RGBA du pixel pour déterminer la couleur de la skybox
+    unsigned char r = pixel[0];
+    unsigned char g = pixel[1];
+    unsigned char b = pixel[2];
+    unsigned char a = pixel[3];
+
+    // Convertir les valeurs de pixel en couleur
+    Component::Color finalColor(r, g, b);
+
+    return finalColor;
+}
+
+unsigned char *Raytracer::Skybox::getPixel(float u, float v)
+{
+    int x = static_cast<int>(u * m_width) % m_width;
+    int y = static_cast<int>(v * m_height) % m_height;
+    int index = (x + y * m_width) * m_channels;
+    return &m_data[index];
+}
+
+Raytracer::Skybox::~Skybox()
+{
+    m_data.clear();
 }

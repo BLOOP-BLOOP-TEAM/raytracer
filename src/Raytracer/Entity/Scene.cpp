@@ -23,7 +23,7 @@ Component::Vector3f Raytracer::Scene::getResolution() const
 }
 
 Raytracer::Scene::Scene(const std::string &name, const std::string &nameFile) : _image(std::make_unique<Image>(getResolution().x, getResolution().y)), _fileName(nameFile), _isCalculate(
-        false), _name(name)
+        false), _name(name), _skybox("./skybox/skybox.png")
 {
     std::cout << "Creating scene" << std::endl;
 }
@@ -47,7 +47,7 @@ Raytracer::Scene::~Scene()
 
 void Raytracer::Scene::calculateImage()
 {
-    _image->calculateImage(_entities);
+    _image->calculateImage(_entities, _skybox);
     _image->writePPM(FOLDER_PPM + _name + ".ppm");
     setIsCalculate();
 }
