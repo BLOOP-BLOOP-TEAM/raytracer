@@ -11,6 +11,8 @@ static const std::string ID_CAMERA_POS_TITLE = "#cameraPosTitle";
 static const std::string ID_CAMERA_POS_VALUE = "#cameraPosValue";
 static const std::string ID_CAMERA_ROTATION_TITLE = "#cameraRotationTitle";
 static const std::string ID_CAMERA_ROTATION_VALUE = "#cameraRotationValue";
+static const std::string ID_SCENE_TITLE = "#sceneTitle";
+static const std::string ID_SCENE_VALUE = "#sceneValue";
 static const std::string UNDEFINED = "UNDEFINED";
 
 namespace Raytracer {
@@ -54,17 +56,35 @@ namespace Raytracer {
         return UNDEFINED;
     }
 
-    void DisplayModule::initGuy() {
-        Component::Text CameraPosTitle(ID_CAMERA_POS_TITLE, FONT, "Camera Position :", 15, {10, 10, 0}, {255, 0, 0}, {0, 0, 0});
-        Component::Text CameraPosValue(ID_CAMERA_POS_VALUE, FONT, getCameraPos(), 15, {150, 10, 0}, {255, 0, 0}, {0, 0, 0});
+    std::string DisplayModule::GetSceneName(const std::string &filename) {
+        const std::string extension = ".cfg";
+        const std::string prefix = "Scenes/";
+        size_t filename_start = filename.find_last_of("/") + 1;
+        size_t filename_end = filename.find_last_of(extension);
 
-        Component::Text CameraRotationTitle(ID_CAMERA_ROTATION_TITLE, FONT, "Camera Rotation :", 15, {10, 30, 0}, {255, 0, 0}, {0, 0, 0});
-        Component::Text CameraRotationValue(ID_CAMERA_ROTATION_VALUE, FONT, getCameraRotation(), 15, {150, 30, 0}, {255, 0, 0}, {0, 0, 0});
+        if (filename_end == std::string::npos || filename_end < filename_start)
+            filename_end = filename.length();
+        else
+            filename_end -= extension.length();
+        return filename.substr(filename_start, filename_end - filename_start + 1);
+    }
+
+    void DisplayModule::initGuy() {
+        Component::Text CameraPosTitle(ID_CAMERA_POS_TITLE, FONT, "Camera Position :", 15, {10, 40, 0}, {93, 40, 165}, {0, 0, 0});
+        Component::Text CameraPosValue(ID_CAMERA_POS_VALUE, FONT, getCameraPos(), 15, {150, 40, 0}, {255, 0, 0}, {0, 0, 0});
+
+        Component::Text CameraRotationTitle(ID_CAMERA_ROTATION_TITLE, FONT, "Camera Rotation :", 15, {10, 60, 0}, {255, 0, 0}, {0, 0, 0});
+        Component::Text CameraRotationValue(ID_CAMERA_ROTATION_VALUE, FONT, getCameraRotation(), 15, {150, 60, 0}, {255, 0, 0}, {0, 0, 0});
+
+        Component::Text SceneTitle(ID_SCENE_TITLE, FONT, "Scene Name :", 15, {10, 10, 0}, {255, 0, 0}, {0, 0, 0});
+        Component::Text SceneValue(ID_SCENE_VALUE, FONT, GetSceneName(_scenesManager.getSceneActual().getFileName()), 15, {110, 10, 0}, {255, 0, 0}, {0, 0, 0});
 
         _allTexts.push_back(CameraPosTitle);
         _allTexts.push_back(CameraPosValue);
         _allTexts.push_back(CameraRotationTitle);
         _allTexts.push_back(CameraRotationValue);
+        _allTexts.push_back(SceneTitle);
+        _allTexts.push_back(SceneValue);
     }
 
     void DisplayModule::setText(const Component::Text &textComponent) {
@@ -92,12 +112,20 @@ namespace Raytracer {
     }
 
     void DisplayModule::updateText(sf::Text &sfText, const Component::Text &textComponent) {
+        sf::Color colorHighlight = (sf::Color(93, 40, 165, 255));
+        sf::Color colorUnhighlight = (sf::Color(250, 0, 0, 255));
+
         sfText.setString(textComponent.text);
         sfText.setPosition({static_cast<float>(textComponent.pos.x), static_cast<float>(textComponent.pos.y)});
-        sfText.setFillColor(sf::Color(textComponent.textColor.r,
-            textComponent.textColor.g,
-            textComponent.textColor.b,
-            255));
+        if (textComponent.id == ID_CAMERA_POS_TITLE)
+            _scenesManager.isCtrlActive() ? sfText.setFillColor(colorUnhighlight) : sfText.setFillColor(colorHighlight);
+        else if (textComponent.id == ID_CAMERA_ROTATION_TITLE)
+            _scenesManager.isCtrlActive() ? sfText.setFillColor(colorHighlight) : sfText.setFillColor(colorUnhighlight);
+        else
+            sfText.setFillColor(sf::Color(textComponent.textColor.r,
+                textComponent.textColor.g,
+                textComponent.textColor.b,
+                255));
         _window.draw(sfText);
     }
 
@@ -125,11 +153,13 @@ namespace Raytracer {
 
     void DisplayModule::updateCameraValues() {
         for (auto &text :_allTexts) {
-            if (text.id == ID_CAMERA_POS_VALUE)
+            if (text.id == ID_CAMERA_POS_VALUE) {
                 text.text = getCameraPos();
+                _scenesManager.isCtrlActive() ? text.textColor = text.textColor = Component::Color(255, 0, 0) : text.textColor = Component::Color(93, 40, 165);
+            }
             if (text.id == ID_CAMERA_ROTATION_VALUE) {
                 text.text = getCameraRotation();
-                // std::cout << getCameraRotation() << std::endl;
+                _scenesManager.isCtrlActive() ? text.textColor = Component::Color(93, 40, 165) : text.textColor = Component::Color(255, 0, 0);
             }
         }
     }
