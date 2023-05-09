@@ -22,6 +22,8 @@ namespace Plugin {
 
             [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hitPoint) const override;
 
+            double operator=(const std::string &s);
+
         protected:
         private:
             Component::Vector3f calculateCylinderAxis(const Component::Vector3f &basePoint, const Component::Vector3f &topPoint);

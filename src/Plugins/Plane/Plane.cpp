@@ -5,7 +5,8 @@
 ** Plane
 */
 
-#include <libconfig.h++>
+#include <iostream>
+#include <map>
 #include "Api.hpp"
 #include "Plane.hpp"
 
@@ -30,10 +31,14 @@ Component::Vector3f Plugin::Plane::getNormal(const Component::Vector3f &hitPoint
     return _normal;
 }
 
-Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
+Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
 {
-    Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
-    Component::Vector3f normal(setting["normal"][0], setting["normal"][1], setting["normal"][2]);
+    Component::Vector3f position(std::get<double>(setting.find("position_x")->second), std::get<double>(setting.find("position_y")->second), std::get<double>(setting.find("position_z")->second));
+    Component::Vector3f normal(std::get<double>(setting.find("normal_x")->second), std::get<double>(setting.find("normal_y")->second), std::get<double>(setting.find("normal_z")->second));
+
+    std::cout << std::endl << std::endl << std::endl << "Plane created" << std::endl;
+    std::cout << "position: " << position.x << " " << position.y << " " << position.z << std::endl;
+    std::cout << "normal: " << normal.x << " " << normal.y << " " << normal.z << std::endl << std::endl << std::endl << std::endl;
     return new Plugin::Plane(position, normal);
 }
 

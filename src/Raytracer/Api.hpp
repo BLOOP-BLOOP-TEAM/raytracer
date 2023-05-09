@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <libconfig.h++>
+#include <variant>
 #include "IEntity.hpp"
 #include "IMaterial.hpp"
 
@@ -21,11 +21,11 @@ extern "C"
 {
     enum LibType { ENTITY, MATERIAL };
 
-    EXPORT Raytracer::IEntity *createEntity(const libconfig::Setting &setting);
+    EXPORT Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting);
 
     EXPORT void destroyEntity(Raytracer::IEntity *entity);
 
-    EXPORT Raytracer::IMaterial *createMaterial(const libconfig::Setting &setting);
+    EXPORT Raytracer::IMaterial *createMaterial(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting);
 
     EXPORT void destroyMaterial(Raytracer::IMaterial *material);
 

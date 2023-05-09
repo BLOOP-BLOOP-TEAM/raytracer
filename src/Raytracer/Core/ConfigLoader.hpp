@@ -12,6 +12,7 @@
 #include <map>
 #include <cstdbool>
 #include <functional>
+#include <sstream>
 #include <libconfig.h++>
 #include "Scene.hpp"
 #include "FactoryEntity.hpp"
@@ -20,7 +21,7 @@
 namespace Raytracer {
     class ConfigLoader {
         public:
-            ConfigLoader();
+            ConfigLoader() = default;
             ~ConfigLoader() = default;
 
             static std::unique_ptr<std::vector<std::unique_ptr<Raytracer::Scene>>> loadConfigFolder();
@@ -34,7 +35,7 @@ namespace Raytracer {
             static bool isAGoodConfigFile(libconfig::Config &cfg, const std::string &path);
             static void applyMaterialsToPrimitives(Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
             static Raytracer::IMaterial *getMaterialFromName(const Raytracer::Scene &scene, const std::string &name);
-
             static std::string extractFileName(const std::string &path);
+            static std::map<std::string, std::variant<double, int, std::string, bool>> transformSettingToDataMap(const libconfig::Setting &setting);
     };
 }; // namespace Raytracer
