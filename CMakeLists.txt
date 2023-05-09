@@ -91,6 +91,14 @@ set_target_properties(plugin_cylinder PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
         )
 
+add_library(plugin_triangle SHARED)
+set_target_properties(plugin_triangle PROPERTIES
+        CXX_STANDARD 20
+        COMPILE_FLAGS "-fno-gnu-unique"
+        PREFIX ""
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+        )
+
 add_library(plugin_plane_material SHARED)
 set_target_properties(plugin_plane_material PROPERTIES
         CXX_STANDARD 20
