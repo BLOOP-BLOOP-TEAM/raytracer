@@ -27,8 +27,6 @@ namespace Raytracer {
 
         [[nodiscard]] Component::Vector3f getResolution() const override;
 
-        [[nodiscard]] const Component::Vector3f &getRotation() const;
-        void setRotation(const Component::Vector3f &rotation);
         [[nodiscard]] const std::string &getTypeCam() const;
         [[nodiscard]] bool isEdited() const;
         void setEdit(bool status);
@@ -36,7 +34,6 @@ namespace Raytracer {
     protected:
     private:
         std::string _typeCam;
-        Component::Vector3f _rotation;
         Component::Vector3f _resolution;
         double _fieldOfView;
         bool _isEdited;

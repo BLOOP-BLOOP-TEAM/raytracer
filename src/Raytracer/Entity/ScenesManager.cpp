@@ -5,6 +5,7 @@
 ** ScenesManager
 */
 
+#include <iostream>
 #include "RaytracerException.hpp"
 #include "ScenesManager.hpp"
 
@@ -71,28 +72,28 @@ void Raytracer::ScenesManager::setSceneActual(int scene)
     _sceneActual = scene;
 }
 
-void Raytracer::ScenesManager::moveCamera(std::string key)
+void Raytracer::ScenesManager::moveCamera(std::string key, bool isCtrlPressed)
 {
     ACam &cam = getCam();
 
     switch (key[4]) {
         case 'Z':
-            cam.translate({0, 1, 0});
+            isCtrlPressed ? cam.rotate({0.1, 0, 0}) : cam.translate({0, 1, 0});
             break;
         case 'Q':
-            cam.translate({0, 0, 1});
+            isCtrlPressed ? cam.rotate({0, 0.1, 0}) : cam.translate({0, 0, -1});
             break;
         case 'S':
-            cam.translate({0, -1, 0});
+            isCtrlPressed ? cam.rotate({-0.1, 0, 0}) : cam.translate({0, -1, 0});
             break;
         case 'D':
-            cam.translate({0, 0, -1});
+            isCtrlPressed ? cam.rotate({0, -0.1, 0}) : cam.translate({0, 0, 1});
             break;
         case 'A':
-            cam.translate({-1, 0, 0});
+            isCtrlPressed ? cam.rotate({0, 0, -0.1}) : cam.translate({-1, 0, 0});
             break;
         case 'E':
-            cam.translate({1, 0, 0});
+            isCtrlPressed ? cam.rotate({0, 0, 0.1}) : cam.translate({1, 0, 0});
             break;
         default:
             break;
@@ -128,7 +129,7 @@ void Raytracer::ScenesManager::update(Raytracer::EventManager &eventManager)
     if (eventManager.isEventTriggered(keyRight))
         _sceneActual == _scenes.size() - 1 ? setSceneActual(0) : setSceneActual(_sceneActual + 1);
     if (!key.empty())
-        moveCamera(key);
+        moveCamera(key, eventManager.isCtrlActive());
     if (eventManager.isEventTriggered(keyEnter) && getCam().isEdited()) {
         _scenes[_sceneActual]->calculateImage();
         getCam().setEdit(false);

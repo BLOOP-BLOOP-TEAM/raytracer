@@ -12,8 +12,8 @@
 
 static const std::string DIRECTIONALLIGHT = "DirectionalLight";
 
-Plugin::DirectionalLight::DirectionalLight(const Component::Vector3f &position, const Component::Color &color, double intensity, const Component::Vector3f &direction)
-        : Raytracer::ALight(DIRECTIONALLIGHT, position, color, intensity) , _direction(direction)
+Plugin::DirectionalLight::DirectionalLight(const Component::Vector3f &position, const Component::Vector3f &rotation, const Component::Color &color, double intensity, const Component::Vector3f &direction)
+        : Raytracer::ALight(DIRECTIONALLIGHT, position, rotation, color, intensity) , _direction(direction)
 {
 }
 
@@ -25,6 +25,7 @@ bool Plugin::DirectionalLight::isIlluminating(const Component::Vector3f &origin,
 Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
 {
     Component::Vector3f position(std::get<double>(setting.find("position_x")->second), std::get<double>(setting.find("position_y")->second), std::get<double>(setting.find("position_z")->second));
+    Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
     Component::Vector3f direction(std::get<double>(setting.find("direction_x")->second), std::get<double>(setting.find("direction_y")->second), std::get<double>(setting.find("direction_z")->second));
     Component::Color color(std::get<double>(setting.find("color_r")->second), std::get<double>(setting.find("color_g")->second), std::get<double>(setting.find("color_b")->second));
     double intensity = std::get<double>(setting.find("intensity")->second);
@@ -34,7 +35,7 @@ Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double
     std::cout << "direction: " << direction.x << " " << direction.y << " " << direction.z << std::endl;
     std::cout << "color: " << color.r << " " << color.g << " " << color.b << std::endl;
     std::cout << "intensity: " << intensity << std::endl << std::endl << std::endl << std::endl;
-    return new Plugin::DirectionalLight(position, color, intensity, direction);
+    return new Plugin::DirectionalLight(position, rotation, color, intensity, direction);
 }
 
 const char *getName()
