@@ -8,6 +8,7 @@
 #pragma once
 
 #include <cmath>
+#include <string>
 
 namespace Component {
     struct Vector3f {

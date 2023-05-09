@@ -11,6 +11,7 @@ static const std::string ID_CAMERA_POS_TITLE = "#cameraPosTitle";
 static const std::string ID_CAMERA_POS_VALUE = "#cameraPosValue";
 static const std::string ID_CAMERA_ROTATION_TITLE = "#cameraRotationTitle";
 static const std::string ID_CAMERA_ROTATION_VALUE = "#cameraRotationValue";
+static const std::string UNDEFINED = "UNDEFINED";
 
 namespace Raytracer {
 
@@ -38,7 +39,7 @@ namespace Raytracer {
             if (entity->getType() == CompType::CAM)
                 return PosVector3fToString(entity->getPosition());
         }
-        return "UNDEFINED";
+        return UNDEFINED;
     }
 
     std::string DisplayModule::getCameraRotation() {
@@ -50,7 +51,7 @@ namespace Raytracer {
                 return Vector3fToString(cam->getRotation());
             }
         }
-        return "UNDEFINED";
+        return UNDEFINED;
     }
 
     void DisplayModule::initGuy() {

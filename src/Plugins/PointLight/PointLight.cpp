@@ -6,7 +6,7 @@
 */
 
 #include <iostream>
-#include <libconfig.h++>
+#include <map>
 #include "Api.hpp"
 #include "PointLight.hpp"
 
@@ -22,14 +22,17 @@ bool Plugin::PointLight::isIlluminating(const Component::Vector3f &origin, const
     return true;
 }
 
-Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
+Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
 {
-    Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
-    Component::Vector3f rotation(setting["rotation"][0], setting["rotation"][1], setting["rotation"][2]);
-    Component::Color color(setting["color"][0], setting["color"][1], setting["color"][2]);
-    double intensity = 0.0f;
+    Component::Vector3f position(std::get<double>(setting.find("position_x")->second), std::get<double>(setting.find("position_y")->second), std::get<double>(setting.find("position_z")->second));
+    Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
+    Component::Color color(std::get<double>(setting.find("color_r")->second), std::get<double>(setting.find("color_g")->second), std::get<double>(setting.find("color_b")->second));
+    double intensity = std::get<double>(setting.find("intensity")->second);
 
-    setting.lookupValue("intensity", intensity);
+    std::cout << std::endl << std::endl << std::endl << "PointLight created" << std::endl;
+    std::cout << "position: " << position.x << " " << position.y << " " << position.z << std::endl;
+    std::cout << "color: " << color.r << " " << color.g << " " << color.b << std::endl;
+    std::cout << "intensity: " << intensity << std::endl << std::endl << std::endl << std::endl;
     return new Plugin::PointLight(position, rotation, color, intensity);
 }
 
