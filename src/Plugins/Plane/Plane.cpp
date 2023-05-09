@@ -12,8 +12,8 @@
 
 static const std::string PLANE = "Plane";
 
-Plugin::Plane::Plane(const Component::Vector3f &position, const Component::Vector3f &normal)
-        : APrimitive(PLANE, position), _normal(normal.normalize()) {}
+Plugin::Plane::Plane(const Component::Vector3f &position, const Component::Vector3f &rotation, const Component::Vector3f &normal)
+        : APrimitive(PLANE, position, rotation), _normal(normal.normalize()) {}
 
 double Plugin::Plane::intersect(const Raytracer::Ray &ray) const
 {
@@ -40,12 +40,12 @@ extern "C" {
         Component::Vector3f normal(std::get<double>(setting.find("normal_x")->second),
                                    std::get<double>(setting.find("normal_y")->second),
                                    std::get<double>(setting.find("normal_z")->second));
-
+        Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
         std::cout << std::endl << std::endl << std::endl << "Plane created" << std::endl;
         std::cout << "position: " << position.x << " " << position.y << " " << position.z << std::endl;
         std::cout << "normal: " << normal.x << " " << normal.y << " " << normal.z << std::endl << std::endl << std::endl
                   << std::endl;
-        return new Plugin::Plane(position, normal);
+        return new Plugin::Plane(position, rotation, normal);
     }
 
     void destroyEntity(Raytracer::IEntity *entity) {

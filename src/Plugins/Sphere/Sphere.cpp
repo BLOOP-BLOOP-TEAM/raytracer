@@ -12,7 +12,7 @@
 
 static const std::string SPHERE = "sphere";
 
-Plugin::Sphere::Sphere(const Component::Vector3f &position, double radius) : APrimitive(SPHERE, position), _radius(radius)
+Plugin::Sphere::Sphere(const Component::Vector3f &position, const Component::Vector3f &rotation, double radius) : APrimitive(SPHERE, position, rotation), _radius(radius)
 {
 
 }
@@ -56,11 +56,11 @@ extern "C" {
                                      std::get<double>(setting.find("position_y")->second),
                                      std::get<double>(setting.find("position_z")->second));
         double radius = std::get<double>(setting.find("radius")->second);
-
+        Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
         std::cout << std::endl << std::endl << std::endl << "Sphere created" << std::endl;
         std::cout << "position: " << position.x << " " << position.y << " " << position.z << std::endl;
         std::cout << "radius: " << radius << std::endl << std::endl << std::endl << std::endl;
-        return new Plugin::Sphere(position, radius);
+        return new Plugin::Sphere(position, rotation, radius);
     }
 
     const char *getName() {

@@ -12,8 +12,8 @@
 
 static const std::string DIRECTIONALLIGHT = "DirectionalLight";
 
-Plugin::DirectionalLight::DirectionalLight(const Component::Vector3f &position, const Component::Color &color, double intensity, const Component::Vector3f &direction)
-        : Raytracer::ALight(DIRECTIONALLIGHT, position, color, intensity) , _direction(direction)
+Plugin::DirectionalLight::DirectionalLight(const Component::Vector3f &position, const Component::Vector3f &rotation, const Component::Color &color, double intensity, const Component::Vector3f &direction)
+        : Raytracer::ALight(DIRECTIONALLIGHT, position, rotation, color, intensity) , _direction(direction)
 {
 }
 
@@ -34,9 +34,9 @@ extern "C" {
         Component::Color color(std::get<double>(setting.find("color_r")->second),
                                std::get<double>(setting.find("color_g")->second),
                                std::get<double>(setting.find("color_b")->second));
+        Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
         double intensity = std::get<double>(setting.find("intensity")->second);
-
-        return new Plugin::DirectionalLight(position, color, intensity, direction);
+        return new Plugin::DirectionalLight(position, rotation, color, intensity, direction);
     }
 
     const char *getName() {

@@ -11,6 +11,7 @@ static const std::string ID_CAMERA_POS_TITLE = "#cameraPosTitle";
 static const std::string ID_CAMERA_POS_VALUE = "#cameraPosValue";
 static const std::string ID_CAMERA_ROTATION_TITLE = "#cameraRotationTitle";
 static const std::string ID_CAMERA_ROTATION_VALUE = "#cameraRotationValue";
+static const std::string UNDEFINED = "UNDEFINED";
 
 namespace Raytracer {
 
@@ -19,19 +20,26 @@ namespace Raytracer {
 
     DisplayModule::~DisplayModule() {}
 
-    std::string DisplayModule::Vector3fToString(Component::Vector3f vec) {
+    std::string DisplayModule::PosVector3fToString(Component::Vector3f vec) {
         std::stringstream ss;
 
         ss << "(" << vec.z << ", " << vec.y << ", " << vec.x << ")"; // technique de la loutre
         return ss.str();
     }
 
+    std::string DisplayModule::Vector3fToString(Component::Vector3f vec) {
+        std::stringstream ss;
+
+        ss << "(" << vec.y << ", " << vec.x << ", " << vec.z << ")";
+        return ss.str();
+    }
+
     std::string DisplayModule::getCameraPos() {
         for (const auto &entity: _scenesManager.getSceneActual().getEntities()) {
             if (entity->getType() == CompType::CAM)
-                return Vector3fToString(entity->getPosition());
+                return PosVector3fToString(entity->getPosition());
         }
-        return "UNDEFINED";
+        return UNDEFINED;
     }
 
     std::string DisplayModule::getCameraRotation() {
@@ -43,7 +51,7 @@ namespace Raytracer {
                 return Vector3fToString(cam->getRotation());
             }
         }
-        return "UNDEFINED";
+        return UNDEFINED;
     }
 
     void DisplayModule::initGuy() {
@@ -119,6 +127,10 @@ namespace Raytracer {
         for (auto &text :_allTexts) {
             if (text.id == ID_CAMERA_POS_VALUE)
                 text.text = getCameraPos();
+            if (text.id == ID_CAMERA_ROTATION_VALUE) {
+                text.text = getCameraRotation();
+                // std::cout << getCameraRotation() << std::endl;
+            }
         }
     }
 

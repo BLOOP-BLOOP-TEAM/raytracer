@@ -12,8 +12,8 @@
 
 static const std::string POINTLIGHT = "PointLight";
 
-Plugin::PointLight::PointLight(const Component::Vector3f &position, const Component::Color &color, double intensity)
-        : Raytracer::ALight(POINTLIGHT, position, color, intensity)
+Plugin::PointLight::PointLight(const Component::Vector3f &position, const Component::Vector3f &rotation, const Component::Color &color, double intensity)
+        : Raytracer::ALight(POINTLIGHT, position, rotation, color, intensity)
 {
 }
 
@@ -32,8 +32,8 @@ extern "C" {
                                std::get<double>(setting.find("color_g")->second),
                                std::get<double>(setting.find("color_b")->second));
         double intensity = std::get<double>(setting.find("intensity")->second);
-
-        return new Plugin::PointLight(position, color, intensity);
+        Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
+        return new Plugin::PointLight(position, rotation, color, intensity);
     }
 
     const char *getName() {
