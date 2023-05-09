@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <libconfig.h++>
+#include <variant>
 #include "IEntity.hpp"
 #include "IMaterial.hpp"
 
@@ -26,7 +26,7 @@ extern "C"
      * 
      * @param setting The libconfig::Setting object representing the configuration of the entity.
      */
-    EXPORT Raytracer::IEntity *createEntity(const libconfig::Setting &setting);
+    EXPORT Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting);
 
     /**
      * @brief Destroys an entity object.
@@ -40,7 +40,7 @@ extern "C"
      * 
      * @param setting The libconfig::Setting object representing the configuration of the material.
      */
-    EXPORT Raytracer::IMaterial *createMaterial(const libconfig::Setting &setting);
+    EXPORT Raytracer::IMaterial *createMaterial(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting);
 
     /**
      * @brief Destroys a material object.

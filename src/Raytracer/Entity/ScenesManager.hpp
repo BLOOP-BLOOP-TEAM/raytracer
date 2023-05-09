@@ -88,7 +88,7 @@ namespace Raytracer {
 
         [[nodiscard]] ACam &getCam() const;
 
-        void moveCamera(std::string key);
+        void moveCamera(std::string key, bool isCtrlPressed);
 
     protected:
     private:

@@ -6,16 +6,16 @@
 */
 
 #include <iostream>
-#include <libconfig.h++>
 #include <vector>
+#include <map>
 #include "Api.hpp"
 #include "Cylinder.hpp"
 
 static const std::string cylinderName = "Cylinder";
 
-Plugin::Cylinder::Cylinder(const Component::Vector3f &position, double radius, double height,
+Plugin::Cylinder::Cylinder(const Component::Vector3f &position, const Component::Vector3f &rotation, double radius, double height,
                             Component::Vector3f &basePoint, Component::Vector3f &topPoint)
-    : APrimitive("Cylinder", position), _radius(radius), _height(height)
+    : APrimitive("Cylinder", position, rotation), _radius(radius), _height(height)
 {
     _axis = calculateCylinderAxis(basePoint, topPoint);
 }
@@ -90,17 +90,16 @@ Component::Vector3f Plugin::Cylinder::getNormal(const Component::Vector3f &hitPo
     return (hitPoint - getPosition()).normalize();
 }
 
-Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
+Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
 {
-    Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
-    Component::Vector3f basePoint(setting["basePoint"][0], setting["basePoint"][1], setting["basePoint"][2]);
-    Component::Vector3f topPoint(setting["topPoint"][0], setting["topPoint"][1], setting["topPoint"][2]);
-    double height = 0;
-    double radius = 0;
+    Component::Vector3f position(std::get<double>(setting.find("position_x")->second), std::get<double>(setting.find("position_y")->second), std::get<double>(setting.find("position_z")->second));
+    Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
+    Component::Vector3f basePoint(std::get<double>(setting.find("basePoint_x")->second), std::get<double>(setting.find("basePoint_y")->second), std::get<double>(setting.find("basePoint_z")->second));
+    Component::Vector3f topPoint(std::get<double>(setting.find("topPoint_x")->second), std::get<double>(setting.find("topPoint_y")->second), std::get<double>(setting.find("topPoint_z")->second));
+    double height = std::get<double>(setting.find("height")->second);
+    double radius = std::get<double>(setting.find("radius")->second);
 
-    setting.lookupValue("radius", radius);
-    setting.lookupValue("height", height);
-    return new Plugin::Cylinder(position, radius, height, basePoint, topPoint);
+    return new Plugin::Cylinder(position, rotation, radius, height, basePoint, topPoint);
 }
 
 const char *getName()

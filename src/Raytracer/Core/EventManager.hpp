@@ -43,10 +43,17 @@ namespace Raytracer {
              */
             void clear();
 
+            /**
+             * @brief Check the _isCtrlActive variable
+             */
+            [[nodiscard]] bool isCtrlActive() const;
+
+
         protected:
         private:
             std::vector<std::string> _events;
             sf::RenderWindow &_window;
             sf::Event _event;
+            bool _isCtrlActive;
     };
 };

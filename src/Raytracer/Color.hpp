@@ -8,6 +8,8 @@
 #pragma once
 
 #include <algorithm>
+#include <string>
+#include <variant>
 
 namespace Component {
     /**

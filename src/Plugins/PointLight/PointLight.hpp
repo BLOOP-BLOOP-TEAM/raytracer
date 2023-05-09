@@ -22,7 +22,7 @@ namespace Plugin {
          * @param color The color of the light source.
          * @param intensity The intensity of the light source.
          */
-        PointLight(const Component::Vector3f &position, const Component::Color &color, double intensity);
+        PointLight(const Component::Vector3f &position, const Component::Vector3f &rotation, const Component::Color &color, double intensity);
 
         ~PointLight() override = default;
 

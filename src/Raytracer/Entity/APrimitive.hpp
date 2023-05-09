@@ -24,8 +24,9 @@ namespace Raytracer {
              * 
              * @param type The type of the primitive as a string
              * @param position The position of the primitive as a Component::Vector3f object
+             * @param rotation The rotation of the primitive as a Component::Vector3f object
              */
-            APrimitive(std::string type, const Component::Vector3f &position);
+            APrimitive(std::string type, const Component::Vector3f &position, const Component::Vector3f &rotation);
 
              ~APrimitive() override = default;
 

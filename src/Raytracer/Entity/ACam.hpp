@@ -44,11 +44,6 @@ namespace Raytracer {
             [[nodiscard]] double getFieldOfView() const override;
 
             /**
-             * @brief Returns the rotation of the camera
-             */
-            [[nodiscard]] const Component::Vector3f &getRotation() const;
-
-            /**
              * @brief Sets the rotation of the camera
              * 
              * @param rotation a Vector3f object representing the new rotation of the camera
@@ -78,7 +73,6 @@ namespace Raytracer {
         protected:
         private:
             std::string _typeCam;
-            Component::Vector3f _rotation;
             Component::Vector3f _resolution;
             double _fieldOfView;
             bool _isEdited;

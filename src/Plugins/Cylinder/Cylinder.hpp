@@ -20,12 +20,13 @@ namespace Plugin {
              * @brief Constructor for Cylinder class.
              * 
              * @param position The position of the cylinder.
+             * @param rotation The rotation of the cylinder.
              * @param radius The radius of the cylinder.
              * @param height The height of the cylinder.
              * @param basePoint The base point of the cylinder.
              * @param topPoint The top point of the cylinder.
              */
-            Cylinder(const Component::Vector3f &position, double radius, double height,
+            Cylinder(const Component::Vector3f &position, const Component::Vector3f &rotation, double radius, double height,
                     Component::Vector3f &basePoint, Component::Vector3f &topPoint);
 
             ~Cylinder();
@@ -43,6 +44,8 @@ namespace Plugin {
              * @param hitPoint The point at which to compute the normal.
              */
             [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hitPoint) const override;
+
+            double operator=(const std::string &s);
 
         protected:
         private:

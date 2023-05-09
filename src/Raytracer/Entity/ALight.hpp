@@ -25,10 +25,12 @@ namespace Raytracer {
              * 
              * @param type The type of the light as a string
              * @param position The position of the light as a Vector3f
+             * @param rotation The rotation of the light as a Vector3f
              * @param color The color of the light as a Color
              * @param intensity The intensity of the light as a double
              */
-            ALight(std::string type, const Component::Vector3f &position, const Component::Color &color, double intensity);
+            ALight(std::string type, const Component::Vector3f &position, const Component::Vector3f &rotation, const Component::Color &color, double intensity);
+
 
             ~ALight() override = default;
 

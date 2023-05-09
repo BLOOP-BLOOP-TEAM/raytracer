@@ -44,7 +44,7 @@ namespace Raytracer {
              * @param name The name of the material.
              * @param config The configuration of the material.
              */
-            Raytracer::IMaterial *createMaterial(const std::string &name, const libconfig::Setting &config);
+            Raytracer::IMaterial *createMaterial(const std::string &name, const std::map<std::string, std::variant<double, int, std::string, bool>> &config);
 
             /**
              * @brief Destroys the given material.
@@ -60,14 +60,14 @@ namespace Raytracer {
              * @param funcCreate The function that creates the material.
              * @param funcDestroy The function that destroys the material.
              */
-            void addCreator(const std::string &name, std::function<Raytracer::IMaterial *(const libconfig::Setting &)> funcCreate, std::function<void(Raytracer::IMaterial *material)> funcDestroy);
+            void addCreator(const std::string &name, std::function<Raytracer::IMaterial *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)> funcCreate, std::function<void(Raytracer::IMaterial *material)> funcDestroy);
 
             /**
              * @brief Gets a map of material creators.
              */
-            [[nodiscard]] const std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(const libconfig::Setting &)>, std::function<void(Raytracer::IMaterial *material)>>>& getMaterials() const;
+            [[nodiscard]] const std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>, std::function<void(Raytracer::IMaterial *material)>>>& getMaterials() const;
 
         private:
-            std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(const libconfig::Setting &)>, std::function<void(Raytracer::IMaterial *material)>>> _materials;
+            std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>, std::function<void(Raytracer::IMaterial *material)>>> _materials;
     };
 }

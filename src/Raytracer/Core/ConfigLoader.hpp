@@ -12,6 +12,7 @@
 #include <map>
 #include <cstdbool>
 #include <functional>
+#include <sstream>
 #include <libconfig.h++>
 #include "Scene.hpp"
 #include "FactoryEntity.hpp"
@@ -23,8 +24,7 @@ namespace Raytracer {
      */
     class ConfigLoader {
         public:
-            ConfigLoader();
-
+            ConfigLoader() = default;
             ~ConfigLoader() = default;
 
             /**
@@ -106,5 +106,12 @@ namespace Raytracer {
              * @param path The file path.
              */
             static std::string extractFileName(const std::string &path);
+
+            /**
+             * @brief Transform the data parsed by libconfig into a map
+             * 
+             * @param setting The libonfig parsed data
+             */
+            static std::map<std::string, std::variant<double, int, std::string, bool>> transformSettingToDataMap(const libconfig::Setting &setting);
     };
 };

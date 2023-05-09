@@ -50,5 +50,13 @@ namespace Raytracer {
              * @brief Gets the type of the entity
              */
             [[nodiscard]] virtual Raytracer::CompType getType() const = 0;
+
+            /**
+             * @brief Gets the rotation of the entity
+             */
+            [[nodiscard]] virtual Component::Vector3f getRotation() const = 0;
+        protected:
+        private:
+
     };
 };

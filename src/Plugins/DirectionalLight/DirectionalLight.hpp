@@ -13,7 +13,7 @@ namespace Plugin {
     class DirectionalLight : public Raytracer::ALight {
         public:
 
-        DirectionalLight(const Component::Vector3f &position, const Component::Color &color, double intensity,
+        DirectionalLight(const Component::Vector3f &position, const Component::Vector3f &rotation, const Component::Color &color, double intensity,
                          const Component::Vector3f &direction);
 
         ~DirectionalLight() override = default;

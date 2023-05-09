@@ -25,8 +25,10 @@ namespace Raytracer {
              * 
              * @param type The type of the entity as a CompType enum
              * @param position The position of the entity as a Vector3f
+             * @param rotation The rotation of the entity as Vector3f
              */
-            AEntity(Raytracer::CompType type, const Component::Vector3f &position);
+            AEntity(Raytracer::CompType type, const Component::Vector3f &position, const Component::Vector3f &rotation);
+
 
             ~AEntity() override = default;
 
@@ -60,6 +62,12 @@ namespace Raytracer {
              * @brief Function that gets the type of the entity
              */
             [[nodiscard]] Raytracer::CompType getType() const final;
+            
+            /**
+             * @brief Function that gets the rotation of the entity
+             */
+            [[nodiscard]] Component::Vector3f getRotation() const final;
+
         protected:
             Component::Vector3f _position;
             Component::Vector3f _rotation;

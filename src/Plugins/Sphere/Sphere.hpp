@@ -23,7 +23,7 @@ namespace Plugin {
              * @param position The center position of the sphere.
              * @param radius The radius of the sphere.
              */
-            Sphere(const Component::Vector3f &position, double radius);
+            Sphere(const Component::Vector3f &position, const Component::Vector3f &rotation, double radius);
 
             ~Sphere() override = default;
 

@@ -23,9 +23,9 @@ namespace Plugin {
              * @param position The position of the plane.
              * @param normal The normal vector of the plane.
              */
-            Plane(const Component::Vector3f &position, const Component::Vector3f &normal);
+            Plane(const Component::Vector3f &position, const Component::Vector3f &rotation, const Component::Vector3f &normal);
 
-            virtual ~Plane() = default;
+            ~Plane() override = default;
 
             /**
              * @brief Computes the intersection point between the plane and a given ray.

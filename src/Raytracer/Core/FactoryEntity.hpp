@@ -10,6 +10,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <variant>
 #include <functional>
 #include <libconfig.h++>
 #include "IEntity.hpp"
@@ -45,7 +46,7 @@ namespace Raytracer {
              * @param name The name of the entity.
              * @param setting The configuration of the entity.
              */
-            IEntity *createEntity(const std::string &name, const libconfig::Setting &setting);
+            IEntity *createEntity(const std::string &name, const std::map<std::string, std::variant<double, int, std::string, bool>> &setting);
 
             /**
              * @brief Destroys the given entity.
@@ -61,15 +62,15 @@ namespace Raytracer {
              * @param funcCreate The function that creates the entity.
              * @param funcDestroy The function that destroys the entity.
              */
-            void addCreator(const std::string &name, const std::function<Raytracer::IEntity *(const libconfig::Setting &)>& funcCreate, const std::function<void(Raytracer::IEntity *entity)>& funcDestroy);
+            void addCreator(const std::string &name, const std::function<Raytracer::IEntity *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>& funcCreate, const std::function<void(Raytracer::IEntity *entity)>& funcDestroy);
 
             /**
              * @brief Gets a map of entity creators.
              */
-            [[nodiscard]] const std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const libconfig::Setting &)>, std::function<void(Raytracer::IEntity *entity)>>>& getEntities() const;
+            [[nodiscard]] const std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>, std::function<void(Raytracer::IEntity *entity)>>>& getEntities() const;
 
 
         private:
-            std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const libconfig::Setting &)>, std::function<void(Raytracer::IEntity *entity)>>> _entities;
+            std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>, std::function<void(Raytracer::IEntity *entity)>>> _entities;
     };
 };

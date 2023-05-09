@@ -6,7 +6,7 @@
 */
 
 #include <iostream>
-#include <libconfig.h++>
+#include <map>
 #include "Api.hpp"
 #include "Camera.hpp"
 
@@ -17,18 +17,19 @@ Plugin::Camera::Camera(const Component::Vector3f &position, const Component::Vec
 {
 }
 
-Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
+Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
 {
-    Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
+    std::cout << std::endl << std::endl << std::endl << std::endl << "Creating camera" << std::endl;
+    std::cout << "variant index = " << setting.find("position_x")->second.index() << std::endl;
+    Component::Vector3f position(std::get<double>(setting.find("position_x")->second), std::get<double>(setting.find("position_y")->second), std::get<double>(setting.find("position_z")->second));
+    std::cout << "position : x = " << position.x << " y = " << position.y << " z = " << position.z << std::endl;
+    Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
+    std::cout << "rotation: x = " << rotation.x << " y = " << rotation.y << " z = " << rotation.z << std::endl;
+    Component::Vector3f resolution(std::get<int>(setting.find("resolution_width")->second), std::get<int>(setting.find("resolution_height")->second), 0);
+    std::cout << "resolution: width = " << resolution.x << " height = " << resolution.y << std::endl;
+    double fieldOfView = std::get<double>(setting.find("fieldOfView")->second);
+    std::cout << "fieldOfView = " << fieldOfView << std::endl << std::endl << std::endl << std::endl << std::endl;
 
-    Component::Vector3f rotation(setting["rotation"][0], setting["rotation"][1], setting["rotation"][2]);
-    double fieldOfView = 0.0f;
-    Component::Vector3f resolution;
-    libconfig::Setting &res = setting["resolution"];
-
-    setting.lookupValue("fieldOfView", fieldOfView);
-    res.lookupValue("width", resolution.x);
-    res.lookupValue("height", resolution.y);
     return new Plugin::Camera(position, rotation, false, fieldOfView, resolution);
 }
 
