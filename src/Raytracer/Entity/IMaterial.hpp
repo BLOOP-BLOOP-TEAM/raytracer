@@ -46,6 +46,11 @@ namespace Raytracer {
             virtual double getSpecular() const = 0;
 
             /**
+             * @brief Gets the diffus factor of the material
+             */
+            [[nodiscard]] virtual double getDiffuseFactor() const = 0;
+
+            /**
              * @brief Gets the shininess of the material
              */
             virtual double getShininess() const = 0;
@@ -64,5 +69,9 @@ namespace Raytracer {
              * @brief Get the refractive index of the material
              */
             [[nodiscard]] virtual double getRefractiveIndex() const = 0;
+
+            [[nodiscard]] virtual const std::string &getType() = 0;
+
+
     };
 }

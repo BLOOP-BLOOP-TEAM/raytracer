@@ -97,7 +97,7 @@ namespace Raytracer {
         // Mettre à jour les pixels
         for (unsigned int y = 0; y < _height; ++y) {
             for (unsigned int x = 0; x < _width; ++x) {
-                Component::Color color = image.get_pixel(x, y);
+                Component::Color color = image.getPixel(x, y);
                 size_t index = y * _width + x;
                 _pixels[index].position = sf::Vector2f(static_cast<double>(x), static_cast<double>(y));
                 _pixels[index].color = sf::Color(color.r, color.g, color.b);

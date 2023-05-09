@@ -36,7 +36,7 @@ namespace Raytracer {
              * 
              * @param ray The Ray object to check for intersection
              */
-            [[nodiscard]] double intersect(const Ray &ray) const override;
+            [[nodiscard]] double intersect(const Ray &ray) const override = 0;
     
             /**
              * @brief Function that sets the material of the primitive
@@ -48,16 +48,9 @@ namespace Raytracer {
             /**
              * @brief Function that gets the normal of the primitive at the specified hit point
              * 
-             * @param hit_point The hit point as a Component::Vector3f object
+             * @param hitPoint The hit point as a Component::Vector3f object
              */
-            [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hit_point) const override;
-
-            /**
-             * @brief Function that gets the color of the primitive at the specified hit point
-             * 
-             * @param hit_point The hit point as a Component::Vector3f object
-             */
-            [[nodiscard]] Component::Color getColor(const Component::Vector3f &hit_point) const override;
+            [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hitPoint) const override = 0;
 
             /**
              * @brief Function that gets the material of the primitive

@@ -40,14 +40,14 @@ namespace Raytracer {
              * @param x The x-coordinate of the pixel
              * @param y The y-coordinate of the pixel
              */
-            [[nodiscard]] Component::Color get_pixel(unsigned int x, unsigned int y) const;
+            [[nodiscard]] Component::Color getPixel(unsigned int x, unsigned int y) const;
 
             /**
              * @brief Writes the image as a PPM file
              * 
              * @param filename The name of the file to be written
              */
-            void write_ppm(const std::string &filename) const;
+            void writePPM(const std::string &filename) const;
 
             /**
              * @brief Calculates the color of each pixel in the image

@@ -5,8 +5,8 @@
 ** RaytracerException
 */
 
-#include <string>
 #include <exception>
+#include <string>
 
 namespace Raytracer {
     /**
@@ -24,18 +24,20 @@ namespace Raytracer {
              * 
              * @param message string that will define the message in _message
              */
-            RaytracerException(const std::string &message);
-            
-            /**
-            * @brief Function that print the message set
-            *
-            * This function is used when an error is catched to print the
-            * message set on the construction of the object.
-            */
-            const char *what() const noexcept override;
+            explicit RaytracerException(const std::string &message);
 
-        protected:
+            const std::string &message() const noexcept;
+            
         private:
+
+            /**
+             * @brief Function that print the message set
+             *
+             * This function is used when an error is catched to print the
+             * message set on the construction of the object.
+             */
+            [[nodiscard]] const char *what() const noexcept override;
+
             std::string _message;
     };
 }

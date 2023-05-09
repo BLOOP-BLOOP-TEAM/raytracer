@@ -25,7 +25,9 @@ namespace Plugin {
              * @param diffuseFactor The diffuse factor of the material.
              * @param reflectivity The reflectivity of the material.
              */
-            ReflectMaterial(const Component::Color &baseColor, double diffuseFactor, double reflectivity);
+            ReflectMaterial(const Component::Color &baseColor, double diffuseFactor, double reflectivity,
+                            double refractivity,
+                            double refractiveIndex, const Component::Color &diffuse, double specular, double shininess);
 
             ~ReflectMaterial() override = default;
 

@@ -35,10 +35,12 @@ const std::string &Raytracer::ACam::getTypeCam() const
     return _typeCam;
 }
 
-const bool Raytracer::ACam::isEdited() const {
+const bool Raytracer::ACam::isEdited() const
+{
     return _isEdited;
 }
 
-void Raytracer::ACam::setEdit(bool status) {
+void Raytracer::ACam::setEdit(bool status)
+{
     _isEdited = status;
 }

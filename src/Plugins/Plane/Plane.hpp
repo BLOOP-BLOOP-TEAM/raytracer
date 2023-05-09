@@ -41,13 +41,6 @@ namespace Plugin {
              */
             Component::Vector3f getNormal(const Component::Vector3f &hitPoint) const override;
 
-            /**
-             * @brief Gets the color of the plane at a given point.
-             * 
-             * @param hitPoint The point at which to compute the color.
-             */
-            Component::Color getColor(const Component::Vector3f &hitPoint) const override;
-
     private:
         Component::Vector3f _normal;
     };

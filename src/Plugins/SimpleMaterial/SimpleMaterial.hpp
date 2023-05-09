@@ -18,13 +18,20 @@ namespace Plugin {
     class SimpleMaterial : public Raytracer::AMaterial {
         public:
             /**
-             * @brief Constructor for SimpleMaterial class.
+             * @brief Construct a new SimpleMaterial object
              * 
-             * @param baseColor The base color of the material.
-             * @param diffuseFactor The diffuse factor of the material.
-             * @param reflectivity The reflectivity of the material.
+             * @param baseColor The base color of the material
+             * @param diffuseFactor The diffuse factor of the material
+             * @param refractivity The refractivity of the material
+             * @param refractiveIndex The refractive index of the material
+             * @param reflectivity The reflectivity of the material
+             * @param diffuse The diffuse color of the material
+             * @param specular The specular coefficient of the material
+             * @param shininess The shininess coefficient of the material
              */
-            SimpleMaterial(const Component::Color &baseColor, double diffuseFactor, double reflectivity);
+            SimpleMaterial(const Component::Color &baseColor, double diffuseFactor, double refractivity,
+                            double refractiveIndex,
+                            double reflectivity, const Component::Color &diffuse, double specular, double shininess);
 
             ~SimpleMaterial() override = default;
 

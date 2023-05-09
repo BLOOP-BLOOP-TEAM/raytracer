@@ -45,7 +45,8 @@ double Plugin::Sphere::intersect(const Raytracer::Ray &ray) const
 
 Component::Vector3f Plugin::Sphere::getNormal(const Component::Vector3f &hitPoint) const
 {
-    return (hitPoint - getPosition()).normalize();
+    Component::Vector3f normal = hitPoint - getPosition();
+    return normal.normalize();
 }
 
 Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
