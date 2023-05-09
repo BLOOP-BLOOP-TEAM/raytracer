@@ -15,7 +15,7 @@ static const std::string cylinderName = "Cylinder";
 
 Plugin::Cylinder::Cylinder(const Component::Vector3f &position, double radius, double height,
                             Component::Vector3f &basePoint, Component::Vector3f &topPoint)
-    : APrimitive("Cylinder", position), _radius(radius), _height(height)
+    : APrimitive(cylinderName, position), _radius(radius), _height(height)
 {
     _axis = calculateCylinderAxis(basePoint, topPoint);
 }
