@@ -107,24 +107,23 @@ Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origi
     Component::Color reflectedColor(0, 0, 0);
     Component::Color refractedColor(0, 0, 0);
 
+    const double epsilon = 1e-6;  // Définir une petite constante pour décaler l'origine du rayon réfléchi/réfracté
+
     if (recursionDepth > 0) {
         if (material.getReflectivity() > 0) {
             Component::Vector3f reflectionDirection = getReflectionDirection(direction, hitNormal);
-            reflectedColor = castRay(hitPoint, reflectionDirection, entities, lights, recursionDepth - 1);
+            reflectedColor = castRay(hitPoint + reflectionDirection * epsilon, reflectionDirection, entities, lights, recursionDepth - 1);
         }
 
         if (material.getRefractivity() > 0) {
             Component::Vector3f refractionDirection = getRefractionDirection(direction, hitNormal, material.getRefractiveIndex());
-            refractedColor = castRay(hitPoint, refractionDirection, entities, lights, recursionDepth - 1);
+            refractedColor = castRay(hitPoint + refractionDirection * epsilon, refractionDirection, entities, lights, recursionDepth - 1);
         }
 
-        finalColor = localColor * (1 - material.getReflectivity() - material.getRefractivity()) +
-                      reflectedColor * material.getReflectivity() +
-                      refractedColor * material.getRefractivity();
+        finalColor = localColor * (1 - material.getReflectivity() - material.getRefractivity()) + reflectedColor * material.getReflectivity() + refractedColor * material.getRefractivity();
     } else {
         finalColor = localColor;
     }
-
 
     // Clamp color values between 0 and 255
     finalColor.clamp();
@@ -153,17 +152,17 @@ Component::Color Raytracer::Calculator::calculateLighting(const Component::Vecto
         if (!inShadow) {
             if (light.isIlluminating(hitPoint, lightDirection)) {
                 double distance = (light.getPosition() - hitPoint).length();
-                double attenuation_factor = 0.1;
+                double attenuation_factor = 0.01;
                 double attenuation = std::pow(distance, attenuation_factor);
 
                 Component::Color diffuseColor = computeDiffuseColor(hitPoint, hitNormal, lightDirection, material, lightIntensity / attenuation);
                 Component::Color specularColor = computeSpecularColor(hitPoint, hitNormal, lightDirection, material, light, lightIntensity / attenuation);
 
-                diffuseColor.clamp();
-                specularColor.clamp();
+//                diffuseColor.clamp();
+//                specularColor.clamp();
                 // Ajouter la couleur diffuse et spéculaire
                 finalColor = finalColor + diffuseColor + specularColor;
-                finalColor.clamp();
+//                finalColor.clamp();
             }
         }
     }
@@ -247,7 +246,7 @@ bool Raytracer::Calculator::checkShadows(const Component::Vector3f &hitPoint, co
 Component::Color Raytracer::Calculator::getAverageColor(int x, int y, const Raytracer::ACam *camera,
                                                         const std::vector<IEntity *> &entities,
                                                         const std::vector<Raytracer::ALight *> &lights,
-                                                        int subPixelsPerAxis = 1)
+                                                        int subPixelsPerAxis = 3)
 {
     int numSubPixels = subPixelsPerAxis * subPixelsPerAxis;
     Component::Color pixelColorSum(0, 0, 0);
