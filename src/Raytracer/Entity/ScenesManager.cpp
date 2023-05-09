@@ -123,7 +123,6 @@ void Raytracer::ScenesManager::update(Raytracer::EventManager &eventManager)
                         eventManager.isEventTriggered(keyE) ? keyE :
                         "";
 
-    std::cout << _scenes.size() << std::endl;
     if (eventManager.isEventTriggered(keyLeft))
         _sceneActual > 0 ? setSceneActual(_sceneActual - 1) : setSceneActual(_scenes.size() - 1);
     if (eventManager.isEventTriggered(keyRight))
