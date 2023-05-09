@@ -37,9 +37,12 @@ namespace Raytracer {
 
         void moveCamera(std::string key, bool isCtrlPressed);
 
+        [[nodiscard]] bool isCtrlActive() const;
+
     protected:
     private:
         std::vector<std::unique_ptr<Scene>> _scenes;
         int _sceneActual;
+        bool _isCtrlActive;
     };
 };
