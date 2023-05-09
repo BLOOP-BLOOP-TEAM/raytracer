@@ -33,10 +33,6 @@ extern "C" {
                                std::get<double>(setting.find("color_b")->second));
         double intensity = std::get<double>(setting.find("intensity")->second);
 
-        std::cout << std::endl << std::endl << std::endl << "PointLight created" << std::endl;
-        std::cout << "position: " << position.x << " " << position.y << " " << position.z << std::endl;
-        std::cout << "color: " << color.r << " " << color.g << " " << color.b << std::endl;
-        std::cout << "intensity: " << intensity << std::endl << std::endl << std::endl << std::endl;
         return new Plugin::PointLight(position, color, intensity);
     }
 
