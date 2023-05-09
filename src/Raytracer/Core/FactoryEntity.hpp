@@ -10,6 +10,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <variant>
 #include <functional>
 #include <libconfig.h++>
 #include "IEntity.hpp"
@@ -22,14 +23,12 @@ namespace Raytracer {
         FactoryEntity(const FactoryEntity&) = delete;
         FactoryEntity& operator=(const FactoryEntity&) = delete;
         static FactoryEntity& getInstance();
-        IEntity *createEntity(const std::string &name, const libconfig::Setting &setting);
+        IEntity *createEntity(const std::string &name, const std::map<std::string, std::variant<double, int, std::string, bool>> &setting);
         void destroyEntity(IEntity *entity);
-        void addCreator(const std::string &name, const std::function<Raytracer::IEntity *(const libconfig::Setting &)>& funcCreate, const std::function<void(Raytracer::IEntity *entity)>& funcDestroy);
-        [[nodiscard]] const std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const libconfig::Setting &)>, std::function<void(Raytracer::IEntity *entity)>>>& getEntities() const;
-
+        void addCreator(const std::string &name, const std::function<Raytracer::IEntity *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>& funcCreate, const std::function<void(Raytracer::IEntity *entity)>& funcDestroy);
 
     private:
 
-        std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const libconfig::Setting &)>, std::function<void(Raytracer::IEntity *entity)>>> _entities;
+        std::map<std::string, std::pair<std::function<Raytracer::IEntity *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>, std::function<void(Raytracer::IEntity *entity)>>> _entities;
     };
 };

@@ -6,6 +6,8 @@
 */
 
 #include <filesystem>
+#include <iomanip>
+#include <variant>
 #include <vector>
 #include "AMaterial.hpp"
 #include "IEntity.hpp"
@@ -27,10 +29,6 @@ static const std::vector<std::string> elementTypes = {
     MATERIALS
 };
 
-Raytracer::ConfigLoader::ConfigLoader()
-{
-}
-
 bool Raytracer::ConfigLoader::isAGoodConfigFile(libconfig::Config &cfg, const std::string &path)
 {
     try {
@@ -47,6 +45,44 @@ bool Raytracer::ConfigLoader::isAGoodConfigFile(libconfig::Config &cfg, const st
     std::cout << "File is a good config file" << std::endl;
     return true;
 }
+
+std::map<std::string, std::variant<double, int, std::string, bool>> Raytracer::ConfigLoader::transformSettingToDataMap(const libconfig::Setting &setting)
+{
+    std::map<std::string, std::variant<double, int, std::string, bool>> dataMap;
+    std::string name;
+    std::variant<double, int, std::string, bool> data;
+    std::string stringValue;
+
+    for (auto &element : setting) {
+        name = element.getName();
+        switch (element.getType()) {
+            case libconfig::Setting::Type::TypeInt:
+                int intValue;
+                setting.lookupValue(name, intValue);
+                data = intValue;
+                break;
+            case libconfig::Setting::Type::TypeFloat:
+                double doubleValue;
+                setting.lookupValue(name, doubleValue);
+                data = doubleValue;
+                break;
+            case libconfig::Setting::Type::TypeString:
+                setting.lookupValue(name, stringValue);
+                data = stringValue;
+                break;
+            case libconfig::Setting::Type::TypeBoolean:
+                bool boolValue;
+                setting.lookupValue(name, boolValue);
+                data = boolValue;
+                break;
+            default:
+                throw Raytracer::RaytracerException("Unknown type in config file");
+        }
+        dataMap[name] = data;
+    }
+    return dataMap;
+}
+
 
 std::unique_ptr<std::vector<std::unique_ptr<Raytracer::Scene>>> Raytracer::ConfigLoader::loadConfigFolder()
 {
@@ -74,11 +110,7 @@ void Raytracer::ConfigLoader::loadPluginType(const std::string &type, const libc
         loadLights(root, scene);
     else if (std::find(elementTypes.begin(), elementTypes.end(), type) != elementTypes.end()) {
         std::cout << "ConfigLoader: loading " << type << std::endl;
-        try {
-            scene.addEntity(Raytracer::FactoryEntity::getInstance().createEntity(type, root));
-        } catch (const std::exception &e) {
-            std::cerr << "ConfigLoader: " << e.what() << std::endl;
-        }
+        scene.addEntity(Raytracer::FactoryEntity::getInstance().createEntity(type, transformSettingToDataMap(root)));
     } else
         std::cerr << "configLoader: loadPlugintypes: plugin type not found" << std::endl;
 }
@@ -144,17 +176,21 @@ std::unique_ptr<Raytracer::Scene> Raytracer::ConfigLoader::loadConfigFile(const 
             loadPluginType(element.getName(), element, *scene, materialsToApply);
         }
     } catch (const libconfig::SettingNotFoundException &nfex) {
-        // Ignore.
+        std::cerr << "configLoader: loadConfigFile: Setting not found: " << nfex.what() << std::endl;
+        return nullptr;
     } catch (const libconfig::SettingTypeException &tex) {
-        std::cerr << "configLoader: loadConfigFile: " << tex.what() << " : " << tex.getPath() << std::endl;
+        std::cerr << "configLoader: loadConfigFile: Setting type mismatch: " << tex.what() << std::endl;
+        return nullptr;
     } catch (const libconfig::SettingException &ex) {
-        std::cerr << "configLoader: loadConfigFile: " << ex.what() << std::endl;
+        std::cerr << "configLoader: loadConfigFile: Setting exception: " << ex.what() << std::endl;
+        return nullptr;
     } catch (const std::exception &e) {
-        std::cerr << "configLoader: loadConfigFile: " << e.what() << std::endl;
+        std::cerr << "configLoader: loadConfigFile: exception: " << e.what() << std::endl;
+        return nullptr;
     }
     applyMaterialsToPrimitives(*scene, materialsToApply);
     if (!scene) {
-        throw Raytracer::RaytracerException("LoadConfig: loadConfigFile: scene is null");
+        return nullptr;
     }
     return scene;
 }
@@ -173,7 +209,7 @@ void Raytracer::ConfigLoader::loadPrimitives(const libconfig::Setting &root, Ray
                 if (element.exists(MATERIAL))
                     materialsToApply.insert({primitive.getName(), element[MATERIAL]});
                 std::cout << "ConfigLoader: loading " << primitive.getName() << std::endl;
-                scene.addEntity(Raytracer::FactoryEntity::getInstance().createEntity(primitive.getName(), element));
+                scene.addEntity(Raytracer::FactoryEntity::getInstance().createEntity(primitive.getName(), transformSettingToDataMap(element)));
             }
         }
     } catch (const libconfig::SettingException &ex) {
@@ -192,7 +228,7 @@ void Raytracer::ConfigLoader::loadLights(const libconfig::Setting &root, Raytrac
 
             std::cout << "\tLight found : " << light.getName() << std::endl;
             for (const auto &element : light) {
-                scene.addEntity(Raytracer::FactoryEntity::getInstance().createEntity(light.getName(), element));
+                scene.addEntity(Raytracer::FactoryEntity::getInstance().createEntity(light.getName(), transformSettingToDataMap(element)));
             }
         }
     } catch (const libconfig::SettingException &ex) {
@@ -213,7 +249,7 @@ void Raytracer::ConfigLoader::loadMaterials(const libconfig::Setting &root, Rayt
             std::cout << "\tMaterial found : " << material.getName() << std::endl;
             for (const auto &element : material) {
                 std::cout << "ConfigLoader: loading material " << material.getName() << std::endl;
-                scene.addMaterial(Raytracer::FactoryMaterial::getInstance().createMaterial(material.getName(), element));
+                scene.addMaterial(Raytracer::FactoryMaterial::getInstance().createMaterial(material.getName(), transformSettingToDataMap(element)));
             }
         }
     } catch (const libconfig::SettingException &ex) {

@@ -5,7 +5,7 @@
 ** Vector3f
 */
 
-#include "Vector3f.hpp"
+#include <iostream>
 #include "Vector3f.hpp"
 
 Component::Vector3f::Vector3f() : x(0), y(0), z(0) {}
@@ -76,4 +76,3 @@ Component::Vector3f Component::Vector3f::normalize() const
 {
     return *this / length();
 }
-

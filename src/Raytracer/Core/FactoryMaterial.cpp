@@ -5,7 +5,7 @@
 ** FactoryMaterial
 */
 
-#include <iostream>
+#include "RaytracerException.hpp"
 #include "FactoryMaterial.hpp"
 
 Raytracer::FactoryMaterial &Raytracer::FactoryMaterial::getInstance()
@@ -14,12 +14,12 @@ Raytracer::FactoryMaterial &Raytracer::FactoryMaterial::getInstance()
     return (instance);
 }
 
-Raytracer::IMaterial *Raytracer::FactoryMaterial::createMaterial(const std::string &name, const libconfig::Setting &data)
+Raytracer::IMaterial *Raytracer::FactoryMaterial::createMaterial(const std::string &name, const std::map<std::string, std::variant<double, int, std::string, bool>> &data)
 {
     Raytracer::IMaterial *result = _materials[name].first(data);
 
     if (result == nullptr) {
-        //throw
+        throw Raytracer::RaytracerException("Material " + name + " not found");
     }
     return (result);
 }
@@ -33,15 +33,10 @@ void Raytracer::FactoryMaterial::destroyMaterial(Raytracer::IMaterial *material)
 
 void Raytracer::FactoryMaterial::addCreator(
     const std::string &name,
-    std::function<Raytracer::IMaterial *(const libconfig::Setting &)> funCreate,
+    std::function<Raytracer::IMaterial *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)> funCreate,
     std::function<void(Raytracer::IMaterial *material)> funcDestroy)
 {
     auto funcPair = std::make_pair(funCreate, funcDestroy);
 
     _materials.insert({name, funcPair});
-}
-
-const std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(const libconfig::Setting &)>, std::function<void(Raytracer::IMaterial *material)>>>& Raytracer::FactoryMaterial::getMaterials() const
-{
-    return (_materials);
 }
