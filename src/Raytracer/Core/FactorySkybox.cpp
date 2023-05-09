@@ -5,6 +5,7 @@
 ** FactorySkybox
 */
 
+#include "RaytracerException.hpp"
 #include "FactorySkybox.hpp"
 
 Raytracer::FactorySkybox &Raytracer::FactorySkybox::getInstance()
@@ -16,7 +17,7 @@ Raytracer::FactorySkybox &Raytracer::FactorySkybox::getInstance()
 Raytracer::ISkybox *Raytracer::FactorySkybox::createSkybox(const std::string &name, const std::map<std::string, std::variant<double, int, std::string, bool>> &properties)
 {
     if (_materials.find(name) == _materials.end())
-        throw std::runtime_error("Skybox " + name + " not found");
+        throw Raytracer::RaytracerException("Skybox " + name + " not found");
     return _materials[name].first(properties);
 }
 

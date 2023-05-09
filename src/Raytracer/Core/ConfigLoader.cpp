@@ -266,9 +266,15 @@ void Raytracer::ConfigLoader::loadSkybox(const libconfig::Setting &root, Raytrac
         const libconfig::Setting &skybox = root;
 
         std::cout << "\tSkybox found : " << skybox.getName() << std::endl;
-        for (const auto &element : skybox) {
-            std::cout << "ConfigLoader: loading skybox " << skybox.getName() << std::endl;
-            scene.addSkybox(Raytracer::FactorySkybox::getInstance().createSkybox(skybox.getName(), transformSettingToDataMap(element)));
+        for (const auto &skyboxElement : skybox) {
+            std::cout << "ConfigLoader: loading skybox " << skyboxElement.getName() << std::endl;
+            for (const auto &element : skyboxElement) {
+                std::cout << "ConfigLoader: loading skybox " << skybox.getName()
+                          << std::endl;
+                scene.addSkybox(
+                Raytracer::FactorySkybox::getInstance().createSkybox(
+                skyboxElement.getName(), transformSettingToDataMap(element)));
+            }
         }
     } catch (const libconfig::SettingException &ex) {
         std::cerr << "configLoader: loadSkybox: " << ex.what() << " : " << ex.getPath() << std::endl;
