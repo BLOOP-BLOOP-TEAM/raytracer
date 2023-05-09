@@ -17,7 +17,6 @@
 #include "Scene.hpp"
 #include "FactoryEntity.hpp"
 #include "FactoryMaterial.hpp"
-#include "DataUnion.hpp"
 
 namespace Raytracer {
     class ConfigLoader {

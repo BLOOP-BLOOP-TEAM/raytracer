@@ -9,7 +9,6 @@
 
 #include <variant>
 #include "IEntity.hpp"
-#include "DataUnion.hpp"
 #include "IMaterial.hpp"
 
 #ifdef _WIN32
