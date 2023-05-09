@@ -13,9 +13,9 @@
 
 static const std::string cylinderName = "Cylinder";
 
-Plugin::Cylinder::Cylinder(const Component::Vector3f &position, double radius, double height,
+Plugin::Cylinder::Cylinder(const Component::Vector3f &position, const Component::Vector3f &rotation, double radius, double height,
                             Component::Vector3f &basePoint, Component::Vector3f &topPoint)
-    : APrimitive("Cylinder", position), _radius(radius), _height(height)
+    : APrimitive("Cylinder", position, rotation), _radius(radius), _height(height)
 {
     _axis = calculateCylinderAxis(basePoint, topPoint);
 }
@@ -93,6 +93,7 @@ Component::Vector3f Plugin::Cylinder::getNormal(const Component::Vector3f &hitPo
 Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
 {
     Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
+    Component::Vector3f rotation(setting["rotation"][0], setting["rotation"][1], setting["rotation"][2]);
     Component::Vector3f basePoint(setting["basePoint"][0], setting["basePoint"][1], setting["basePoint"][2]);
     Component::Vector3f topPoint(setting["topPoint"][0], setting["topPoint"][1], setting["topPoint"][2]);
     double height = 0;
@@ -100,7 +101,7 @@ Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
 
     setting.lookupValue("radius", radius);
     setting.lookupValue("height", height);
-    return new Plugin::Cylinder(position, radius, height, basePoint, topPoint);
+    return new Plugin::Cylinder(position, rotation, radius, height, basePoint, topPoint);
 }
 
 const char *getName()

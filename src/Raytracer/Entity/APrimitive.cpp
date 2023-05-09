@@ -9,9 +9,9 @@
 #include <iostream>
 #include "APrimitive.hpp"
 
-Raytracer::APrimitive::APrimitive(std::string type, const Component::Vector3f &position) : _typePrimitive(std::move(type)),
+Raytracer::APrimitive::APrimitive(std::string type, const Component::Vector3f &position, const Component::Vector3f &rotation) : _typePrimitive(std::move(type)),
                                                                                                   AEntity(Raytracer::CompType::PRIMITIVE,
-                                                                                                          position), _material(nullptr)
+                                                                                                          position, rotation), _material(nullptr)
 {
 }
 

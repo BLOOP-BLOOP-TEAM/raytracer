@@ -20,6 +20,7 @@ namespace Raytracer {
             virtual void scale(const Component::Vector3f &newScale) = 0;
             [[nodiscard]] virtual Component::Vector3f getPosition() const = 0;
             [[nodiscard]] virtual Raytracer::CompType getType() const = 0;
+            [[nodiscard]] virtual Component::Vector3f getRotation() const = 0;
         protected:
         private:
 

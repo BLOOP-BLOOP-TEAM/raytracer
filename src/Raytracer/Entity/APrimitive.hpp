@@ -14,7 +14,7 @@
 namespace Raytracer {
     class APrimitive : public IPrimitive, public AEntity {
     public:
-        APrimitive(std::string type, const Component::Vector3f &position);
+        APrimitive(std::string type, const Component::Vector3f &position, const Component::Vector3f &rotation);
 
         ~APrimitive() override = default;
 

@@ -10,8 +10,8 @@
 #include <utility>
 
 namespace Raytracer {
-    ALight::ALight(std::string type, const Component::Vector3f &position, const Component::Color &color, double intensity)
-            : AEntity(Raytracer::CompType::LIGHT, position), _typeLight(std::move(type)), _color(color), _intensity(intensity) {}
+    ALight::ALight(std::string type, const Component::Vector3f &position, const Component::Vector3f &rotation, const Component::Color &color, double intensity)
+            : AEntity(Raytracer::CompType::LIGHT, position, rotation), _typeLight(std::move(type)), _color(color), _intensity(intensity) {}
 
     const Component::Color& ALight::getColor() const
     {

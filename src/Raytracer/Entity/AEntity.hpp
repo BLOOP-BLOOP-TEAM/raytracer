@@ -14,7 +14,7 @@
 namespace Raytracer {
     class AEntity : public IEntity {
     public:
-        AEntity(Raytracer::CompType type, const Component::Vector3f &position);
+        AEntity(Raytracer::CompType type, const Component::Vector3f &position, const Component::Vector3f &rotation);
 
         ~AEntity() override = default;
 
@@ -27,6 +27,8 @@ namespace Raytracer {
         [[nodiscard]] Component::Vector3f getPosition() const final;
 
         [[nodiscard]] Raytracer::CompType getType() const final;
+
+        [[nodiscard]] Component::Vector3f getRotation() const final;
 
     protected:
         Component::Vector3f _position;

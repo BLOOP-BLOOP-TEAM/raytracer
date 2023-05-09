@@ -11,8 +11,8 @@
 
 static const std::string PLANE = "Plane";
 
-Plugin::Plane::Plane(const Component::Vector3f &position, const Component::Vector3f &normal)
-        : APrimitive(PLANE, position), _normal(normal.normalize()) {}
+Plugin::Plane::Plane(const Component::Vector3f &position, const Component::Vector3f &rotation, const Component::Vector3f &normal)
+        : APrimitive(PLANE, position, rotation), _normal(normal.normalize()) {}
 
 double Plugin::Plane::intersect(const Raytracer::Ray &ray) const
 {
@@ -34,7 +34,8 @@ Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
 {
     Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
     Component::Vector3f normal(setting["normal"][0], setting["normal"][1], setting["normal"][2]);
-    return new Plugin::Plane(position, normal);
+    Component::Vector3f rotation(setting["rotation"][0], setting["rotation"][1], setting["rotation"][2]);
+    return new Plugin::Plane(position, normal, rotation);
 }
 
 void destroyEntity(Raytracer::IEntity *entity)
