@@ -14,7 +14,7 @@
 namespace Plugin {
     class Sphere : public Raytracer::APrimitive {
         public:
-            Sphere(const Component::Vector3f &position, double radius);
+            Sphere(const Component::Vector3f &position, const Component::Vector3f &rotation, double radius);
 
             ~Sphere() override = default;
 

@@ -12,7 +12,7 @@
 namespace Plugin {
     class PointLight : public Raytracer::ALight {
     public:
-        PointLight(const Component::Vector3f &position, const Component::Color &color, double intensity);
+        PointLight(const Component::Vector3f &position, const Component::Vector3f &rotation, const Component::Color &color, double intensity);
 
         ~PointLight() override = default;
 

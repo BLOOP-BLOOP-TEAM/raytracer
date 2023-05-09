@@ -7,8 +7,6 @@
 
 #include "Color.hpp"
 
-#include "Color.hpp"
-
 Component::Color::Color() : r(0.0), g(0.0), b(0.0) {}
 
 Component::Color::Color(double red, double green, double blue) : r(red), g(green), b(blue) {}

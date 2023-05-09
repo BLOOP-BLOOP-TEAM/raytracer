@@ -22,6 +22,8 @@ namespace Raytracer {
 
         [[nodiscard]] bool isEventTriggered(const std::string &event) const;
 
+        [[nodiscard]] bool isCtrlActive() const;
+
         void clear();
 
     protected:
@@ -29,5 +31,6 @@ namespace Raytracer {
         std::vector<std::string> _events;
         sf::RenderWindow &_window;
         sf::Event _event;
+        bool _isCtrlActive;
     };
 }

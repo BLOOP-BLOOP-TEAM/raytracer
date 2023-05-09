@@ -7,14 +7,15 @@
 
 #include <iostream>
 #include <libconfig.h++>
+#include <map>
 #include "Api.hpp"
 #include "Triangle.hpp"
 
 static const std::string triangleName = "Triangle";
 
 namespace Plugin {
-    Triangle::Triangle(Component::Matrix3x3 &matrix, Component::Vector3f &position)
-        : APrimitive(triangleName, position), _matrix(matrix)
+    Triangle::Triangle(Component::Matrix3x3 &matrix, Component::Vector3f &position, Component::Vector3f &rotation)
+        : APrimitive(triangleName, position, rotation), _matrix(matrix)
     {
     }
 
@@ -63,14 +64,22 @@ namespace Plugin {
     }
 }
 
-Raytracer::IEntity *createEntity(const libconfig::Setting &setting)
+Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
 {
-    Component::Matrix3x3 matrix(setting["matrix"][0], setting["matrix"][1], setting["matrix"][2],
-                                setting["matrix"][3], setting["matrix"][4], setting["matrix"][5],
-                                setting["matrix"][6], setting["matrix"][7], setting["matrix"][8]);
+    Component::Matrix3x3 matrix(std::get<double>(setting.find("matrixA_pos_x")->second),
+                                std::get<double>(setting.find("matrixA_pos_y")->second),
+                                std::get<double>(setting.find("matrixA_pos_z")->second),
+                                std::get<double>(setting.find("matrixB_pos_x")->second),
+                                std::get<double>(setting.find("matrixB_pos_y")->second),
+                                std::get<double>(setting.find("matrixB_pos_z")->second),
+                                std::get<double>(setting.find("matrixC_pos_x")->second),
+                                std::get<double>(setting.find("matrixC_pos_y")->second),
+                                std::get<double>(setting.find("matrixC_pos_z")->second)
+                                );
+    Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
+    Component::Vector3f position(std::get<double>(setting.find("position_x")->second), std::get<double>(setting.find("position_y")->second), std::get<double>(setting.find("position_z")->second));
 
-    Component::Vector3f position(setting["position"][0], setting["position"][1], setting["position"][2]);
-    return new Plugin::Triangle(matrix, position);
+    return new Plugin::Triangle(matrix, position, rotation);
 }
 
 const char *getName()

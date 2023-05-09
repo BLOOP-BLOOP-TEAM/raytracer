@@ -13,7 +13,7 @@
 namespace Plugin {
     class Cylinder : public Raytracer::APrimitive {
         public:
-            Cylinder(const Component::Vector3f &position, double radius, double height,
+            Cylinder(const Component::Vector3f &position, const Component::Vector3f &rotation, double radius, double height,
                     Component::Vector3f &basePoint, Component::Vector3f &topPoint);
 
             ~Cylinder();
@@ -21,6 +21,8 @@ namespace Plugin {
             [[nodiscard]] double intersect(const Raytracer::Ray &ray) const override;
 
             [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hitPoint) const override;
+
+            double operator=(const std::string &s);
 
         protected:
         private:

@@ -14,7 +14,7 @@
 namespace Raytracer {
     class ALight : public ILight, public AEntity {
     public:
-        ALight(std::string type, const Component::Vector3f &position, const Component::Color &color, double intensity);
+        ALight(std::string type, const Component::Vector3f &position, const Component::Vector3f &rotation, const Component::Color &color, double intensity);
 
         ~ALight() override = default;
 

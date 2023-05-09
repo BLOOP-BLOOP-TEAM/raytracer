@@ -58,7 +58,7 @@ void Raytracer::PluginLoader::loadPlugin(const std::string& filepath)
 
         switch (type) {
             case LibType::ENTITY: {
-                auto createEntity = plugin->getFunction<Raytracer::IEntity*(*)(const libconfig::Setting&)>("createEntity");
+                auto createEntity = plugin->getFunction<Raytracer::IEntity*(*)(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>("createEntity");
                 auto destroyEntity = plugin->getFunction<void(*)(Raytracer::IEntity*)>("destroyEntity");
                 auto nameEntity = plugin->getFunction<const char*(*)()>("getName");
 
@@ -66,7 +66,7 @@ void Raytracer::PluginLoader::loadPlugin(const std::string& filepath)
                 break;
             }
             case LibType::MATERIAL: {
-                auto createMaterial = plugin->getFunction<Raytracer::IMaterial*(*)(const libconfig::Setting&)>("createMaterial");
+                auto createMaterial = plugin->getFunction<Raytracer::IMaterial*(*)(const std::map<std::string, std::variant<double, int, std::string, bool>>&)>("createMaterial");
                 auto destroyMaterial = plugin->getFunction<void(*)(Raytracer::IMaterial*)>("destroyMaterial");
                 auto nameMaterial = plugin->getFunction<const char*(*)()>("getName");
 
