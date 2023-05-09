@@ -12,7 +12,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
-#include "Skybox.hpp"
+#include "../../Plugins/SimpleSkybox/Skybox.hpp"
 #include "Color.hpp"
 #include "IEntity.hpp"
 #include "ALight.hpp"
@@ -28,7 +28,7 @@ namespace Raytracer {
 
         void writePPM(const std::string &filename) const;
 
-        void calculateImage(std::vector<IEntity *> &entities, Skybox &skybox);
+        void calculateImage(std::vector<IEntity *> &entities, Raytracer::ISkybox *skybox);
 
     private:
         int width;

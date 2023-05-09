@@ -90,28 +90,34 @@ Component::Vector3f Plugin::Cylinder::getNormal(const Component::Vector3f &hitPo
     return (hitPoint - getPosition()).normalize();
 }
 
-Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
-{
-    Component::Vector3f position(std::get<double>(setting.find("position_x")->second), std::get<double>(setting.find("position_y")->second), std::get<double>(setting.find("position_z")->second));
-    Component::Vector3f basePoint(std::get<double>(setting.find("basePoint_x")->second), std::get<double>(setting.find("basePoint_y")->second), std::get<double>(setting.find("basePoint_z")->second));
-    Component::Vector3f topPoint(std::get<double>(setting.find("topPoint_x")->second), std::get<double>(setting.find("topPoint_y")->second), std::get<double>(setting.find("topPoint_z")->second));
-    double height = std::get<double>(setting.find("height")->second);
-    double radius = std::get<double>(setting.find("radius")->second);
+extern "C" {
 
-    return new Plugin::Cylinder(position, radius, height, basePoint, topPoint);
-}
+    Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting) {
+        Component::Vector3f position(std::get<double>(setting.find("position_x")->second),
+                                     std::get<double>(setting.find("position_y")->second),
+                                     std::get<double>(setting.find("position_z")->second));
+        Component::Vector3f basePoint(std::get<double>(setting.find("basePoint_x")->second),
+                                      std::get<double>(setting.find("basePoint_y")->second),
+                                      std::get<double>(setting.find("basePoint_z")->second));
+        Component::Vector3f topPoint(std::get<double>(setting.find("topPoint_x")->second),
+                                     std::get<double>(setting.find("topPoint_y")->second),
+                                     std::get<double>(setting.find("topPoint_z")->second));
+        double height = std::get<double>(setting.find("height")->second);
+        double radius = std::get<double>(setting.find("radius")->second);
 
-const char *getName()
-{
-    return cylinderName.c_str();
-}
+        return new Plugin::Cylinder(position, radius, height, basePoint, topPoint);
+    }
 
-LibType getType() {
-    return LibType::ENTITY;
-}
+    const char *getName() {
+        return cylinderName.c_str();
+    }
 
-void destroyEntity(Raytracer::IEntity *entity)
-{
-    std::cout << "destroy cylinder" << std::endl;
-    delete entity;
+    LibType getType() {
+        return LibType::ENTITY;
+    }
+
+    void destroyEntity(Raytracer::IEntity *entity) {
+        std::cout << "destroy cylinder" << std::endl;
+        delete entity;
+    }
 }

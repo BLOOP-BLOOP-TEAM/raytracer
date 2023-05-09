@@ -31,28 +31,32 @@ Component::Vector3f Plugin::Plane::getNormal(const Component::Vector3f &hitPoint
     return _normal;
 }
 
-Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
-{
-    Component::Vector3f position(std::get<double>(setting.find("position_x")->second), std::get<double>(setting.find("position_y")->second), std::get<double>(setting.find("position_z")->second));
-    Component::Vector3f normal(std::get<double>(setting.find("normal_x")->second), std::get<double>(setting.find("normal_y")->second), std::get<double>(setting.find("normal_z")->second));
+extern "C" {
 
-    std::cout << std::endl << std::endl << std::endl << "Plane created" << std::endl;
-    std::cout << "position: " << position.x << " " << position.y << " " << position.z << std::endl;
-    std::cout << "normal: " << normal.x << " " << normal.y << " " << normal.z << std::endl << std::endl << std::endl << std::endl;
-    return new Plugin::Plane(position, normal);
-}
+    Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting) {
+        Component::Vector3f position(std::get<double>(setting.find("position_x")->second),
+                                     std::get<double>(setting.find("position_y")->second),
+                                     std::get<double>(setting.find("position_z")->second));
+        Component::Vector3f normal(std::get<double>(setting.find("normal_x")->second),
+                                   std::get<double>(setting.find("normal_y")->second),
+                                   std::get<double>(setting.find("normal_z")->second));
 
-void destroyEntity(Raytracer::IEntity *entity)
-{
-    delete entity;
-}
+        std::cout << std::endl << std::endl << std::endl << "Plane created" << std::endl;
+        std::cout << "position: " << position.x << " " << position.y << " " << position.z << std::endl;
+        std::cout << "normal: " << normal.x << " " << normal.y << " " << normal.z << std::endl << std::endl << std::endl
+                  << std::endl;
+        return new Plugin::Plane(position, normal);
+    }
 
-const char *getName()
-{
-    return PLANE.c_str();
-}
+    void destroyEntity(Raytracer::IEntity *entity) {
+        delete entity;
+    }
 
-LibType getType()
-{
-    return LibType::ENTITY;
+    const char *getName() {
+        return PLANE.c_str();
+    }
+
+    LibType getType() {
+        return LibType::ENTITY;
+    }
 }

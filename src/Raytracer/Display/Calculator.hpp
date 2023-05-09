@@ -14,7 +14,7 @@
 #include <memory>
 #include "Color.hpp"
 #include "IEntity.hpp"
-#include "Skybox.hpp"
+#include "../../Plugins/SimpleSkybox/Skybox.hpp"
 #include "ALight.hpp"
 #include "ACam.hpp"
 #include "AMaterial.hpp"
@@ -24,7 +24,7 @@
 namespace Raytracer {
     class Calculator {
     public:
-        Calculator(int width, int height, std::vector<IEntity *> &entities, std::vector<std::vector<Component::Color>>& pixels, Skybox &skybox);
+        Calculator(int width, int height, std::vector<IEntity *> &entities, std::vector<std::vector<Component::Color>>& pixels, Raytracer::ISkybox *skybox);
 
         ~Calculator() = default;
 
@@ -34,7 +34,7 @@ namespace Raytracer {
     private:
         int width;
         int height;
-        Skybox skybox;
+        Raytracer::ISkybox *skybox;
         std::vector<IEntity *> &entities;
         std::vector<std::vector<Component::Color>>& pixels;
         Component::Color ambientLightColor;

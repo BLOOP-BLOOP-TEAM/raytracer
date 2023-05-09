@@ -7,9 +7,9 @@ target_include_directories(plugin_plane PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(plugin_perspective_camera PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(plugin_point_light PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(plugin_simple_material PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
-target_include_directories(plugin_reflect_material PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(plugin_plane_material PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(plugin_directional_light PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
+target_include_directories(plugin_simple_skybox PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 
 target_sources(raytracer PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/ACam.cpp"
@@ -20,6 +20,7 @@ target_sources(raytracer PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/Scene.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/ScenesManager.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/ASkybox.cpp"
         )
 
 target_sources(plugin_plane PRIVATE
@@ -39,10 +40,6 @@ target_sources(plugin_directional_light PRIVATE
         )
 
 target_sources(plugin_simple_material PRIVATE
-        "${CMAKE_CURRENT_SOURCE_DIR}/AMaterial.cpp"
-        )
-
-target_sources(plugin_reflect_material PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/AMaterial.cpp"
         )
 
@@ -66,5 +63,10 @@ target_sources(plugin_cylinder PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/AMaterial.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/APrimitive.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/AEntity.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/AEntity.cpp"
+        )
+
+target_sources(plugin_simple_skybox PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/ASkybox.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/AEntity.cpp"
         )
