@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 target_include_directories(raytracer PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(plugin_sphere PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(plugin_cylinder PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
+target_include_directories(plugin_triangle PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(plugin_plane PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(plugin_perspective_camera PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(plugin_point_light PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
@@ -62,6 +63,12 @@ target_sources(plugin_cylinder PRIVATE
 target_sources(plugin_simple_skybox PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/Vector3f.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp"
+        )
+
+target_sources(plugin_triangle PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/Vector3f.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Matrix.cpp"
         )
 
 add_subdirectory(Core)

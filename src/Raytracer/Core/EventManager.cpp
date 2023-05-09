@@ -88,15 +88,21 @@ bool Raytracer::EventManager::isCtrlActive() const
 
 void Raytracer::EventManager::update()
 {
+    bool toQuit = false;
+
     while (_window.pollEvent(_event)) {
-        if (_event.type == sf::Event::Closed) {
-            _events.push_back("Quit");
-            _window.close();
-        }
+        if (_event.type == sf::Event::Closed)
+            toQuit = true;
         if (_event.type == sf::Event::KeyPressed && KeyboardKeys.find(_event.key.code) != KeyboardKeys.end()) {
             _events.push_back(KeyboardKeys.at(_event.key.code));
             if (KeyboardKeys.at(_event.key.code) == "KEY_CTRL_PRESSED")
                 _isCtrlActive = !_isCtrlActive;
+            if (KeyboardKeys.at(_event.key.code) == "KEY_ESC_PRESSED")
+                toQuit = true;
+        }
+        if (toQuit) {
+            _events.push_back("Quit");
+            _window.close();
         }
     }
 }
