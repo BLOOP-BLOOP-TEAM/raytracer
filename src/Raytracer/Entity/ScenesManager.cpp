@@ -123,10 +123,11 @@ void Raytracer::ScenesManager::update(Raytracer::EventManager &eventManager)
                         eventManager.isEventTriggered(keyE) ? keyE :
                         "";
 
+    std::cout << _scenes.size() << std::endl;
     if (eventManager.isEventTriggered(keyLeft))
-        _sceneActual - 1 >= 0 ? setSceneActual(_sceneActual - 1) : setSceneActual(_scenes.size());
+        _sceneActual > 0 ? setSceneActual(_sceneActual - 1) : setSceneActual(_scenes.size() - 1);
     if (eventManager.isEventTriggered(keyRight))
-        _sceneActual + 1 > _scenes.size() ? setSceneActual(0) : setSceneActual(_sceneActual + 1);
+        _sceneActual == _scenes.size() - 1 ? setSceneActual(0) : setSceneActual(_sceneActual + 1);
     if (!key.empty())
         moveCamera(key);
     if (eventManager.isEventTriggered(keyEnter) && getCam().isEdited()) {
