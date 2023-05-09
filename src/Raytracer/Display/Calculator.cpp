@@ -246,7 +246,7 @@ bool Raytracer::Calculator::checkShadows(const Component::Vector3f &hitPoint, co
 Component::Color Raytracer::Calculator::getAverageColor(int x, int y, const Raytracer::ACam *camera,
                                                         const std::vector<IEntity *> &entities,
                                                         const std::vector<Raytracer::ALight *> &lights,
-                                                        int subPixelsPerAxis = 3)
+                                                        int subPixelsPerAxis = 1)
 {
     int numSubPixels = subPixelsPerAxis * subPixelsPerAxis;
     Component::Color pixelColorSum(0, 0, 0);
@@ -268,6 +268,9 @@ Component::Color Raytracer::Calculator::getAverageColor(int x, int y, const Rayt
 }
 
 
+#include <thread>
+#include <vector>
+
 void Raytracer::Calculator::calculatePixels()
 {
     try {
@@ -283,15 +286,33 @@ void Raytracer::Calculator::calculatePixels()
             }
         }
         std::cout << "Number of entities: " << entities.size() << std::endl;
-        for (int y = 0; y < height; ++y) {
-            for (int x = 0; x < width; ++x) {
-                pixels[y][x] = getAverageColor(x, y, camera, entities, lights);
-            }
+
+        int num_threads = std::thread::hardware_concurrency();
+        std::vector<std::thread> threads(num_threads);
+        int chunk_size = height / num_threads;
+
+        for (int i = 0; i < num_threads; ++i) {
+            threads[i] = std::thread([this, i, chunk_size, num_threads, camera, &lights]() {
+                int start = i * chunk_size;
+                int end = (i == num_threads - 1) ? height : start + chunk_size;
+
+                for (int y = start; y < end; ++y) {
+                    for (int x = 0; x < width; ++x) {
+                        pixels[y][x] = getAverageColor(x, y, camera, entities, lights);
+                    }
+                }
+            });
         }
+
+        for (auto &t : threads) {
+            t.join();
+        }
+
     } catch (const std::runtime_error &e) {
         std::cerr << "Error: " << e.what() << std::endl;
     }
 }
+
 
 Raytracer::Calculator::Calculator(int width, int height, std::vector<IEntity *> &entities,
                                   std::vector<std::vector<Component::Color>> &pixels, Skybox &skybox) : width(width), height(height), entities(entities), pixels(pixels), ambientLightColor(1.0f, 1.0f, 1.0f),
