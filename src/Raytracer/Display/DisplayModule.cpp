@@ -156,11 +156,23 @@ namespace Raytracer {
         }
     }
 
+    void DisplayModule::updateValues() {
+        updateCameraValues();
+        updateSceneNameValue();
+    }
+
+    void DisplayModule::updateSceneNameValue() {
+        for (auto &text :_allTexts) {
+            if (text.id == ID_SCENE_VALUE)
+                text.text = GetSceneName(_scenesManager.getSceneActual().getFileName());
+        }
+    }
+
     void DisplayModule::update(const Image &image) {
         _window.clear();
         displayPixels(image);
         _window.draw(_pixels);
-        updateCameraValues();
+        updateValues();
         displayGuy();
         _window.display();
     }
