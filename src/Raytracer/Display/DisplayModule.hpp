@@ -36,7 +36,11 @@ namespace Raytracer {
 
             void updateText(sf::Text &sfText, const Component::Text &textComponent);
 
+            void updateValues();
+
             void updateCameraValues();
+
+            void updateSceneNameValue();
 
             sf::RenderWindow &getWindow();
 
