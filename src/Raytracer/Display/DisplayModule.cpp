@@ -20,26 +20,19 @@ namespace Raytracer {
     DisplayModule::DisplayModule(unsigned int width, unsigned int height, const std::string& title, ScenesManager &scenesManager)
             : _width(width), _height(height), _window(sf::VideoMode(width, height), title), _scenesManager(scenesManager), _pixels(sf::Points, width * height) {}
 
-    DisplayModule::~DisplayModule() {}
-
-    std::string DisplayModule::PosVector3fToString(Component::Vector3f vec) {
-        std::stringstream ss;
-
-        ss << "(" << vec.z << ", " << vec.y << ", " << vec.x << ")";
-        return ss.str();
-    }
+    DisplayModule::~DisplayModule() = default;
 
     std::string DisplayModule::Vector3fToString(Component::Vector3f vec) {
         std::stringstream ss;
 
-        ss << "(" << vec.y << ", " << vec.x << ", " << vec.z << ")";
+        ss << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
         return ss.str();
     }
 
     std::string DisplayModule::getCameraPos() {
         for (const auto &entity: _scenesManager.getSceneActual().getEntities()) {
             if (entity->getType() == CompType::CAM)
-                return PosVector3fToString(entity->getPosition());
+                return Vector3fToString(entity->getPosition());
         }
         return UNDEFINED;
     }
