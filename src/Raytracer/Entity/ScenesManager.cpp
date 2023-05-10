@@ -40,16 +40,11 @@ void Raytracer::ScenesManager::removeScene(const std::string &path)
     unsigned int scenesSize = _scenes.size();
 
     for (unsigned int i = 0; i < scenesSize; i++) {
-        std::cout << "finito" << std::endl;
         if (_scenes[i]->getFileName() == path) {
-            std::cout << _scenes.size() << std::endl;
-            std::cout << i << std::endl;
             _scenes.erase(_scenes.begin() + i);
-            std::cout << "ez" << std::endl;
             return;
         }
     }
-    std::cout << "lol" << std::endl;
     throw Raytracer::RaytracerException("Scene not found");
 }
 

@@ -105,12 +105,8 @@ void Raytracer::Observer::checkNewFiles() {
             continue;
         if (isFileExist(path))
             continue;
-        else {
+        else
             _sceneManager.addScene(ConfigLoader::loadConfigFile(FOLDER_NAME + path));
-            // subscribe(path);
-            // _sceneManager.
-            // std::cout << "NOUVEAU FILE : " << path << std::endl;
-        }
     }
 }
 
