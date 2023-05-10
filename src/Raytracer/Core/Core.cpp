@@ -34,7 +34,7 @@ void Raytracer::Core::run()
     while (!_eventManager->isEventTriggered("Quit")) {
         _eventManager->clear();
         _eventManager->update();
-        _scenesManager->update(*_eventManager);
+        _scenesManager->update(*_eventManager, *_observer);
         _observer->checkEditedFiles();
         _displayModule->update(_scenesManager->getSceneActual().getImage());
     }

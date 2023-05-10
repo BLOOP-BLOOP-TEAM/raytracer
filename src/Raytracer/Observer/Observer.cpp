@@ -9,6 +9,8 @@
 #include "Observer.hpp"
 
 static const std::string FOLDER_NAME = "Scenes";
+static const std::string keyLeft = "KEY_LEFT_PRESSED";
+static const std::string keyRight = "KEY_RIGHT_PRESSED";
 
 Raytracer::Observer::Observer(ScenesManager &sceneManager) : _sceneManager(sceneManager)
 {
@@ -80,6 +82,8 @@ void Raytracer::Observer::checkEditedFiles() {
     std::vector<bool> filesStatus;
     int nbrFiles = _allSubScenes.size();
     int index = 0;
+
+    std::cout << "NOMBRE DE FICHIER : " << nbrFiles << std::endl;
 
     for (const auto &path : _allSubScenes) {
         const std::time_t timeStamp = getTimeStamp(path);

@@ -11,7 +11,11 @@
 #include <string>
 #include <memory>
 #include "Scene.hpp"
-#include "EventManager.hpp"
+// #include "Observer.hpp"
+
+namespace Raytracer {
+    class Observer;
+}
 
 namespace Raytracer {
     class ScenesManager {
@@ -29,9 +33,11 @@ namespace Raytracer {
 
         [[nodiscard]] Scene &getSceneActual() const;
 
+        [[nodiscard]] int getNumberScenes() const;
+
         void setSceneActual(int scene);
 
-        void update(Raytracer::EventManager &eventManager);
+        void update(Raytracer::EventManager &eventManager, Raytracer::Observer &observer);
 
         [[nodiscard]] ACam &getCam() const;
 
