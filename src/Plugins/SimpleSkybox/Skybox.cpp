@@ -38,24 +38,19 @@ Component::Color Raytracer::Skybox::getColorFromRay(const Component::Vector3f &d
 {
     if (!ASkybox::isLoaded())
         return {0, 0, 0};
-    // Convertir le rayon en coordonnées sphériques
     float theta = std::acos(direction.y);
     float phi = std::atan2(direction.z, direction.x) + M_PI;
 
-    // Convertir les coordonnées sphériques en coordonnées UV
     float u = phi / (2 * M_PI);
     float v = theta / M_PI;
 
-    // Obtenir le pixel de l'image de la skybox
     unsigned char *pixel = getPixel(u, v);
 
-    // Utilisez les valeurs RGBA du pixel pour déterminer la couleur de la skybox
     unsigned char r = pixel[0];
     unsigned char g = pixel[1];
     unsigned char b = pixel[2];
     unsigned char a = pixel[3];
 
-    // Convertir les valeurs de pixel en couleur
     Component::Color finalColor(r, g, b);
 
     return finalColor;

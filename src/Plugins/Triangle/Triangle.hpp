@@ -14,7 +14,7 @@ namespace Plugin {
     class Triangle : public Raytracer::APrimitive {
         public:
             Triangle(Component::Matrix3x3 &matrix, Component::Vector3f &position, Component::Vector3f &rotation);
-            ~Triangle() = default;
+            ~Triangle() override = default;
 
             [[nodiscard]] double intersect(const Raytracer::Ray &ray) const override;
             

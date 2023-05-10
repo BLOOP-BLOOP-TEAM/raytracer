@@ -39,13 +39,10 @@ Component::Color Plugin::PlaneMaterial::computeColor(const Component::Vector3f &
 
     double cosTheta = std::max(0.0, normal.dot(lightDirection));
 
-    // Prendre en compte l'intensité de la lumière dans la couleur ambiante
     Component::Color ambientColor = baseColor * ambientLightIntensity * lightIntensity;
 
-    // Prendre en compte l'intensité de la lumière et le diffuseFactor dans la couleur diffuse
     Component::Color color = baseColor * (_diffuseFactor * cosTheta * lightIntensity);
 
-    // Ajouter la couleur ambiante à la couleur diffuse
     color = color + ambientColor;
 
     return color;

@@ -46,7 +46,7 @@ namespace Plugin {
         if (v < 0.0 || u + v > 1.0) {
             return false;
         }
-        
+
         double t = f * edge2.dot(q);
 
         if (t > epsilon) {
