@@ -17,6 +17,7 @@
 #include "Scene.hpp"
 #include "FactoryEntity.hpp"
 #include "FactoryMaterial.hpp"
+#include "FactorySkybox.hpp"
 
 namespace Raytracer {
     class ConfigLoader {
@@ -37,5 +38,7 @@ namespace Raytracer {
             static Raytracer::IMaterial *getMaterialFromName(const Raytracer::Scene &scene, const std::string &name);
             static std::string extractFileName(const std::string &path);
             static std::map<std::string, std::variant<double, int, std::string, bool>> transformSettingToDataMap(const libconfig::Setting &setting);
+
+            static void loadSkybox(const libconfig::Setting &root, Scene &scene);
     };
 }; // namespace Raytracer

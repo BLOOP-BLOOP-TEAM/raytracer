@@ -6,7 +6,7 @@
 */
 
 #include <iostream>
-#include "../../src/Raytracer/RaytracerException.hpp"
+#include "RaytracerException.hpp"
 
 static void throw_test(void)
 {

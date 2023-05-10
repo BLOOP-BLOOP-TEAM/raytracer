@@ -15,6 +15,7 @@
 #include "IEntity.hpp"
 #include "Plugin.hpp"
 #include "FactoryEntity.hpp"
+#include "FactorySkybox.hpp"
 #include "FactoryMaterial.hpp"
 
 namespace Raytracer {
@@ -28,11 +29,9 @@ namespace Raytracer {
         static PluginLoader& getInstance();
 
     private:
-        std::vector<std::string> findPluginFiles(const std::string& directory);
+        static std::vector<std::string> findPluginFiles(const std::string& directory);
         void loadPlugin(const std::string& filepath);
 
-        FactoryEntity& _factoryEntity;
-        FactoryMaterial& _factoryMaterial;
         std::vector<std::unique_ptr<Plugin>> _loadedPlugins;
     };
 }

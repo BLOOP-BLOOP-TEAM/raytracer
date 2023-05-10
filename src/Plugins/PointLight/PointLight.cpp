@@ -22,32 +22,30 @@ bool Plugin::PointLight::isIlluminating(const Component::Vector3f &origin, const
     return true;
 }
 
-Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
-{
-    Component::Vector3f position(std::get<double>(setting.find("position_x")->second), std::get<double>(setting.find("position_y")->second), std::get<double>(setting.find("position_z")->second));
-    Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
-    Component::Color color(std::get<double>(setting.find("color_r")->second), std::get<double>(setting.find("color_g")->second), std::get<double>(setting.find("color_b")->second));
-    double intensity = std::get<double>(setting.find("intensity")->second);
+extern "C" {
 
-    std::cout << std::endl << std::endl << std::endl << "PointLight created" << std::endl;
-    std::cout << "position: " << position.x << " " << position.y << " " << position.z << std::endl;
-    std::cout << "color: " << color.r << " " << color.g << " " << color.b << std::endl;
-    std::cout << "intensity: " << intensity << std::endl << std::endl << std::endl << std::endl;
-    return new Plugin::PointLight(position, rotation, color, intensity);
-}
+    Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting) {
+        Component::Vector3f position(std::get<double>(setting.find("position_x")->second),
+                                     std::get<double>(setting.find("position_y")->second),
+                                     std::get<double>(setting.find("position_z")->second));
+        Component::Color color(std::get<double>(setting.find("color_r")->second),
+                               std::get<double>(setting.find("color_g")->second),
+                               std::get<double>(setting.find("color_b")->second));
+        double intensity = std::get<double>(setting.find("intensity")->second);
+        Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
+        return new Plugin::PointLight(position, rotation, color, intensity);
+    }
 
-const char *getName()
-{
-    return POINTLIGHT.c_str();
-}
+    const char *getName() {
+        return POINTLIGHT.c_str();
+    }
 
-LibType getType()
-{
-    return LibType::ENTITY;
-}
+    LibType getType() {
+        return LibType::ENTITY;
+    }
 
-void destroyEntity(Raytracer::IEntity *entity)
-{
-    std::cout << "destroying light" << std::endl;
-    delete entity;
+    void destroyEntity(Raytracer::IEntity *entity) {
+        std::cout << "destroying light" << std::endl;
+        delete entity;
+    }
 }

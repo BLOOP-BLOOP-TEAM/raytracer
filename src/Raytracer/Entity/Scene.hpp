@@ -12,6 +12,7 @@
 #include <memory>
 #include "IEntity.hpp"
 #include "Image.hpp"
+#include "Skybox.hpp"
 #include "EventManager.hpp"
 
 namespace Raytracer {
@@ -21,11 +22,15 @@ namespace Raytracer {
 
         ~Scene();
 
-        Component::Vector3f getResolution() const;
+        [[nodiscard]] Component::Vector3f getResolution() const;
 
         void addEntity(IEntity *entity);
 
         void addMaterial(IMaterial *material);
+
+        void addSkybox(ISkybox *skybox);
+
+        [[nodiscard]] ISkybox *getSkybox();
 
         [[nodiscard]] IEntity &getEntity(int index) const;
 
@@ -51,6 +56,7 @@ namespace Raytracer {
     private:
         std::vector<IEntity *> _entities;
         std::vector<IMaterial *> _materials;
+        Skybox *_skybox;
         std::unique_ptr<Image> _image;
         std::string _fileName;
         std::string _name;
