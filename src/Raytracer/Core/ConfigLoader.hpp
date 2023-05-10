@@ -29,16 +29,15 @@ namespace Raytracer {
             static std::unique_ptr<Raytracer::Scene> loadConfigFile(const std::string &path);
         protected:
         private:
-            static void loadPluginType(const std::string &type, const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
-            static void loadPrimitives(const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
+            static void loadPluginType(const std::string &type, const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::pair<std::string, IEntity *>, std::pair<std::string, IMaterial *>> &materialsToApply);
+            static void loadPrimitives(const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::pair<std::string, IEntity *>, std::pair<std::string, IMaterial *>> &materialsToApply);
             static void loadLights(const libconfig::Setting &root, Raytracer::Scene &scene);
-            static void loadMaterials(const libconfig::Setting &root, Raytracer::Scene &scene);
+            static void loadMaterials(const libconfig::Setting &root, Raytracer::Scene &scene, std::map<std::pair<std::string, IEntity *>, std::pair<std::string, IMaterial *>> &materialsToApply);
             static bool isAGoodConfigFile(libconfig::Config &cfg, const std::string &path);
-            static void applyMaterialsToPrimitives(Raytracer::Scene &scene, std::map<std::string, std::string> &materialsToApply);
-            static Raytracer::IMaterial *getMaterialFromName(const Raytracer::Scene &scene, const std::string &name);
+            static void applyMaterialsToPrimitives(std::map<std::pair<std::string, IEntity *>, std::pair<std::string, IMaterial *>> &materialsToApply);
             static std::string extractFileName(const std::string &path);
             static std::map<std::string, std::variant<double, int, std::string, bool>> transformSettingToDataMap(const libconfig::Setting &setting);
-
+            static void addMaterialInMap(std::map<std::pair<std::string, IEntity *>, std::pair<std::string, IMaterial *>> &materialsToApply, const std::string &name, IMaterial *material);
             static void loadSkybox(const libconfig::Setting &root, Scene &scene);
     };
-}; // namespace Raytracer
+};
