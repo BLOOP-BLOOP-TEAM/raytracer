@@ -48,9 +48,7 @@ namespace Raytracer {
 
             std::string getCameraRotation();
 
-            std::string PosVector3fToString(Component::Vector3f vec);
-
-            std::string Vector3fToString(Component::Vector3f vec);
+            static std::string Vector3fToString(Component::Vector3f vec);
 
             [[nodiscard]] std::string GetSceneName(const std::string &filename);
 

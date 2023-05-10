@@ -5,6 +5,8 @@
 ** Calculator
 */
 
+#include <thread>
+#include <vector>
 #include "CompType.hpp"
 #include "APrimitive.hpp"
 #include "Calculator.hpp"
@@ -12,6 +14,7 @@
 #include "ACam.hpp"
 #include "AMaterial.hpp"
 #include "Matrix.hpp"
+#include "ISkybox.hpp"
 
 Raytracer::ACam *Raytracer::Calculator::findCam(const std::vector<IEntity *> &entities)
 {
@@ -37,30 +40,23 @@ std::vector<Raytracer::ALight *> Raytracer::Calculator::findLights(const std::ve
     return lights;
 }
 
-Component::Vector3f Raytracer::Calculator::getRayDirection(int x, int y, const Raytracer::ACam *cam)
+Component::Vector3f Raytracer::Calculator::getRayDirection(int x, int y, const Raytracer::ACam *cam) const
 {
-    // Calculer les coordonnées normalisées de l'écran
     double ndcX = (2.0f * x) / static_cast<double>(width) - 1.0f;
     double ndcY = 1.0f - (2.0f * y) / static_cast<double>(height);
 
-    // Calculer l'aspect ratio de l'écran
     double aRatio = static_cast<double>(width) / static_cast<double>(height);
 
-    // Calculer la distance focale en fonction du champ de vision (fov) et de l'aspect ratio
     double fov = cam->getFieldOfView();
     double focalLengthX = 1.0f / tanf(fov * 0.5f * (M_PI / 180.0f));
     double focalLengthY = focalLengthX * aRatio;
 
-    // Créer un vecteur direction dans l'espace de la caméra
     Component::Vector3f directionInCameraSpace(ndcX / (focalLengthX + 1e-6), ndcY / ((focalLengthY + 1e-6)), -1.0f);
 
-    // Convertir les angles d'Euler de la rotation de la caméra en une matrice de rotation
     Component::Matrix3x3 rotationMatrix = Component::Matrix3x3::fromEulerAngles(cam->getRotation());
 
-    // Appliquer la rotation de la caméra au vecteur direction
     Component::Vector3f direction = rotationMatrix * directionInCameraSpace;
 
-    // Normaliser le vecteur direction
     direction = direction.normalize();
 
     return direction;
@@ -74,8 +70,7 @@ Component::Vector3f Raytracer::Calculator::getRefractionDirection(const Componen
     double k = 1.0 - eta * eta * (1.0 - cosIncident * cosIncident);
 
     if (k < 0) {
-        // TIR (réflexion totale interne)
-        return Component::Vector3f(0, 0, 0);
+        return {0, 0, 0};
     } else {
         return incident * eta + normal * (eta * cosIncident - sqrt(k));
     }
@@ -91,7 +86,6 @@ Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origi
     APrimitive *primitive = static_cast<APrimitive *>(&intersectedObject);
     Component::Color finalColor = Component::Color(0, 0, 0);
 
-    // S'il n'y a pas d'intersection, retourner une couleur d'arrière-plan
     if (minT == std::numeric_limits<double>::max()) {
         if (skybox == nullptr)
             return finalColor;
@@ -102,13 +96,13 @@ Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origi
     Component::Vector3f hitPoint = origin + normalizedDirection * minT;
     Component::Vector3f hitNormal = primitive->getNormal(hitPoint);
     IMaterial &object_material = primitive->getMaterial();
-    AMaterial &material = static_cast<Raytracer::AMaterial &>(object_material);
+    auto &material = static_cast<Raytracer::AMaterial &>(object_material);
 
     Component::Color localColor = calculateLighting(hitPoint, hitNormal, material, entities, lights);
     Component::Color reflectedColor(0, 0, 0);
     Component::Color refractedColor(0, 0, 0);
 
-    const double epsilon = 1e-6;  // Définir une petite constante pour décaler l'origine du rayon réfléchi/réfracté
+    const double epsilon = 1e-6;
 
     if (recursionDepth > 0) {
         if (material.getReflectivity() > 0) {
@@ -126,7 +120,6 @@ Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origi
         finalColor = localColor;
     }
 
-    // Clamp color values between 0 and 255
     finalColor.clamp();
     Component::Color integerColor = finalColor.toInteger();
 
@@ -146,10 +139,8 @@ Component::Color Raytracer::Calculator::calculateLighting(const Component::Vecto
 
         double lightIntensity = light.getIntensity();
 
-        // Vérifier les ombres
         bool inShadow = checkShadows(hitPoint, hitNormal, lightDirection, entities, light);
 
-        // Calculer la couleur diffuse et spéculaire
         if (!inShadow) {
             if (light.isIlluminating(hitPoint, lightDirection)) {
                 double distance = (light.getPosition() - hitPoint).length();
@@ -159,11 +150,7 @@ Component::Color Raytracer::Calculator::calculateLighting(const Component::Vecto
                 Component::Color diffuseColor = computeDiffuseColor(hitPoint, hitNormal, lightDirection, material, lightIntensity / attenuation);
                 Component::Color specularColor = computeSpecularColor(hitPoint, hitNormal, lightDirection, material, light, lightIntensity / attenuation);
 
-//                diffuseColor.clamp();
-//                specularColor.clamp();
-                // Ajouter la couleur diffuse et spéculaire
                 finalColor = finalColor + diffuseColor + specularColor;
-//                finalColor.clamp();
             }
         }
     }
@@ -261,16 +248,11 @@ Component::Color Raytracer::Calculator::getAverageColor(int x, int y, const Rayt
         }
     }
 
-    // Calculer la couleur moyenne des sous-pixels
     Component::Color pixelColor(static_cast<int>(pixelColorSum.r / numSubPixels),
                                 static_cast<int>(pixelColorSum.g / numSubPixels),
                                 static_cast<int>(pixelColorSum.b / numSubPixels));
     return pixelColor;
 }
-
-
-#include <thread>
-#include <vector>
 
 void Raytracer::Calculator::calculatePixels()
 {
