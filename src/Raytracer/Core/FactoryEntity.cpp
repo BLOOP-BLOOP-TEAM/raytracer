@@ -40,7 +40,7 @@ void Raytracer::FactoryEntity::destroyEntity(Raytracer::IEntity *entity)
         APrimitive *primitive = static_cast<APrimitive *>(ent);
         _entities[primitive->getTypePrimitive()].second(entity);
     } else {
-        //throw
+        throw Raytracer::RaytracerException("Error: Entity not found");
     }
 }
 
