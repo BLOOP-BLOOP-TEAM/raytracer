@@ -91,7 +91,6 @@ std::unique_ptr<std::vector<std::unique_ptr<Raytracer::Scene>>> Raytracer::Confi
     std::unique_ptr<Raytracer::Scene> scene;
 
     for (const auto &entry : std::filesystem::directory_iterator(FOLDER_NAME)) {
-        // check if filename end with .cgf
         if (entry.path().filename().extension() != ".cfg")
             continue;
         scene = loadConfigFile(entry.path());
@@ -167,7 +166,6 @@ std::unique_ptr<Raytracer::Scene> Raytracer::ConfigLoader::loadConfigFile(const 
         return nullptr;
     const libconfig::Setting &root = cfg.getRoot();
     scene = std::make_unique<Raytracer::Scene>(extractFileName(path), path);
-    // Output a list of all books in the inventory.
     try {
         const libconfig::Setting &elements = root;
         int count = elements.getLength();

@@ -41,4 +41,4 @@ namespace Raytracer {
 
             static void loadSkybox(const libconfig::Setting &root, Scene &scene);
     };
-}; // namespace Raytracer
+};

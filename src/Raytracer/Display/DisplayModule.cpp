@@ -25,7 +25,7 @@ namespace Raytracer {
     std::string DisplayModule::PosVector3fToString(Component::Vector3f vec) {
         std::stringstream ss;
 
-        ss << "(" << vec.z << ", " << vec.y << ", " << vec.x << ")"; // technique de la loutre
+        ss << "(" << vec.z << ", " << vec.y << ", " << vec.x << ")";
         return ss.str();
     }
 
@@ -130,7 +130,6 @@ namespace Raytracer {
     }
 
     void DisplayModule::displayPixels(const Image &image) {
-        // Mettre à jour les pixels
         for (unsigned int y = 0; y < _height; ++y) {
             for (unsigned int x = 0; x < _width; ++x) {
                 Component::Color color = image.getPixel(x, y);
@@ -142,7 +141,7 @@ namespace Raytracer {
     }
 
     void DisplayModule::displayGuy() {
-        for (const auto &text : _allTexts) { // gestion des textes
+        for (const auto &text : _allTexts) {
             auto it = _allSfTexts.find(text.id);
             if (it == _allSfTexts.end())
                 setText(text);
@@ -165,7 +164,6 @@ namespace Raytracer {
     }
 
     void DisplayModule::update(const Image &image) {
-        // Dessiner et afficher les pixels
         _window.clear();
         displayPixels(image);
         _window.draw(_pixels);
