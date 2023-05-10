@@ -12,6 +12,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include "Skybox.hpp"
 #include "Color.hpp"
 #include "IEntity.hpp"
 #include "ALight.hpp"
@@ -53,8 +54,10 @@ namespace Raytracer {
              * @brief Calculates the color of each pixel in the image
              * 
              * @param entities A vector of IEntity objects used to calculate the color of each pixel
+             * @param skybox A Skybox entity used to calculate the skybox of the image
              */
-            void calculateImage(std::vector<IEntity *> &entities);
+            void calculateImage(std::vector<IEntity *> &entities, Raytracer::ISkybox *skybox);
+
         private:
             int width;
             int height;

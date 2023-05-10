@@ -49,30 +49,30 @@ Component::Vector3f Plugin::Sphere::getNormal(const Component::Vector3f &hitPoin
     return normal.normalize();
 }
 
-Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
-{
-    Component::Vector3f position(std::get<double>(setting.find("position_x")->second), std::get<double>(setting.find("position_y")->second), std::get<double>(setting.find("position_z")->second));
-    Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
-    double radius = std::get<double>(setting.find("radius")->second);
+extern "C" {
 
-    std::cout << std::endl << std::endl << std::endl << "Sphere created" << std::endl;
-    std::cout << "position: " << position.x << " " << position.y << " " << position.z << std::endl;
-    std::cout << "radius: " << radius << std::endl << std::endl << std::endl << std::endl;
-    return new Plugin::Sphere(position, rotation, radius);
-}
+    Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting) {
+        Component::Vector3f position(std::get<double>(setting.find("position_x")->second),
+                                     std::get<double>(setting.find("position_y")->second),
+                                     std::get<double>(setting.find("position_z")->second));
+        double radius = std::get<double>(setting.find("radius")->second);
+        Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
+        std::cout << std::endl << std::endl << std::endl << "Sphere created" << std::endl;
+        std::cout << "position: " << position.x << " " << position.y << " " << position.z << std::endl;
+        std::cout << "radius: " << radius << std::endl << std::endl << std::endl << std::endl;
+        return new Plugin::Sphere(position, rotation, radius);
+    }
 
-const char *getName()
-{
-    return SPHERE.c_str();
-}
+    const char *getName() {
+        return SPHERE.c_str();
+    }
 
-LibType getType()
-{
-    return LibType::ENTITY;
-}
+    LibType getType() {
+        return LibType::ENTITY;
+    }
 
-void destroyEntity(Raytracer::IEntity *entity)
-{
-    std::cout << "destroy sphere" << std::endl;
-    delete entity;
+    void destroyEntity(Raytracer::IEntity *entity) {
+        std::cout << "destroy sphere" << std::endl;
+        delete entity;
+    }
 }

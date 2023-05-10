@@ -19,11 +19,7 @@ void Raytracer::AEntity::translate(const Component::Vector3f &newPos)
 
 void Raytracer::AEntity::rotate(const Component::Vector3f &newRot)
 {
-    std::cout << "-----------" << std::endl;
-    std::cout << _rotation.x << " " << _rotation.y << " " << _rotation.z << " " << std::endl;
     _rotation = _rotation + newRot;
-    std::cout << _rotation.x << " " << _rotation.y << " " << _rotation.z << " " << std::endl;
-    std::cout << "-----------" << std::endl;
 }
 
 void Raytracer::AEntity::scale(const Component::Vector3f &newScale)
@@ -33,12 +29,12 @@ void Raytracer::AEntity::scale(const Component::Vector3f &newScale)
 
 Component::Vector3f Raytracer::AEntity::getPosition() const
 {
-    return (_position);
+    return _position;
 }
 
 Component::Vector3f Raytracer::AEntity::getRotation() const
 {
-    return (_rotation);
+    return _rotation;
 }
 
 Raytracer::CompType Raytracer::AEntity::getType() const

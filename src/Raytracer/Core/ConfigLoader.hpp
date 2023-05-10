@@ -17,6 +17,7 @@
 #include "Scene.hpp"
 #include "FactoryEntity.hpp"
 #include "FactoryMaterial.hpp"
+#include "FactorySkybox.hpp"
 
 namespace Raytracer {
     /**
@@ -113,5 +114,7 @@ namespace Raytracer {
              * @param setting The libonfig parsed data
              */
             static std::map<std::string, std::variant<double, int, std::string, bool>> transformSettingToDataMap(const libconfig::Setting &setting);
+
+            static void loadSkybox(const libconfig::Setting &root, Scene &scene);
     };
 };

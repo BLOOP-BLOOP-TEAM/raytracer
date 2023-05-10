@@ -16,6 +16,7 @@
 #include "ConfigLoader.hpp"
 
 static const std::string FOLDER_NAME = "Scenes";
+static const std::string SKYBOX = "skybox";
 static const std::string PRIMITIVES = "primitives";
 static const std::string CAMERA = "camera";
 static const std::string LIGHTS = "lights";
@@ -108,6 +109,8 @@ void Raytracer::ConfigLoader::loadPluginType(const std::string &type, const libc
         loadMaterials(root, scene);
     else if (type == LIGHTS)
         loadLights(root, scene);
+    else if (type == SKYBOX)
+        loadSkybox(root, scene);
     else if (std::find(elementTypes.begin(), elementTypes.end(), type) != elementTypes.end()) {
         std::cout << "ConfigLoader: loading " << type << std::endl;
         scene.addEntity(Raytracer::FactoryEntity::getInstance().createEntity(type, transformSettingToDataMap(root)));
@@ -254,5 +257,26 @@ void Raytracer::ConfigLoader::loadMaterials(const libconfig::Setting &root, Rayt
         }
     } catch (const libconfig::SettingException &ex) {
         std::cerr << "configLoader: loadMaterials: " << ex.what() << " : " << ex.getPath() << std::endl;
+    }
+}
+
+void Raytracer::ConfigLoader::loadSkybox(const libconfig::Setting &root, Raytracer::Scene &scene)
+{
+    try {
+        const libconfig::Setting &skybox = root;
+
+        std::cout << "\tSkybox found : " << skybox.getName() << std::endl;
+        for (const auto &skyboxElement : skybox) {
+            std::cout << "ConfigLoader: loading skybox " << skyboxElement.getName() << std::endl;
+            for (const auto &element : skyboxElement) {
+                std::cout << "ConfigLoader: loading skybox " << skybox.getName()
+                          << std::endl;
+                scene.addSkybox(
+                Raytracer::FactorySkybox::getInstance().createSkybox(
+                skyboxElement.getName(), transformSettingToDataMap(element)));
+            }
+        }
+    } catch (const libconfig::SettingException &ex) {
+        std::cerr << "configLoader: loadSkybox: " << ex.what() << " : " << ex.getPath() << std::endl;
     }
 }

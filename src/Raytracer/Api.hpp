@@ -10,6 +10,7 @@
 #include <variant>
 #include "IEntity.hpp"
 #include "IMaterial.hpp"
+#include "ISkybox.hpp"
 
 #ifdef _WIN32
     #define EXPORT __declspec(dllexport)
@@ -19,12 +20,12 @@
 
 extern "C"
 {
-    enum LibType { ENTITY, MATERIAL };
+    enum LibType { ENTITY, MATERIAL, SKYBOX };
 
     /**
-     * @brief Creates an entity object based on the provided libconfig::Setting.
+     * @brief Creates an entity object.
      * 
-     * @param setting The libconfig::Setting object representing the configuration of the entity.
+     * @param setting Map of data for the entity.
      */
     EXPORT Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting);
 
@@ -36,9 +37,9 @@ extern "C"
     EXPORT void destroyEntity(Raytracer::IEntity *entity);
 
     /**
-     * @brief Creates a material object based on the provided libconfig::Setting.
+     * @brief Creates a material object.
      * 
-     * @param setting The libconfig::Setting object representing the configuration of the material.
+     * @param setting Map of data for the material.
      */
     EXPORT Raytracer::IMaterial *createMaterial(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting);
 
@@ -46,6 +47,15 @@ extern "C"
      * @brief Destroys a material object.
      */
     EXPORT void destroyMaterial(Raytracer::IMaterial *material);
+
+    /**
+     * @brief Create a skybox object
+     * 
+     * @param setting Map of data for the skybox.
+     */
+    EXPORT Raytracer::ISkybox *createSkybox(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting);
+
+    EXPORT void destroySkybox(Raytracer::ISkybox *skybox);
 
     /**
      * @brief Retrieves the name of the library.

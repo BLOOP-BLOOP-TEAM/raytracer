@@ -14,6 +14,7 @@
 #include <memory>
 #include "Color.hpp"
 #include "IEntity.hpp"
+#include "Skybox.hpp"
 #include "ALight.hpp"
 #include "ACam.hpp"
 #include "AMaterial.hpp"
@@ -33,8 +34,9 @@ namespace Raytracer {
              * @param height the height of the image
              * @param entities a reference to a vector of entities
              * @param pixels a reference to a vector of vectors of colors to store the calculated pixels
+             * @param skybox a skybox entity
              */
-            Calculator(int width, int height, std::vector<IEntity *> &entities, std::vector<std::vector<Component::Color>>& pixels);
+             Calculator(int width, int height, std::vector<IEntity *> &entities, std::vector<std::vector<Component::Color>>& pixels, Raytracer::ISkybox *skybox);
 
             ~Calculator() = default;
 
@@ -47,6 +49,7 @@ namespace Raytracer {
         private:
             int width;
             int height;
+            Raytracer::ISkybox *skybox;
             std::vector<IEntity *> &entities;
             std::vector<std::vector<Component::Color>>& pixels;
             Component::Color ambientLightColor;

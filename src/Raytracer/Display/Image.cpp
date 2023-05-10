@@ -37,10 +37,10 @@ void Raytracer::Image::writePPM(const std::string &filename) const
     file.close();
 }
 
-void Raytracer::Image::calculateImage(std::vector<IEntity *> &entities)
+void Raytracer::Image::calculateImage(std::vector<IEntity *> &entities, Raytracer::ISkybox *skybox)
 {
     std::cout << "Image calculated" << std::endl;
-    Calculator calculator(width, height, entities, pixels);
+    Calculator calculator(width, height, entities, pixels, skybox);
     try {
         calculator.calculatePixels();
     } catch (const std::runtime_error &e) {

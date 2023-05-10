@@ -15,7 +15,7 @@ static const std::string cylinderName = "Cylinder";
 
 Plugin::Cylinder::Cylinder(const Component::Vector3f &position, const Component::Vector3f &rotation, double radius, double height,
                             Component::Vector3f &basePoint, Component::Vector3f &topPoint)
-    : APrimitive("Cylinder", position, rotation), _radius(radius), _height(height)
+    : APrimitive(cylinderName, position, rotation), _radius(radius), _height(height)
 {
     _axis = calculateCylinderAxis(basePoint, topPoint);
 }
@@ -90,29 +90,34 @@ Component::Vector3f Plugin::Cylinder::getNormal(const Component::Vector3f &hitPo
     return (hitPoint - getPosition()).normalize();
 }
 
-Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting)
-{
-    Component::Vector3f position(std::get<double>(setting.find("position_x")->second), std::get<double>(setting.find("position_y")->second), std::get<double>(setting.find("position_z")->second));
-    Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
-    Component::Vector3f basePoint(std::get<double>(setting.find("basePoint_x")->second), std::get<double>(setting.find("basePoint_y")->second), std::get<double>(setting.find("basePoint_z")->second));
-    Component::Vector3f topPoint(std::get<double>(setting.find("topPoint_x")->second), std::get<double>(setting.find("topPoint_y")->second), std::get<double>(setting.find("topPoint_z")->second));
-    double height = std::get<double>(setting.find("height")->second);
-    double radius = std::get<double>(setting.find("radius")->second);
+extern "C" {
 
-    return new Plugin::Cylinder(position, rotation, radius, height, basePoint, topPoint);
-}
+    Raytracer::IEntity *createEntity(const std::map<std::string, std::variant<double, int, std::string, bool>> &setting) {
+        Component::Vector3f position(std::get<double>(setting.find("position_x")->second),
+                                     std::get<double>(setting.find("position_y")->second),
+                                     std::get<double>(setting.find("position_z")->second));
+        Component::Vector3f basePoint(std::get<double>(setting.find("basePoint_x")->second),
+                                      std::get<double>(setting.find("basePoint_y")->second),
+                                      std::get<double>(setting.find("basePoint_z")->second));
+        Component::Vector3f topPoint(std::get<double>(setting.find("topPoint_x")->second),
+                                     std::get<double>(setting.find("topPoint_y")->second),
+                                     std::get<double>(setting.find("topPoint_z")->second));
+        Component::Vector3f rotation(std::get<double>(setting.find("rotation_x")->second), std::get<double>(setting.find("rotation_y")->second), std::get<double>(setting.find("rotation_z")->second));
+        double height = std::get<double>(setting.find("height")->second);
+        double radius = std::get<double>(setting.find("radius")->second);
+        return new Plugin::Cylinder(position, rotation, radius, height, basePoint, topPoint);
+    }
 
-const char *getName()
-{
-    return cylinderName.c_str();
-}
+    const char *getName() {
+        return cylinderName.c_str();
+    }
 
-LibType getType() {
-    return LibType::ENTITY;
-}
+    LibType getType() {
+        return LibType::ENTITY;
+    }
 
-void destroyEntity(Raytracer::IEntity *entity)
-{
-    std::cout << "destroy cylinder" << std::endl;
-    delete entity;
+    void destroyEntity(Raytracer::IEntity *entity) {
+        std::cout << "destroy cylinder" << std::endl;
+        delete entity;
+    }
 }

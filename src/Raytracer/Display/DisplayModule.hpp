@@ -11,6 +11,7 @@
 #include <sstream>
 #include "Image.hpp"
 #include "Text.hpp"
+#include "Color.hpp"
 #include "ScenesManager.hpp"
 #include "RaytracerException.hpp"
 
@@ -104,6 +105,8 @@ namespace Raytracer {
              * @param vec The Vector3f object to convert
              */
             std::string Vector3fToString(Component::Vector3f vec);
+
+            [[nodiscard]] std::string GetSceneName(const std::string &filename);
 
         protected:
         private:

@@ -81,19 +81,19 @@ void Raytracer::ScenesManager::moveCamera(std::string key, bool isCtrlPressed)
             isCtrlPressed ? cam.rotate({0.1, 0, 0}) : cam.translate({0, 1, 0});
             break;
         case 'Q':
-            isCtrlPressed ? cam.rotate({0, 0.1, 0}) : cam.translate({0, 0, -1});
+            isCtrlPressed ? cam.rotate({0, 0.1, 0}) : cam.translate({0, 0, 1});
             break;
         case 'S':
             isCtrlPressed ? cam.rotate({-0.1, 0, 0}) : cam.translate({0, -1, 0});
             break;
         case 'D':
-            isCtrlPressed ? cam.rotate({0, -0.1, 0}) : cam.translate({0, 0, 1});
+            isCtrlPressed ? cam.rotate({0, -0.1, 0}) : cam.translate({0, 0, -1});
             break;
         case 'A':
-            isCtrlPressed ? cam.rotate({0, 0, -0.1}) : cam.translate({-1, 0, 0});
+            isCtrlPressed ? cam.rotate({0, 0, -0.1}) : cam.translate({1, 0, 0});
             break;
         case 'E':
-            isCtrlPressed ? cam.rotate({0, 0, 0.1}) : cam.translate({1, 0, 0});
+            isCtrlPressed ? cam.rotate({0, 0, 0.1}) : cam.translate({-1, 0, 0});
             break;
         default:
             break;
@@ -114,6 +114,11 @@ Raytracer::ACam &Raytracer::ScenesManager::getCam() const
     throw Raytracer::RaytracerException("Camera not found");
 }
 
+bool Raytracer::ScenesManager::isCtrlActive() const
+{
+    return _isCtrlActive;
+}
+
 void Raytracer::ScenesManager::update(Raytracer::EventManager &eventManager)
 {
     const std::string key = eventManager.isEventTriggered(keyZ) ? keyZ :
@@ -124,6 +129,7 @@ void Raytracer::ScenesManager::update(Raytracer::EventManager &eventManager)
                         eventManager.isEventTriggered(keyE) ? keyE :
                         "";
 
+    _isCtrlActive = eventManager.isCtrlActive();
     if (eventManager.isEventTriggered(keyLeft))
         _sceneActual > 0 ? setSceneActual(_sceneActual - 1) : setSceneActual(_scenes.size() - 1);
     if (eventManager.isEventTriggered(keyRight))

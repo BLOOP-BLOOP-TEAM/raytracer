@@ -13,11 +13,6 @@
 #include "AMaterial.hpp"
 #include "Matrix.hpp"
 
-Raytracer::Calculator::Calculator(int width, int height, std::vector<IEntity *> &entities, std::vector<std::vector<Component::Color>>& pixels)
-    : width(width), height(height), entities(entities), pixels(pixels), ambientLightColor(1.0f, 1.0f, 1.0f),
-                      ambientLightIntensity(0.1f) {}
-
-
 Raytracer::ACam *Raytracer::Calculator::findCam(const std::vector<IEntity *> &entities)
 {
     for (const auto &entity : entities) {
@@ -91,18 +86,20 @@ Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origi
                                                 const std::vector<Raytracer::ALight *> &lights,
                                                 int recursionDepth = 100)
 {
-    double t_min = std::numeric_limits<double>::max();
-    IEntity &intersected_object = findClosestEntity(origin, direction, entities, t_min);
+    double minT = std::numeric_limits<double>::max();
+    IEntity &intersected_object = findClosestEntity(origin, direction, entities, minT);
     APrimitive *primitive = static_cast<APrimitive *>(&intersected_object);
     Component::Color finalColor = Component::Color(0, 0, 0);
 
     // S'il n'y a pas d'intersection, retourner une couleur d'arrière-plan
-    if (t_min == std::numeric_limits<double>::max()) {
+    if (minT == std::numeric_limits<double>::max()) {
+        if (skybox == nullptr)
+            return finalColor;
+        finalColor = skybox->getColorFromRay(direction);
         return finalColor;
     }
-
-    Component::Vector3f normalized_direction = direction.normalize();
-    Component::Vector3f hitPoint = origin + normalized_direction * t_min;
+    Component::Vector3f normalizedDirection = direction.normalize();
+    Component::Vector3f hitPoint = origin + normalizedDirection * minT;
     Component::Vector3f hitNormal = primitive->getNormal(hitPoint);
     IMaterial &objectMaterial = primitive->getMaterial();
     AMaterial &material = static_cast<Raytracer::AMaterial &>(objectMaterial);
@@ -111,24 +108,23 @@ Component::Color Raytracer::Calculator::castRay(const Component::Vector3f &origi
     Component::Color reflectedColor(0, 0, 0);
     Component::Color refractedColor(0, 0, 0);
 
+    const double epsilon = 1e-6;  // Définir une petite constante pour décaler l'origine du rayon réfléchi/réfracté
+
     if (recursionDepth > 0) {
         if (material.getReflectivity() > 0) {
             Component::Vector3f reflectionDirection = getReflectionDirection(direction, hitNormal);
-            reflectedColor = castRay(hitPoint, reflectionDirection, entities, lights, recursionDepth - 1);
+            reflectedColor = castRay(hitPoint + reflectionDirection * epsilon, reflectionDirection, entities, lights, recursionDepth - 1);
         }
 
         if (material.getRefractivity() > 0) {
             Component::Vector3f refractionDirection = getRefractionDirection(direction, hitNormal, material.getRefractiveIndex());
-            refractedColor = castRay(hitPoint, refractionDirection, entities, lights, recursionDepth - 1);
+            refractedColor = castRay(hitPoint + refractionDirection * epsilon, refractionDirection, entities, lights, recursionDepth - 1);
         }
 
-        finalColor = localColor * (1 - material.getReflectivity() - material.getRefractivity()) +
-                      reflectedColor * material.getReflectivity() +
-                      refractedColor * material.getRefractivity();
+        finalColor = localColor * (1 - material.getReflectivity() - material.getRefractivity()) + reflectedColor * material.getReflectivity() + refractedColor * material.getRefractivity();
     } else {
         finalColor = localColor;
     }
-
 
     // Clamp color values between 0 and 255
     finalColor.clamp();
@@ -157,17 +153,17 @@ Component::Color Raytracer::Calculator::calculateLighting(const Component::Vecto
         if (!inShadow) {
             if (light.isIlluminating(hitPoint, lightDirection)) {
                 double distance = (light.getPosition() - hitPoint).length();
-                double attenuation_factor = 0.1; // Changez cette valeur pour ajuster l'atténuation
+                double attenuation_factor = 0.01;
                 double attenuation = std::pow(distance, attenuation_factor);
 
                 Component::Color diffuseColor = computeDiffuseColor(hitPoint, hitNormal, lightDirection, material, lightIntensity / attenuation);
                 Component::Color specularColor = computeSpecularColor(hitPoint, hitNormal, lightDirection, material, light, lightIntensity / attenuation);
 
-                diffuseColor.clamp();
-                specularColor.clamp();
+//                diffuseColor.clamp();
+//                specularColor.clamp();
                 // Ajouter la couleur diffuse et spéculaire
                 finalColor = finalColor + diffuseColor + specularColor;
-                finalColor.clamp();
+//                finalColor.clamp();
             }
         }
     }
@@ -273,6 +269,9 @@ Component::Color Raytracer::Calculator::getAverageColor(int x, int y, const Rayt
 }
 
 
+#include <thread>
+#include <vector>
+
 void Raytracer::Calculator::calculatePixels()
 {
     try {
@@ -288,12 +287,33 @@ void Raytracer::Calculator::calculatePixels()
             }
         }
         std::cout << "Number of entities: " << entities.size() << std::endl;
-        for (int y = 0; y < height; ++y) {
-            for (int x = 0; x < width; ++x) {
-                pixels[y][x] = getAverageColor(x, y, camera, entities, lights);
-            }
+
+        int num_threads = std::thread::hardware_concurrency();
+        std::vector<std::thread> threads(num_threads);
+        int chunk_size = height / num_threads;
+
+        for (int i = 0; i < num_threads; ++i) {
+            threads[i] = std::thread([this, i, chunk_size, num_threads, camera, &lights]() {
+                int start = i * chunk_size;
+                int end = (i == num_threads - 1) ? height : start + chunk_size;
+
+                for (int y = start; y < end; ++y) {
+                    for (int x = 0; x < width; ++x) {
+                        pixels[y][x] = getAverageColor(x, y, camera, entities, lights);
+                    }
+                }
+            });
         }
+
+        for (auto &t : threads) {
+            t.join();
+        }
+
     } catch (const std::runtime_error &e) {
         std::cerr << "Error: " << e.what() << std::endl;
     }
 }
+
+Raytracer::Calculator::Calculator(int width, int height, std::vector<IEntity *> &entities,
+                                  std::vector<std::vector<Component::Color>> &pixels, Raytracer::ISkybox *skybox) : width(width), height(height), entities(entities), pixels(pixels), ambientLightColor(1.0f, 1.0f, 1.0f),
+                                  ambientLightIntensity(0.1f), skybox(skybox) {}

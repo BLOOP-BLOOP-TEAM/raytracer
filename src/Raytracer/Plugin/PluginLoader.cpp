@@ -11,7 +11,7 @@
 #include "PluginLoader.hpp"
 #include "Api.hpp"
 
-Raytracer::PluginLoader::PluginLoader() : _factoryEntity(FactoryEntity::getInstance()), _factoryMaterial(FactoryMaterial::getInstance()) {
+Raytracer::PluginLoader::PluginLoader() {
     std::cout << "Loading plugins from directory: "  << std::endl;
 }
 
@@ -62,7 +62,7 @@ void Raytracer::PluginLoader::loadPlugin(const std::string& filepath)
                 auto destroyEntity = plugin->getFunction<void(*)(Raytracer::IEntity*)>("destroyEntity");
                 auto nameEntity = plugin->getFunction<const char*(*)()>("getName");
 
-                _factoryEntity.addCreator(nameEntity(), createEntity, destroyEntity);
+                FactoryEntity::getInstance().addCreator(nameEntity(), createEntity, destroyEntity);
                 break;
             }
             case LibType::MATERIAL: {
@@ -70,7 +70,15 @@ void Raytracer::PluginLoader::loadPlugin(const std::string& filepath)
                 auto destroyMaterial = plugin->getFunction<void(*)(Raytracer::IMaterial*)>("destroyMaterial");
                 auto nameMaterial = plugin->getFunction<const char*(*)()>("getName");
 
-                _factoryMaterial.addCreator(nameMaterial(), createMaterial, destroyMaterial);
+                FactoryMaterial::getInstance().addCreator(nameMaterial(), createMaterial, destroyMaterial);
+                break;
+            }
+            case LibType::SKYBOX: {
+                auto createSkybox = plugin->getFunction<Raytracer::ISkybox*(*)(const std::map<std::string, std::variant<double, int, std::string, bool>>&)>("createSkybox");
+                auto destroySkybox = plugin->getFunction<void(*)(Raytracer::ISkybox*)>("destroySkybox");
+                auto nameSkybox = plugin->getFunction<const char*(*)()>("getName");
+
+                FactorySkybox::getInstance().addCreator(nameSkybox(), createSkybox, destroySkybox);
                 break;
             }
             default:
