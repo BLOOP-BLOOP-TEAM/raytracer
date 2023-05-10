@@ -6,5 +6,4 @@ target_sources(raytracer PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/DisplayModule.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/Image.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/Calculator.cpp"
-        "../../Plugins/SimpleSkybox/Skybox.cpp"
         )

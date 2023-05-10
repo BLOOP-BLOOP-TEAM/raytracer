@@ -12,7 +12,7 @@
 #include <memory>
 #include "IEntity.hpp"
 #include "Image.hpp"
-#include "../../Plugins/SimpleSkybox/Skybox.hpp"
+#include "Skybox.hpp"
 #include "EventManager.hpp"
 
 namespace Raytracer {

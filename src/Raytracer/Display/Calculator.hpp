@@ -14,7 +14,7 @@
 #include <memory>
 #include "Color.hpp"
 #include "IEntity.hpp"
-#include "../../Plugins/SimpleSkybox/Skybox.hpp"
+#include "Skybox.hpp"
 #include "ALight.hpp"
 #include "ACam.hpp"
 #include "AMaterial.hpp"

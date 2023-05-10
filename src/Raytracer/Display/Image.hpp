@@ -12,7 +12,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
-#include "../../Plugins/SimpleSkybox/Skybox.hpp"
+#include "Skybox.hpp"
 #include "Color.hpp"
 #include "IEntity.hpp"
 #include "ALight.hpp"
