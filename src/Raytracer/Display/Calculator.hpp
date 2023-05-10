@@ -18,6 +18,7 @@
 #include "ALight.hpp"
 #include "ACam.hpp"
 #include "AMaterial.hpp"
+#include "ISkybox.hpp"
 
 #pragma once
 
@@ -40,20 +41,20 @@ namespace Raytracer {
         Component::Color ambientLightColor;
         double ambientLightIntensity;
 
-        ACam *findCam(const std::vector<IEntity *> &entities);
+        static ACam *findCam(const std::vector<IEntity *> &entities);
 
-        std::vector<ALight *> findLights(const std::vector<IEntity *> &entities);
+        static std::vector<ALight *> findLights(const std::vector<IEntity *> &entities);
 
-        [[nodiscard]] Component::Vector3f getRayDirection(int x, int y, const ACam *cam);
+        [[nodiscard]] Component::Vector3f getRayDirection(int x, int y, const ACam *cam) const;
 
         Component::Color castRay(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                  const std::vector<IEntity *> &entities,
                                  const std::vector<Raytracer::ALight *> &lights, int recursionDepth) ;
 
-        Raytracer::IEntity &findClosestEntity(const Component::Vector3f &origin, const Component::Vector3f &direction,
+        static Raytracer::IEntity &findClosestEntity(const Component::Vector3f &origin, const Component::Vector3f &direction,
                                                                      const std::vector<IEntity *> &entities, double &minT) ;
 
-        bool checkShadows(const Component::Vector3f &hitPoint, const Component::Vector3f &hitNormal,
+        static bool checkShadows(const Component::Vector3f &hitPoint, const Component::Vector3f &hitNormal,
                                                  const Component::Vector3f &lightDirection, const std::vector<IEntity *> &entities,
                                                  const Raytracer::ALight &light) ;
 
@@ -72,13 +73,13 @@ namespace Raytracer {
                              const Component::Vector3f &lightDirection, const AMaterial &material,
                              const ALight &light, double lightIntensity);
 
-        Component::Vector3f
+        static Component::Vector3f
         getReflectionDirection(const Component::Vector3f &incident, const Component::Vector3f &normal);
 
         Component::Color getAverageColor(int x, int y, const ACam *camera, const std::vector<IEntity *> &entities,
                                          const std::vector<Raytracer::ALight *> &lights, int subPixelsPerAxis);
 
-        Component::Vector3f
+        static Component::Vector3f
         getRefractionDirection(const Component::Vector3f &incident, const Component::Vector3f &normal,
                                double refractiveIndex);
     };

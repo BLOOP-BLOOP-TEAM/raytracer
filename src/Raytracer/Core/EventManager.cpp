@@ -8,7 +8,6 @@
 #include <SFML/Graphics.hpp>
 #include "EventManager.hpp"
 
-// ---------------------- KEYBOARD KEYS ---------------------- //
 static const std::map<sf::Keyboard::Key, const std::string> KeyboardKeys = {
     {sf::Keyboard::Key::A, "KEY_A_PRESSED"},
     {sf::Keyboard::Key::B, "KEY_B_PRESSED"},

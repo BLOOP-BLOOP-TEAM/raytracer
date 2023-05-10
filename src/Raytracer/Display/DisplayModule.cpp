@@ -20,26 +20,19 @@ namespace Raytracer {
     DisplayModule::DisplayModule(unsigned int width, unsigned int height, const std::string& title, ScenesManager &scenesManager)
             : _width(width), _height(height), _window(sf::VideoMode(width, height), title), _scenesManager(scenesManager), _pixels(sf::Points, width * height) {}
 
-    DisplayModule::~DisplayModule() {}
-
-    std::string DisplayModule::PosVector3fToString(Component::Vector3f vec) {
-        std::stringstream ss;
-
-        ss << "(" << vec.z << ", " << vec.y << ", " << vec.x << ")"; // technique de la loutre
-        return ss.str();
-    }
+    DisplayModule::~DisplayModule() = default;
 
     std::string DisplayModule::Vector3fToString(Component::Vector3f vec) {
         std::stringstream ss;
 
-        ss << "(" << vec.y << ", " << vec.x << ", " << vec.z << ")";
+        ss << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
         return ss.str();
     }
 
     std::string DisplayModule::getCameraPos() {
         for (const auto &entity: _scenesManager.getSceneActual().getEntities()) {
             if (entity->getType() == CompType::CAM)
-                return PosVector3fToString(entity->getPosition());
+                return Vector3fToString(entity->getPosition());
         }
         return UNDEFINED;
     }
@@ -130,7 +123,6 @@ namespace Raytracer {
     }
 
     void DisplayModule::displayPixels(const Image &image) {
-        // Mettre à jour les pixels
         for (unsigned int y = 0; y < _height; ++y) {
             for (unsigned int x = 0; x < _width; ++x) {
                 Component::Color color = image.getPixel(x, y);
@@ -142,7 +134,7 @@ namespace Raytracer {
     }
 
     void DisplayModule::displayGuy() {
-        for (const auto &text : _allTexts) { // gestion des textes
+        for (const auto &text : _allTexts) {
             auto it = _allSfTexts.find(text.id);
             if (it == _allSfTexts.end())
                 setText(text);
@@ -165,7 +157,6 @@ namespace Raytracer {
     }
 
     void DisplayModule::update(const Image &image) {
-        // Dessiner et afficher les pixels
         _window.clear();
         displayPixels(image);
         _window.draw(_pixels);

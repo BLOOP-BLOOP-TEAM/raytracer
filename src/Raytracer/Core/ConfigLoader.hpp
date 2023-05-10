@@ -40,4 +40,4 @@ namespace Raytracer {
             static void addMaterialInMap(std::map<std::pair<std::string, IEntity *>, std::pair<std::string, IMaterial *>> &materialsToApply, const std::string &name, IMaterial *material);
             static void loadSkybox(const libconfig::Setting &root, Scene &scene);
     };
-}; // namespace Raytracer
+};
