@@ -11,7 +11,6 @@
 #include <string>
 #include <memory>
 #include "Scene.hpp"
-// #include "Observer.hpp"
 
 namespace Raytracer {
     class Observer;
@@ -34,6 +33,10 @@ namespace Raytracer {
         [[nodiscard]] Scene &getSceneActual() const;
 
         [[nodiscard]] int getNumberScenes() const;
+
+        [[nodiscard]] int getIndexActualScene() const;
+
+        [[nodiscard]] const std::vector<std::unique_ptr<Scene>> &getScenes() const;
 
         void setSceneActual(int scene);
 

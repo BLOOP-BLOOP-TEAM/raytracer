@@ -8,6 +8,7 @@
 #include "RaytracerException.hpp"
 #include "ScenesManager.hpp"
 #include "Observer.hpp"
+#include "Scene.hpp"
 
 static const std::string keyLeft = "KEY_LEFT_PRESSED";
 static const std::string keyRight = "KEY_RIGHT_PRESSED";
@@ -39,11 +40,16 @@ void Raytracer::ScenesManager::removeScene(const std::string &path)
     unsigned int scenesSize = _scenes.size();
 
     for (unsigned int i = 0; i < scenesSize; i++) {
+        std::cout << "finito" << std::endl;
         if (_scenes[i]->getFileName() == path) {
+            std::cout << _scenes.size() << std::endl;
+            std::cout << i << std::endl;
             _scenes.erase(_scenes.begin() + i);
+            std::cout << "ez" << std::endl;
             return;
         }
     }
+    std::cout << "lol" << std::endl;
     throw Raytracer::RaytracerException("Scene not found");
 }
 
@@ -58,6 +64,10 @@ void Raytracer::ScenesManager::replaceScene(std::unique_ptr<Scene> newScene, con
         }
     }
     throw Raytracer::RaytracerException("Scene not found");
+}
+
+const std::vector<std::unique_ptr<Raytracer::Scene>>&Raytracer::ScenesManager::getScenes() const {
+    return _scenes;
 }
 
 Raytracer::Scene &Raytracer::ScenesManager::getSceneActual() const
@@ -75,6 +85,11 @@ void Raytracer::ScenesManager::setSceneActual(int scene)
 int Raytracer::ScenesManager::getNumberScenes() const
 {
     return _scenes.size();
+}
+
+int Raytracer::ScenesManager::getIndexActualScene() const
+{
+    return _sceneActual;
 }
 
 void Raytracer::ScenesManager::moveCamera(std::string key, bool isCtrlPressed)

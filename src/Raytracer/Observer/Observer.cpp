@@ -8,7 +8,7 @@
 #include "ConfigLoader.hpp"
 #include "Observer.hpp"
 
-static const std::string FOLDER_NAME = "Scenes";
+static const std::string FOLDER_NAME = "Scenes/";
 static const std::string keyLeft = "KEY_LEFT_PRESSED";
 static const std::string keyRight = "KEY_RIGHT_PRESSED";
 
@@ -24,14 +24,20 @@ void Raytracer::Observer::subscribe(const std::string &path) {
 }
 
 void Raytracer::Observer::unsubscribe(const std::string &path) {
+    std::string realPath = path;
     size_t index = 0;
-    auto it = std::find(_allSubScenes.begin(), _allSubScenes.end(), path);
+    auto it = std::find(_allSubScenes.begin(), _allSubScenes.end(), realPath);
 
     if (it != _allSubScenes.end()) {
         index = it - _allSubScenes.begin();
         _allSubScenes.erase(_allSubScenes.begin() + index);
         _lastUpdates.erase(_lastUpdates.begin() + index);
-        _sceneManager.removeScene(path);
+        _sceneManager.removeScene(realPath);
+        if (_sceneManager.getNumberScenes() == 0)
+            return;
+        if (_sceneManager.getIndexActualScene() == _sceneManager.getNumberScenes())
+            _sceneManager.setSceneActual(0);
+        subscribe(_sceneManager.getSceneActual().getFileName());
     }
 }
 
@@ -78,13 +84,42 @@ void Raytracer::Observer::notify(const std::string &path)
     _lastUpdates[index] = getTimeStamp(path);
 }
 
+bool Raytracer::Observer::isFileExist(const std::string &path) {
+    std::vector<std::string> allFileNames;
+
+    for (const auto &scene : _sceneManager.getScenes())
+        allFileNames.push_back(scene->getFileName());
+    for (const auto &scenePath : allFileNames) {
+        if (scenePath == (FOLDER_NAME + path))
+            return true;
+    }
+    return false;
+}
+
+void Raytracer::Observer::checkNewFiles() {
+    for (const auto &entry : std::filesystem::directory_iterator(FOLDER_NAME)) {
+        std::string path = entry.path().filename();
+        std::string extension = entry.path().filename().extension();
+
+        if (extension != ".cfg")
+            continue;
+        if (isFileExist(path))
+            continue;
+        else {
+            _sceneManager.addScene(ConfigLoader::loadConfigFile(FOLDER_NAME + path));
+            // subscribe(path);
+            // _sceneManager.
+            // std::cout << "NOUVEAU FILE : " << path << std::endl;
+        }
+    }
+}
+
 void Raytracer::Observer::checkEditedFiles() {
     std::vector<bool> filesStatus;
     int nbrFiles = _allSubScenes.size();
     int index = 0;
 
-    std::cout << "NOMBRE DE FICHIER : " << nbrFiles << std::endl;
-
+    checkNewFiles();
     for (const auto &path : _allSubScenes) {
         const std::time_t timeStamp = getTimeStamp(path);
 
