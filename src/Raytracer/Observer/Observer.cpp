@@ -100,13 +100,17 @@ void Raytracer::Observer::checkNewFiles() {
     for (const auto &entry : std::filesystem::directory_iterator(FOLDER_NAME)) {
         std::string path = entry.path().filename();
         std::string extension = entry.path().filename().extension();
+        std::unique_ptr<Raytracer::Scene> newScene = nullptr;
 
         if (extension != ".cfg")
             continue;
         if (isFileExist(path))
             continue;
-        else
+        else {
+            if ((newScene = ConfigLoader::loadConfigFile(FOLDER_NAME + path)) == nullptr)
+                return;
             _sceneManager.addScene(ConfigLoader::loadConfigFile(FOLDER_NAME + path));
+        }
     }
 }
 
