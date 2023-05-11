@@ -26,7 +26,7 @@ const std::string &Raytracer::AMaterial::getType()
 
 double Raytracer::AMaterial::getRefractivity() const
 {
-    return _refractivity;
+    return _refractivity  / (255);
 }
 
 double Raytracer::AMaterial::getRefractiveIndex() const
