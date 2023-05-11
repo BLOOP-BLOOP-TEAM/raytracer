@@ -76,6 +76,14 @@ set_target_properties(plugin_sphere PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
         )
 
+add_library(plugin_cone SHARED)
+set_target_properties(plugin_cone PROPERTIES
+        CXX_STANDARD 20
+        COMPILE_FLAGS "-fno-gnu-unique"
+        PREFIX ""
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+        )
+
 add_library(plugin_cylinder SHARED)
 set_target_properties(plugin_cylinder PROPERTIES
         CXX_STANDARD 20
