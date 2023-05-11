@@ -33,8 +33,8 @@ void Raytracer::FactoryMaterial::destroyMaterial(Raytracer::IMaterial *material)
 
 void Raytracer::FactoryMaterial::addCreator(
     const std::string &name,
-    std::function<Raytracer::IMaterial *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)> funCreate,
-    std::function<void(Raytracer::IMaterial *material)> funcDestroy)
+    const std::function<Raytracer::IMaterial *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>& funCreate,
+    const std::function<void(Raytracer::IMaterial *material)>& funcDestroy)
 {
     auto funcPair = std::make_pair(funCreate, funcDestroy);
 

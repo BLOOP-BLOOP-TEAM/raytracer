@@ -30,8 +30,8 @@ void Raytracer::FactorySkybox::destroySkybox(Raytracer::ISkybox *skybox)
 
 void Raytracer::FactorySkybox::addCreator(
     const std::string &name,
-    std::function<Raytracer::ISkybox *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)> funCreate,
-    std::function<void(Raytracer::ISkybox *skybox)> funcDestroy)
+    const std::function<Raytracer::ISkybox *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>& funCreate,
+    const std::function<void(Raytracer::ISkybox *skybox)>& funcDestroy)
 {
     auto funcPair = std::make_pair(funCreate, funcDestroy);
 

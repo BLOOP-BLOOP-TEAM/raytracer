@@ -50,7 +50,7 @@ namespace Raytracer {
 
             static std::string Vector3fToString(Component::Vector3f vec);
 
-            [[nodiscard]] std::string GetSceneName(const std::string &filename);
+            [[nodiscard]] static std::string GetSceneName(const std::string &filename);
 
         protected:
         private:

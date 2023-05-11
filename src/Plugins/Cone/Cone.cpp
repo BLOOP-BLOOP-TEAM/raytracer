@@ -17,9 +17,7 @@ namespace Plugin {
     {
     }
 
-    Cone::~Cone()
-    {
-    }
+    Cone::~Cone() = default;
 
     double Cone::intersect(const Raytracer::Ray &ray) const
     {

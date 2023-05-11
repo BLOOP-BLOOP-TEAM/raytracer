@@ -87,7 +87,7 @@ int Raytracer::ScenesManager::getIndexActualScene() const
     return _sceneActual;
 }
 
-void Raytracer::ScenesManager::moveCamera(std::string key, bool isCtrlPressed)
+void Raytracer::ScenesManager::moveCamera(std::string key, bool isCtrlPressed) const
 {
     ACam &cam = getCam();
 

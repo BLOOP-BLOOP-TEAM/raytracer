@@ -20,17 +20,17 @@ void Component::Color::clamp()
 
 Component::Color Component::Color::operator*(double scalar) const
 {
-    return Component::Color(r * scalar, g * scalar, b * scalar);
+    return {r * scalar, g * scalar, b * scalar};
 }
 
 Component::Color Component::Color::operator*(const Component::Color &other) const
 {
-    return Component::Color(r * other.r, g * other.g, b * other.b);
+    return {r * other.r, g * other.g, b * other.b};
 }
 
 Component::Color Component::Color::operator+(const Component::Color &other) const
 {
-    return Component::Color(r + other.r, g + other.g, b + other.b);
+    return {r + other.r, g + other.g, b + other.b};
 }
 
 Component::Color Component::Color::toInteger() const
@@ -38,5 +38,5 @@ Component::Color Component::Color::toInteger() const
     int red = static_cast<int>(r * 255);
     int green = static_cast<int>(g * 255);
     int blue = static_cast<int>(b * 255);
-    return Component::Color(red, green, blue);
+    return {static_cast<double>(red), static_cast<double>(green), static_cast<double>(blue)};
 }
