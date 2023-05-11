@@ -83,7 +83,7 @@ double Plugin::Cylinder::intersect(const Raytracer::Ray &ray) const
     }
 
     return -1;
-}
+    }
 
 Component::Vector3f Plugin::Cylinder::getNormal(const Component::Vector3f &hitPoint) const
 {
