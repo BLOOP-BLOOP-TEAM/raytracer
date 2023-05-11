@@ -7,6 +7,7 @@
 
 #include "ConfigLoader.hpp"
 #include "Observer.hpp"
+#include "RaytracerException.hpp"
 
 static const std::string FOLDER_NAME = "Scenes/";
 static const std::string keyLeft = "KEY_LEFT_PRESSED";
@@ -20,11 +21,11 @@ void Raytracer::Observer::subscribe(const std::string &path) {
     if (std::find(_allSubScenes.begin(), _allSubScenes.end(), path) != _allSubScenes.end())
         return;
     _allSubScenes.push_back(path);
-    _lastUpdates.push_back(getTimeStamp(path));
+    _lastUpdates.push_back(getTimeStamp(path, true));
 }
 
 void Raytracer::Observer::unsubscribe(const std::string &path) {
-    const std::string& realPath = path;
+    const std::string realPath = path;
     size_t index = 0;
     auto it = std::find(_allSubScenes.begin(), _allSubScenes.end(), realPath);
 
@@ -34,17 +35,18 @@ void Raytracer::Observer::unsubscribe(const std::string &path) {
         _lastUpdates.erase(_lastUpdates.begin() + index);
         _sceneManager.removeScene(realPath);
         if (_sceneManager.getNumberScenes() == 0)
-            return;
+            throw Raytracer::RaytracerException("No more file available");
         if (_sceneManager.getIndexActualScene() == _sceneManager.getNumberScenes())
             _sceneManager.setSceneActual(0);
         subscribe(_sceneManager.getSceneActual().getFileName());
     }
 }
 
-std::time_t Raytracer::Observer::getTimeStamp(const std::string &path) {
+std::time_t Raytracer::Observer::getTimeStamp(const std::string &path, bool isSub) {
     if (!std::filesystem::exists(path)) {
         std::cout << "Delete la scene" << std::endl;
-        unsubscribe(path);
+        if (isSub)
+            unsubscribe(path);
         return -1;
     }
 
@@ -81,7 +83,7 @@ void Raytracer::Observer::notify(const std::string &path)
     if (index == _allSubScenes.size())
         return;
     replaceScene(path);
-    _lastUpdates[index] = getTimeStamp(path);
+    _lastUpdates[index] = getTimeStamp(path, true);
 }
 
 bool Raytracer::Observer::isFileExist(const std::string &path) {
@@ -108,8 +110,22 @@ void Raytracer::Observer::checkNewFiles() {
             continue;
         else {
             if ((newScene = ConfigLoader::loadConfigFile(FOLDER_NAME + path)) == nullptr)
-                return;
+                throw Raytracer::RaytracerException("Invalid file");
             _sceneManager.addScene(ConfigLoader::loadConfigFile(FOLDER_NAME + path));
+        }
+    }
+}
+
+void Raytracer::Observer::checkUnsubFileDeleted() {
+    const std::vector<std::unique_ptr<Raytracer::Scene>> &scenes = _sceneManager.getScenes();
+
+    for (const auto &scene : scenes) {
+        const std::string realPath = scene->getFileName();
+        const std::time_t timeStamp = getTimeStamp(realPath, false);
+
+        if (timeStamp == -1 && std::find(_allSubScenes.begin(), _allSubScenes.end(), realPath) == _allSubScenes.end()) {
+            _sceneManager.removeScene(realPath);
+            return;
         }
     }
 }
@@ -120,8 +136,9 @@ void Raytracer::Observer::checkEditedFiles() {
     int index = 0;
 
     checkNewFiles();
+    checkUnsubFileDeleted();
     for (const auto &path : _allSubScenes) {
-        const std::time_t timeStamp = getTimeStamp(path);
+        const std::time_t timeStamp = getTimeStamp(path, true);
 
         if (timeStamp == -1)
             return;
