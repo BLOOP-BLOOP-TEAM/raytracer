@@ -7,6 +7,7 @@
 
 #pragma once
 #include <filesystem>
+#include <cstring>
 #include <chrono>
 #include <algorithm>
 #include <vector>
@@ -25,6 +26,10 @@ namespace Raytracer {
             void notify(const std::string &path);
 
             void subscribe(const std::string &path);
+
+            void checkNewFiles();
+
+            bool isFileExist(const std::string &path);
 
             void unsubscribe(const std::string &path);
 

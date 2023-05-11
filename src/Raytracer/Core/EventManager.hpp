@@ -30,7 +30,7 @@ namespace Raytracer {
     private:
         std::vector<std::string> _events;
         sf::RenderWindow &_window;
-        sf::Event _event;
+        sf::Event _event{};
         bool _isCtrlActive;
     };
 }

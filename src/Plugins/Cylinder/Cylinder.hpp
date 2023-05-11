@@ -16,17 +16,15 @@ namespace Plugin {
             Cylinder(const Component::Vector3f &position, const Component::Vector3f &rotation, double radius, double height,
                     Component::Vector3f &basePoint, Component::Vector3f &topPoint);
 
-            ~Cylinder();
+            ~Cylinder() override;
 
             [[nodiscard]] double intersect(const Raytracer::Ray &ray) const override;
 
             [[nodiscard]] Component::Vector3f getNormal(const Component::Vector3f &hitPoint) const override;
 
-            double operator=(const std::string &s);
-
         protected:
         private:
-            Component::Vector3f calculateCylinderAxis(const Component::Vector3f &basePoint, const Component::Vector3f &topPoint);
+            static Component::Vector3f calculateCylinderAxis(const Component::Vector3f &basePoint, const Component::Vector3f &topPoint);
 
             double _radius;
             double _height;

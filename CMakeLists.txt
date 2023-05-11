@@ -24,7 +24,7 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBCONFIG++ REQUIRED IMPORTED_TARGET libconfig++)
 find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 
-target_link_libraries(raytracer PRIVATE sfml-graphics sfml-window sfml-system PkgConfig::LIBCONFIG++ ${CMAKE_DL_LIBS})
+target_link_libraries(raytracer PRIVATE sfml-graphics sfml-window sfml-system PkgConfig::LIBCONFIG++ ${CMAKE_DL_LIBS} pthread)
 
 ##############################################################################
 # Plugin .so libs
@@ -70,6 +70,14 @@ set_target_properties(plugin_simple_material PROPERTIES
 
 add_library(plugin_sphere SHARED)
 set_target_properties(plugin_sphere PROPERTIES
+        CXX_STANDARD 20
+        COMPILE_FLAGS "-fno-gnu-unique"
+        PREFIX ""
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins"
+        )
+
+add_library(plugin_cone SHARED)
+set_target_properties(plugin_cone PROPERTIES
         CXX_STANDARD 20
         COMPILE_FLAGS "-fno-gnu-unique"
         PREFIX ""

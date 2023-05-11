@@ -36,7 +36,11 @@ namespace Raytracer {
 
             void updateText(sf::Text &sfText, const Component::Text &textComponent);
 
+            void updateValues();
+
             void updateCameraValues();
+
+            void updateSceneNameValue();
 
             sf::RenderWindow &getWindow();
 
@@ -46,7 +50,7 @@ namespace Raytracer {
 
             static std::string Vector3fToString(Component::Vector3f vec);
 
-            [[nodiscard]] std::string GetSceneName(const std::string &filename);
+            [[nodiscard]] static std::string GetSceneName(const std::string &filename);
 
         protected:
         private:

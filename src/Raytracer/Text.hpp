@@ -23,7 +23,7 @@ namespace Component {
         Component::Color textColor = Component::Color();
         Component::Color backgroundColor = Component::Color();
 
-        Text(std::string id);
+        explicit Text(std::string id);
         Text(std::string id, std::string fontPath, std::string text, int size, Component::Vector3f pos,
             Component::Color textColor, Component::Color backgroundColor);
     };

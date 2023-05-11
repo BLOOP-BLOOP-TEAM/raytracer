@@ -52,7 +52,7 @@ namespace Raytracer {
     std::string DisplayModule::GetSceneName(const std::string &filename) {
         const std::string extension = ".cfg";
         const std::string prefix = "Scenes/";
-        size_t filename_start = filename.find_last_of("/") + 1;
+        size_t filename_start = filename.find_last_of('/') + 1;
         size_t filename_end = filename.find_last_of(extension);
 
         if (filename_end == std::string::npos || filename_end < filename_start)
@@ -156,11 +156,23 @@ namespace Raytracer {
         }
     }
 
+    void DisplayModule::updateValues() {
+        updateCameraValues();
+        updateSceneNameValue();
+    }
+
+    void DisplayModule::updateSceneNameValue() {
+        for (auto &text :_allTexts) {
+            if (text.id == ID_SCENE_VALUE)
+                text.text = GetSceneName(_scenesManager.getSceneActual().getFileName());
+        }
+    }
+
     void DisplayModule::update(const Image &image) {
         _window.clear();
         displayPixels(image);
         _window.draw(_pixels);
-        updateCameraValues();
+        updateValues();
         displayGuy();
         _window.display();
     }

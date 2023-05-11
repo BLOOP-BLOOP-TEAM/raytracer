@@ -5,9 +5,10 @@
 ** ScenesManager
 */
 
-#include <iostream>
 #include "RaytracerException.hpp"
 #include "ScenesManager.hpp"
+#include "Observer.hpp"
+#include "Scene.hpp"
 
 static const std::string keyLeft = "KEY_LEFT_PRESSED";
 static const std::string keyRight = "KEY_RIGHT_PRESSED";
@@ -60,6 +61,10 @@ void Raytracer::ScenesManager::replaceScene(std::unique_ptr<Scene> newScene, con
     throw Raytracer::RaytracerException("Scene not found");
 }
 
+const std::vector<std::unique_ptr<Raytracer::Scene>>&Raytracer::ScenesManager::getScenes() const {
+    return _scenes;
+}
+
 Raytracer::Scene &Raytracer::ScenesManager::getSceneActual() const
 {
     if (_sceneActual < 0 || _sceneActual >= _scenes.size())
@@ -72,7 +77,17 @@ void Raytracer::ScenesManager::setSceneActual(int scene)
     _sceneActual = scene;
 }
 
-void Raytracer::ScenesManager::moveCamera(std::string key, bool isCtrlPressed)
+int Raytracer::ScenesManager::getNumberScenes() const
+{
+    return _scenes.size();
+}
+
+int Raytracer::ScenesManager::getIndexActualScene() const
+{
+    return _sceneActual;
+}
+
+void Raytracer::ScenesManager::moveCamera(std::string key, bool isCtrlPressed) const
 {
     ACam &cam = getCam();
 
@@ -119,7 +134,7 @@ bool Raytracer::ScenesManager::isCtrlActive() const
     return _isCtrlActive;
 }
 
-void Raytracer::ScenesManager::update(Raytracer::EventManager &eventManager)
+void Raytracer::ScenesManager::update(Raytracer::EventManager &eventManager, Raytracer::Observer &observer)
 {
     const std::string key = eventManager.isEventTriggered(keyZ) ? keyZ :
                         eventManager.isEventTriggered(keyQ) ? keyQ :
@@ -130,10 +145,14 @@ void Raytracer::ScenesManager::update(Raytracer::EventManager &eventManager)
                         "";
 
     _isCtrlActive = eventManager.isCtrlActive();
-    if (eventManager.isEventTriggered(keyLeft))
+    if (eventManager.isEventTriggered(keyLeft)) {
         _sceneActual > 0 ? setSceneActual(_sceneActual - 1) : setSceneActual(_scenes.size() - 1);
-    if (eventManager.isEventTriggered(keyRight))
+        observer.subscribe(getSceneActual().getFileName());
+    }
+    if (eventManager.isEventTriggered(keyRight)) {
         _sceneActual == _scenes.size() - 1 ? setSceneActual(0) : setSceneActual(_sceneActual + 1);
+        observer.subscribe(getSceneActual().getFileName());
+    }
     if (!key.empty())
         moveCamera(key, eventManager.isCtrlActive());
     if (eventManager.isEventTriggered(keyEnter) && getCam().isEdited()) {

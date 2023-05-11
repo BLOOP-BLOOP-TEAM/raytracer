@@ -21,8 +21,7 @@ Plugin::Cylinder::Cylinder(const Component::Vector3f &position, const Component:
 }
 
 Plugin::Cylinder::~Cylinder()
-{
-}
+= default;
 
 Component::Vector3f Plugin::Cylinder::calculateCylinderAxis(const Component::Vector3f &basePoint, const Component::Vector3f &topPoint)
 {
@@ -83,7 +82,7 @@ double Plugin::Cylinder::intersect(const Raytracer::Ray &ray) const
     }
 
     return -1;
-}
+    }
 
 Component::Vector3f Plugin::Cylinder::getNormal(const Component::Vector3f &hitPoint) const
 {
