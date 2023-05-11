@@ -29,11 +29,13 @@ namespace Raytracer {
 
             void checkNewFiles();
 
+            void checkUnsubFileDeleted();
+
             bool isFileExist(const std::string &path);
 
             void unsubscribe(const std::string &path);
 
-            std::time_t getTimeStamp(const std::string &path);
+            std::time_t getTimeStamp(const std::string &path, bool isSub);
 
         private:
             void replaceScene(const std::string &path);
