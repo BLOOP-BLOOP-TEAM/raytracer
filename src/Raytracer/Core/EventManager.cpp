@@ -76,7 +76,7 @@ static const std::map<sf::Keyboard::Key, const std::string> KeyboardKeys = {
 };
 
 
-Raytracer::EventManager::EventManager(sf::RenderWindow &window) : _window(window), _isCtrlActive(false)
+Raytracer::EventManager::EventManager(sf::RenderWindow &window) : _window(window), _isCtrlActive(false), _events()
 {
 }
 
@@ -100,7 +100,7 @@ void Raytracer::EventManager::update()
                 toQuit = true;
         }
         if (toQuit) {
-            _events.push_back("Quit");
+            _events.emplace_back("Quit");
             _window.close();
         }
     }

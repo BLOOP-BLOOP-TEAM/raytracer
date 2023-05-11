@@ -44,7 +44,7 @@ namespace Raytracer {
 
         [[nodiscard]] ACam &getCam() const;
 
-        void moveCamera(std::string key, bool isCtrlPressed);
+        void moveCamera(std::string key, bool isCtrlPressed) const;
 
         [[nodiscard]] bool isCtrlActive() const;
 

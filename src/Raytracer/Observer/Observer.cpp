@@ -24,7 +24,7 @@ void Raytracer::Observer::subscribe(const std::string &path) {
 }
 
 void Raytracer::Observer::unsubscribe(const std::string &path) {
-    std::string realPath = path;
+    const std::string& realPath = path;
     size_t index = 0;
     auto it = std::find(_allSubScenes.begin(), _allSubScenes.end(), realPath);
 

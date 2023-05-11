@@ -19,7 +19,7 @@ Component::Vector3f Raytracer::Scene::getResolution() const
         if (entity->getType() == Raytracer::CompType::CAM)
             return (dynamic_cast<ICam*>(entity))->getResolution();
     }
-    return Component::Vector3f(1920, 1080, 0);
+    return {1920, 1080, 0};
 }
 
 Raytracer::Scene::Scene(const std::string &name, const std::string &nameFile) : _image(std::make_unique<Image>(getResolution().x, getResolution().y)), _fileName(nameFile), _isCalculate(

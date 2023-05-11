@@ -21,8 +21,7 @@ Plugin::Cylinder::Cylinder(const Component::Vector3f &position, const Component:
 }
 
 Plugin::Cylinder::~Cylinder()
-{
-}
+= default;
 
 Component::Vector3f Plugin::Cylinder::calculateCylinderAxis(const Component::Vector3f &basePoint, const Component::Vector3f &topPoint)
 {

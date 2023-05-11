@@ -52,7 +52,7 @@ namespace Raytracer {
     std::string DisplayModule::GetSceneName(const std::string &filename) {
         const std::string extension = ".cfg";
         const std::string prefix = "Scenes/";
-        size_t filename_start = filename.find_last_of("/") + 1;
+        size_t filename_start = filename.find_last_of('/') + 1;
         size_t filename_end = filename.find_last_of(extension);
 
         if (filename_end == std::string::npos || filename_end < filename_start)

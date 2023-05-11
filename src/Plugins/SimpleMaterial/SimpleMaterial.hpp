@@ -14,8 +14,7 @@
 namespace Plugin {
     class SimpleMaterial : public Raytracer::AMaterial {
     public:
-        SimpleMaterial(const Component::Color &baseColor, double diffuseFactor, double reflectivity);
-
+        
         SimpleMaterial(const Component::Color &baseColor, double diffuseFactor, double refractivity,
                        double refractiveIndex,
                        double reflectivity, const Component::Color &diffuse, double specular, double shininess);

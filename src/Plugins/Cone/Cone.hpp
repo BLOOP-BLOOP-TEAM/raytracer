@@ -16,7 +16,7 @@ namespace Plugin {
     class Cone : public Raytracer::APrimitive {
         public:
             Cone(const Component::Vector3f &position, const Component::Vector3f &rotation, double angleM);
-            ~Cone();
+            ~Cone() override;
 
             [[nodiscard]] double intersect(const Raytracer::Ray &ray) const override;
 

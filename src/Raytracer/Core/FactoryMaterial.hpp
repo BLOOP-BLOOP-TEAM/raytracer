@@ -23,7 +23,7 @@ namespace Raytracer {
         static FactoryMaterial& getInstance();
         Raytracer::IMaterial *createMaterial(const std::string &name, const std::map<std::string, std::variant<double, int, std::string, bool>> &);
         void destroyMaterial(Raytracer::IMaterial *material);
-        void addCreator(const std::string &name, std::function<Raytracer::IMaterial *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)> funcCreate, std::function<void(Raytracer::IMaterial *material)> funcDestroy);
+        void addCreator(const std::string &name, const std::function<Raytracer::IMaterial *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>& funcCreate, const std::function<void(Raytracer::IMaterial *material)>& funcDestroy);
 
     private:
         std::map<std::string, std::pair<std::function<Raytracer::IMaterial *(const std::map<std::string, std::variant<double, int, std::string, bool>> &)>, std::function<void(Raytracer::IMaterial *material)>>> _materials;
